@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class FamilyRole extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
 }
