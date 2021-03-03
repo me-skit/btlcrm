@@ -21,6 +21,7 @@ class CreatePeopleTable extends Migration
             $table->string('third_name', 64)->nullable();
             $table->string('first_surname', 64);
             $table->string('second_surname', 64)->nullable();
+            $table->string('gender', 1)->default('M');
             $table->date('birthday');
             $table->string('e_mail')->nullable();
             $table->string('cellphone')->nullable();

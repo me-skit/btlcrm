@@ -10,6 +10,7 @@ use App\Http\Controllers\PrivilegeController;
 use App\Http\Controllers\PrivilegeRoleController;
 use App\Http\Controllers\DisciplineTypeController;
 use App\Http\Controllers\ActionController;
+use App\Http\Controllers\VillageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -98,4 +99,14 @@ Route::prefix('/action')->group( function() {
     Route::patch('/{action}',  [ActionController::class, 'update'])->name('action.update');
     Route::delete('/{action}',  [ActionController::class, 'destroy'])->name('action.destroy');
     Route::get('/{action}/edit',  [ActionController::class, 'edit'])->name('action.edit');
+});
+
+// Route::resource('villages', VillageController::class);
+Route::get('villages', [VillageController::class, 'index'])->name('villages.index');
+Route::prefix('/village')->group( function() {
+    Route::get('/create',  [VillageController::class, 'create'])->name('village.create');
+    Route::post('/store',  [VillageController::class, 'store'])->name('village.store');
+    Route::patch('/{village}',  [VillageController::class, 'update'])->name('village.update');
+    Route::delete('/{village}',  [VillageController::class, 'destroy'])->name('village.destroy');
+    Route::get('/{village}/edit',  [VillageController::class, 'edit'])->name('village.edit');
 });

@@ -5,17 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Campus extends Model
+class Village extends Model
 {
     use HasFactory;
 
     protected $guarded = [];
 
-    /**
-     *  get the village that owns the campus
-     */
-    public function village()
+    public function campuses()
     {
-        return $this->belongsTo(Village::class);
+        return $this->hasMany(Campus::class);
     }
 }

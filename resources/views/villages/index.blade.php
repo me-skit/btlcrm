@@ -4,9 +4,9 @@
   <div class="container">
     <div class="row justify-content-center mb-3">
       <div class="col-md-10 d-flex justify-content-between align-items-baseline">
-        <h2>Sedes</h2>
+        <h2>Poblados</h2>
         <div>
-          <a href="{{ route('campus.create') }}" class="btn btn-success">Agregar</a>
+          <a href="{{ route('village.create') }}" class="btn btn-success">Agregar</a>
         </div>
       </div>
     </div>
@@ -17,23 +17,21 @@
               <tr>
                   <th>No.</th>
                   <th>Nombre</th>
-                  <th>Poblado</th>
-                  <th>Dirección</th>
+                  <th>Fecha de Creación</th>
                   <th>Acciones</th>
               </tr>
           </thead>
           <tbody>
-            @foreach ($campuses as $key => $campus)
+            @foreach ($villages as $key => $village)
               <tr>
                 <td>{{ $key + 1 }}</td>
-                <td>{{ $campus->name }}</td>
-                <td>{{ $campus->village->name }}</td>
-                <td>{{ $campus->address }}</td>
+                <td>{{ $village->name }}</td>
+                <td>{{ date_format($village->created_at, 'M jS Y H:i:s') }}</td>
                 <td>
                   <div class="d-flex">
-                    <a href="{{ route('campus.edit', $campus->id ) }}" class="btn btn-primary mr-3">Editar</a>
+                    <a href="{{ route('village.edit', $village->id ) }}" class="btn btn-primary mr-3">Editar</a>
 
-                    <form action="{{ route('campus.destroy', $campus->id) }}" method="POST">
+                    <form action="{{ route('village.destroy', $village->id) }}" method="POST">
                       @csrf
                       @method('DELETE')
                       <button type="submit" class="btn btn-danger">Eliminar</button>

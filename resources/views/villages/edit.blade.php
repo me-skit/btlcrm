@@ -6,42 +6,41 @@
       <div class="col-md-8">
         <div class="card">
           <div class="card-header">
-            <span class="font-weight-bold">Editar Estado Civil</span>
+            <span class="font-weight-bold">Editar Población</span>
           </div>
 
           <div class="card-body">
-            <form action="{{ route('status.update', $status->id) }}" method="POST">
+            <form action="{{ route('village.update', $village->id) }}" method="POST">
               @csrf
               @method('PATCH')
 
               <div class="row form-group">
-                <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Descripción') }}<span class="text-danger">*</span></label>
-
+                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}<span class="text-danger">*</span></label>
                 <div class="col-md-6">
                   <input type="text"
-                    name="description"
-                    id="description"
-                    class="form-control @error('description') is-invalid @enderror"
-                    value="{{ old('description') ?? $status->description }}"
+                    name="name"
+                    id="name"
+                    class="form-control @error('name') is-invalid @enderror"
+                    value="{{ old('name') ?? $village->name }}"
                     required
-                    autocomplete="description"
+                    autocomplete="name"
                     autofocus>
 
-                  @error('description')
+                  @error('name')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
                     </span>
                   @enderror
-                </div>              
+                </div>
               </div>
 
               <div class="row form-group mb-0">
                 <div class="col-md-6 offset-md-4">
                   <button class="btn btn-primary">Modificar</button>
-                  <a href="{{ route('status.index') }}" class="btn btn-secondary ml-1">Cancelar</a>
+                  <a href="{{ route('villages.index') }}" class="btn btn-secondary ml-1">Cancelar</a>
                 </div>
               </div>
-            </form>          
+            </form>
           </div>
         </div>
       </div>

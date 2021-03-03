@@ -16,14 +16,15 @@ class CreateFamiliesTable extends Migration
         Schema::create('families', function (Blueprint $table) {
             $table->id();
             $table->foreignId('union_type_id')->constrained();
-            $table->string('hamlet', 128)->nullable();
-            $table->string('colony', 128)->nullable();
-            $table->string('alley', 64)->nullable();
-            $table->string('zone', 2);
+            $table->foreignId('village_id')->constrained();
+            $table->tinyInteger('av_st_number')->nullable();
+            $table->tinyInteger('is_st_av')->default('0');
             $table->string('house_number', 8)->nullable();
+            $table->tinyInteger('zone')->nullable();
+            $table->string('addr_extra_info')->nullable();
             $table->string('phone_number', 16)->nullable();
-            $table->decimal('longitude', 10, 6);
-            $table->decimal('latitude', 10, 6);
+            $table->decimal('longitude', 19, 14)->nullable();
+            $table->decimal('latitude', 19, 14)->nullable();
             $table->timestamps();
         });
     }

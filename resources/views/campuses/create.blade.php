@@ -3,7 +3,7 @@
 @section('content')
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-md-8">
+      <div class="col-md-10">
         <div class="card">
           <div class="card-header">
             <span class="font-weight-bold">Agregar Nueva Sede</span>
@@ -13,9 +13,9 @@
             <form action="{{ route('campus.store') }}" method="post">
               @csrf
 
-              <div class="form-group row">
-                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
-                <div class="col-md-6">
+              <div class="row form-group">
+                <label for="name" class="col-md-3 col-form-label text-md-right">{{ __('Nombre') }}<span class="text-danger">*</span></label>
+                <div class="col-md-7">
                   <input type="text"
                     name="name"
                     id="name"
@@ -33,9 +33,20 @@
                 </div>
               </div>
 
+              <div class="row form-group">
+                <label for="village_id" class="col-md-3 col-form-label text-md-right">{{ __('Poblado') }}<span class="text-danger">*</span></label>
+                <div class="col-md-7">
+                  <select name="village_id" class="form-control">
+                      @foreach ($villages as $village)
+                        <option value="{{ $village->id }}">{{ $village->name }}</option>
+                      @endforeach
+                  </select>
+                </div>
+              </div>
+
               <div class="form-group row">
-                <label for="address" class="col-md-4 col-form-label text-md-right">{{ __('Dirección') }}</label>
-                <div class="col-md-6">
+                <label for="address" class="col-md-3 col-form-label text-md-right">{{ __('Dirección') }}</label>
+                <div class="col-md-7">
                   <input type="text"
                     name="address"
                     id="address"
@@ -54,8 +65,8 @@
               </div>
 
               <div class="row form-group">
-                <label for="longitude" class="col-md-4 col-form-label text-md-right">{{ __('Longitud') }}</label>
-                <div class="col-md-6">
+                <label for="longitude" class="col-md-3 col-form-label text-md-right">{{ __('Longitud') }}</label>
+                <div class="col-md-7">
                   <input type="number"
                     name="longitude"
                     id="longitude"
@@ -73,8 +84,8 @@
               </div>
 
               <div class="row form-group">
-                <label for="latitude" class="col-md-4 col-form-label text-md-right">{{ __('Latitud') }}</label>
-                <div class="col-md-6">
+                <label for="latitude" class="col-md-3 col-form-label text-md-right">{{ __('Latitud') }}</label>
+                <div class="col-md-7">
                   <input type="number"
                     name="latitude"
                     id="latitude"
@@ -92,7 +103,7 @@
               </div>
 
               <div class="row form-group mb-0">
-                <div class="col-md-6 offset-md-4">
+                <div class="col-md-7 offset-md-3">
                   <button type="submit" class="btn btn-primary">Agregar</button>
                   <a href="{{ route('campus.index') }}" class="btn btn-secondary ml-1">Cancelar</a>
                 </div>

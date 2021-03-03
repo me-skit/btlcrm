@@ -16,13 +16,14 @@ class CreateMembershipsTable extends Migration
         Schema::create('memberships', function (Blueprint $table) {
             $table->id();
             $table->foreignId('person_id')->constrained();
-            $table->foreignId('campus_id')->constrained();
+            $table->foreignId('campus_id')->nullable();
             $table->boolean('accepted');
             $table->date('date_accepted')->nullable();
             $table->boolean('baptized');
             $table->date('date_baptized')->nullable();
+            $table->boolean('discipleship');
             $table->boolean('attend_church');
-            $table->tinyInteger('active')->default(1);
+            $table->tinyInteger('active');
             $table->timestamps();
         });
     }

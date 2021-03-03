@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Campus;
+use App\Models\Village;
 use Illuminate\Http\Request;
 
 class CampusController extends Controller
@@ -14,7 +15,7 @@ class CampusController extends Controller
      */
     public function index()
     {
-        $campuses = Campus::all();
+        $campuses = Campus::with('village')->get();
 
         return view('campuses.index', compact('campuses'));
     }
@@ -26,7 +27,9 @@ class CampusController extends Controller
      */
     public function create()
     {
-        return view('campuses.create');
+        $villages = Village::all();
+
+        return view('campuses.create', compact('villages'));
     }
 
     /**
@@ -39,6 +42,7 @@ class CampusController extends Controller
     {
         $data = $request->validate([
             'name' => 'required',
+            'village_id' => 'required',
             'address' => 'required',
             'longitude' => ['numeric', 'nullable'],
             'latitude' => ['numeric', 'nullable']
@@ -46,6 +50,7 @@ class CampusController extends Controller
 
         Campus::create([
             'name' => $data['name'],
+            'village_id' => $data['village_id'],
             'address' => $data['address'],
             'longitude' => $data['longitude'],
             'latitude' => $data['latitude']
@@ -62,7 +67,9 @@ class CampusController extends Controller
      */
     public function edit(Campus $campus)
     {
-        return view('campuses.edit', compact('campus'));
+        $villages = Village::all();
+
+        return view('campuses.edit', compact('campus', 'villages'));
     }
 
     /**
@@ -77,6 +84,7 @@ class CampusController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'address' => 'required',
+            'village_id' => 'required',
             'longitude' => ['numeric', 'nullable'],
             'latitude' => ['numeric', 'nullable']
         ]);

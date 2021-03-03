@@ -17,7 +17,7 @@ class CreateActionsTable extends Migration
             $table->id();
             $table->string('description', 64);
             $table->string('path', 128);
-            $table->string('icon', 64);
+            $table->string('icon', 64)->nullable();
             $table->timestamps();
         });
     }

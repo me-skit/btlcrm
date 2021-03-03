@@ -14,7 +14,7 @@
               @csrf
 
               <div class="form-group row">
-                <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Descripción') }}</label>
+                <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Descripción') }}<span class="text-danger">*</span></label>
                 <div class="col-md-6">
                   <input type="text"
                     name="description"
@@ -34,7 +34,7 @@
               </div>
 
               <div class="form-group row">
-                <label for="path" class="col-md-4 col-form-label text-md-right">{{ __('Path') }}</label>
+                <label for="path" class="col-md-4 col-form-label text-md-right">{{ __('Path') }}<span class="text-danger">*</span></label>
                 <div class="col-md-6">
                   <input type="text"
                     name="path"
