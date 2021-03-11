@@ -23,7 +23,7 @@ class CreateMembershipsTable extends Migration
             $table->date('date_baptized')->nullable();
             $table->boolean('discipleship');
             $table->boolean('attend_church');
-            $table->tinyInteger('active');
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

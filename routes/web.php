@@ -11,6 +11,7 @@ use App\Http\Controllers\PrivilegeRoleController;
 use App\Http\Controllers\DisciplineTypeController;
 use App\Http\Controllers\ActionController;
 use App\Http\Controllers\VillageController;
+use App\Http\Controllers\FamilyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -110,3 +111,31 @@ Route::prefix('/village')->group( function() {
     Route::delete('/{village}',  [VillageController::class, 'destroy'])->name('village.destroy');
     Route::get('/{village}/edit',  [VillageController::class, 'edit'])->name('village.edit');
 });
+
+// Route::resource('families', FamilyController::class);
+Route::get('families', [FamilyController::class, 'index'])->name('families.index');
+Route::prefix('/family')->group( function() {
+    Route::get('/create',  [FamilyController::class, 'create'])->name('family.create');
+    Route::get('/{id}',  [FamilyController::class, 'show'])->name('family.show');
+
+    Route::post('/{id}/addmember',  [FamilyController::class, 'addmember'])->name('family.addmember');
+    Route::get('/{family_id}/editmember/{person}',  [FamilyController::class, 'editmember'])->name('family.editmember');
+    Route::patch('/{family_id}/updatemember/{person}',  [FamilyController::class, 'updatemember'])->name('family.updatemember');
+
+    Route::post('/store',  [FamilyController::class, 'store'])->name('family.store');
+    Route::patch('/{family}',  [FamilyController::class, 'update'])->name('family.update');
+    Route::delete('/{family}',  [FamilyController::class, 'destroy'])->name('family.destroy');
+    Route::get('/{family}/edit',  [FamilyController::class, 'edit'])->name('family.edit');
+});
+
+
+// // Route::resource('people', PersonController::class);
+// Route::get('people', [PersonController::class, 'index'])->name('people.index');
+// Route::prefix('/person')->group( function() {
+//     Route::get('/create',  [PersonController::class, 'create'])->name('person.create');
+//     Route::get('/{id}',  [PersonController::class, 'show'])->name('person.show');
+//     Route::post('/store',  [PersonController::class, 'store'])->name('person.store');
+//     Route::patch('/{person}',  [PersonController::class, 'update'])->name('person.update');
+//     Route::delete('/{person}',  [PersonController::class, 'destroy'])->name('person.destroy');
+//     Route::get('/{person}/edit',  [PersonController::class, 'edit'])->name('person.edit');
+// });

@@ -8,4 +8,46 @@ use Illuminate\Database\Eloquent\Model;
 class Person extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
+
+    /**
+     *  get the families which the person belongs
+     */
+    public function families()
+    {
+        return $this->belongsToMany(Family::class, 'family_members')->withPivot('family_role', 'active');
+    }
+
+    /**
+     *  get the family which the person belongs currently
+     */
+    public function family()
+    {
+        return $this->belongsToMany(Family::class, 'family_members')->withPivot('family_role', 'active')->wherePivot('active', 1)->first();
+    }
+
+    /**
+     *  get the family which the person belonged in case He/She is dead
+     */
+    public function familyBelonged()
+    {
+        return $this->belongsToMany(Family::class, 'family_members')->withPivot('family_role', 'active')->wherePivot('active', 2)->first();
+    }
+
+    /**
+     *  get the family which the person belongs before the current family
+     */
+    public function familyBefore()
+    {
+        return $this->belongsToMany(Family::class, 'family_members')->withPivot('family_role', 'active')->wherePivot('active', 0)->first();
+    }
+  
+    /**
+     *  get the membership information of the person
+     */    
+    public function membership()
+    {
+        return $this->hasOne(Membership::class);
+    }
 }

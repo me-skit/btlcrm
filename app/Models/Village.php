@@ -15,4 +15,9 @@ class Village extends Model
     {
         return $this->hasMany(Campus::class);
     }
+
+    public function families()
+    {
+        return $this->hasMany(Family::class);
+    }
 }

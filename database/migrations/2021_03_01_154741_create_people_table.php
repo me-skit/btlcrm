@@ -15,16 +15,17 @@ class CreatePeopleTable extends Migration
     {
         Schema::create('people', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('status_id')->constrained();
             $table->string('first_name', 64);
             $table->string('second_name', 64)->nullable();
             $table->string('third_name', 64)->nullable();
             $table->string('first_surname', 64);
             $table->string('second_surname', 64)->nullable();
-            $table->string('gender', 1)->default('M');
+            $table->string('sex', 1);
+            $table->tinyInteger('status');
             $table->date('birthday');
-            $table->string('e_mail')->nullable();
-            $table->string('cellphone')->nullable();
+            $table->date('death_date')->nullable();
+            $table->string('e_mail', 128)->nullable();
+            $table->string('cellphone', 16)->nullable();
             $table->string('diseases')->nullable();
             $table->string('handicaps')->nullable();
             $table->timestamps();

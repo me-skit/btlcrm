@@ -14,11 +14,13 @@ class CreateFamilyMembersTable extends Migration
     public function up()
     {
         Schema::create('family_members', function (Blueprint $table) {
-            $table->id();
             $table->foreignId('family_id')->constrained();
             $table->foreignId('person_id')->constrained();
-            $table->foreignId('family_role_id')->constrained();
+            $table->tinyInteger('family_role');
+            $table->boolean('active')->default(1);
             $table->timestamps();
+
+            $table->primary(['family_id', 'person_id']);
         });
     }
 
