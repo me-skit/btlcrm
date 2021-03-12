@@ -3,7 +3,7 @@
     <div class="row form-group">
       <label for="family_role" class="col-md-5 col-form-label text-md-right">{{ __('Rol familiar') }}<span class="text-danger">*</span></label>
       <div class="col-md-7">
-        <select name="family_role" class="form-control">
+        <select name="family_role" id="family_role" class="form-control">
           <option value="1">Padre</option>
           <option value="2">Madre</option>
           <option value="3">Hijo</option>
@@ -137,30 +137,4 @@
 <hr>
 <!-- * * * * * * * preferences  * * * * * * *-->
 
-<div class="row text-center">
-  <div class="col-md-12 mb-2">
-    <h5>Privilegios preferidos</h5>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-sm-6">
-    <input type="checkbox" id="opt01" name="preferences[]" value="M">
-    <label for="opt01" class="ml-1">Anciano</label><br>
-  </div>
-  <div class="col-sm-6">
-    <input type="checkbox" id="opt02" name="preferences[]" value="F">
-    <label for="opt02" class="ml-1">Diácono</label><br>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-sm-6">
-    <input type="checkbox" id="opt03" name="preferences[]" value="M">
-    <label for="opt03" class="ml-1">Directiva Unión Juvenil (UJ)</label><br>
-  </div>
-  <div class="col-sm-6">
-    <input type="checkbox" id="opt04" name="preferences[]" value="F">
-    <label for="opt04" class="ml-1">Directiva Femenil</label><br>
-  </div>
-</div>
+@include('families.addmemberprivileges')

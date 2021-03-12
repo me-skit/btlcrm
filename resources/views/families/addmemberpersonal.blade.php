@@ -112,7 +112,7 @@
     <div class="row form-group">
       <label for="sex" class="col-md-5 col-form-label text-md-right">{{ __('Sexo') }}<span class="text-danger">*</span></label>
       <div class="col-md-7">
-        <select name="sex" class="form-control">
+        <select name="sex" id="sex" class="form-control">
           <option value="M">Masculino</option>
           <option value="F">Femenino</option>
         </select>
@@ -124,7 +124,7 @@
     <div class="row form-group">
       <label for="status" class="col-md-5 col-form-label text-md-right">{{ __('Estado civil') }}<span class="text-danger">*</span></label>
       <div class="col-md-7">
-        <select name="status" class="form-control">
+        <select name="status" id="status" class="form-control">
           <option value="1">Casado(a)</option>
           <option value="2">Soltero(a)</option>
           <option value="3">Unido(a)</option>

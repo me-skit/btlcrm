@@ -33,11 +33,6 @@
                   <div class="d-flex">
                   <a href="{{ route('family.show', $family->id ) }}" class="btn btn-primary mr-3">Detalles</a>
 
-                    <!-- <form action="{{ route('family.destroy', $family->id) }}" method="POST">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" class="btn btn-danger">Eliminar</button>
-                    </form> -->
                   </div>
                 </td>
               </tr>

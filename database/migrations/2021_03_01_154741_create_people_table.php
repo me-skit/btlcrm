@@ -28,6 +28,7 @@ class CreatePeopleTable extends Migration
             $table->string('cellphone', 16)->nullable();
             $table->string('diseases')->nullable();
             $table->string('handicaps')->nullable();
+            $table->json('preferences')->nullable();
             $table->timestamps();
         });
     }

@@ -11,6 +11,10 @@ class Person extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'preferences' => 'array'
+    ];
+
     /**
      *  get the families which the person belongs
      */

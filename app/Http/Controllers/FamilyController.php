@@ -6,11 +6,10 @@ use App\Models\Family;
 use App\Models\Village;
 use App\Models\Campus;
 use App\Models\Person;
+use App\Models\Privilege;
 use App\Models\Membership;
 use App\Models\FamilyMember;
 use Illuminate\Http\Request;
-
-use Carbon\Carbon;
 
 class FamilyController extends Controller
 {
@@ -72,22 +71,13 @@ class FamilyController extends Controller
         $family = Family::findOrFail($id);
         $villages = Village::all();
         $campuses = Campus::all();
+        $privileges = Privilege::all();
 
-        return view('families.show', compact('family', 'villages', 'campuses'));
+        $sexes = array('M' => 'male', 'F' => 'female');
+        $statuses = array(1 => 'married', 2 => 'single');
+
+        return view('families.show', compact('family', 'villages', 'campuses', 'privileges', 'sexes', 'statuses'));
     }
-
-    // /**
-    //  * Show the form for editing the specified resource.
-    //  *
-    //  * @param  \App\Models\Family  $family
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function edit(Family $family)
-    // {
-    //     $villages = Village::all();
-    
-    //     return view('families.edit', compact('family', 'villages'));
-    // }
 
     /**
      * Update the specified resource in storage.
@@ -117,19 +107,6 @@ class FamilyController extends Controller
         return redirect('/family/' . $family->id);
     }
 
-    // /**
-    //  * Remove the specified resource from storage.
-    //  *
-    //  * @param  \App\Models\Family  $family
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function destroy(Family $family)
-    // {
-    //     $family->delete();
-
-    //     return rediret('/families');
-    // }
-
     /**
      * Store a newly created person resource in storage.
      *
@@ -151,7 +128,8 @@ class FamilyController extends Controller
             'e_mail' => ['email', 'nullable'],
             'cellphone' => ['numeric', 'nullable'],
             'diseases' => 'nullable',
-            'handicaps' => 'nullable'
+            'handicaps' => 'nullable',
+            'preferences' => 'nullable'
         ]);
 
         $membership_data = $request->validate([
@@ -188,7 +166,6 @@ class FamilyController extends Controller
         return redirect('/family/' . $id);
     }
 
-
     /**
      * Store a newly created person resource in storage.
      *
@@ -201,7 +178,12 @@ class FamilyController extends Controller
     {
         $family = $person->family();
         $campuses = Campus::all();
-        return view('families.editmember', compact('person', 'family', 'campuses'));
+        $privileges = Privilege::all();
+
+        $sexes = array('M' => 'male', 'F' => 'female');
+        $statuses = array(1 => 'married', 2 => 'single');
+
+        return view('families.editmember', compact('person', 'family', 'campuses', 'privileges', 'sexes', 'statuses'));
     }
 
     /**
@@ -227,7 +209,8 @@ class FamilyController extends Controller
             'e_mail' => ['email', 'nullable'],
             'cellphone' => ['numeric', 'nullable'],
             'diseases' => 'nullable',
-            'handicaps' => 'nullable'
+            'handicaps' => 'nullable',
+            'preferences' => 'nullable'
         ]);
 
         $membership_data = $request->validate([
@@ -279,8 +262,6 @@ class FamilyController extends Controller
 
         // check if all family members are active, if there is no one active=1 family active=0, meninng inactive
         $plucked = $family_members->pluck('active')->toArray();
-        //dd($plucked);
-        //dd(gettype($array));
         if (!in_array(1, $plucked))
         {
             $family->active = 0;

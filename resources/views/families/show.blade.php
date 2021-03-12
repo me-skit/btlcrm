@@ -56,7 +56,7 @@
             <th>Aceptado</th>
             <th>Bautizado</th>
             <th>Asiste</th>
-            <th>Cede</th>
+            <th>Sede</th>
             <th>Acciones</th>
           </thead>
           <tbody>

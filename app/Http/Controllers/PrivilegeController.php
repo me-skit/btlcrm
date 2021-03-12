@@ -38,12 +38,14 @@ class PrivilegeController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'description' => 'required'
+            'description' => 'required',
+            'preferred_sex' => 'nullable',
+            'preferred_status' => 'nullable',
+            'min_age' => ['numeric', 'nullable'],
+            'max_age' => ['numeric', 'nullable']
         ]);
 
-        Privilege::create([
-            'description' => $data['description']
-        ]);
+        Privilege::create($data);
 
         return redirect('/privileges');
     }
@@ -69,7 +71,11 @@ class PrivilegeController extends Controller
     public function update(Request $request, Privilege $privilege)
     {
         $date = $request->validate([
-            'description' => 'required'
+            'description' => 'required',
+            'preferred_sex' => 'nullable',
+            'preferred_status' => 'nullable',
+            'min_age' => ['numeric', 'nullable'],
+            'max_age' => ['numeric', 'nullable']            
         ]);
 
         $privilege->fill($date);

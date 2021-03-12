@@ -17,7 +17,7 @@
         </div>
         <div class="modal-body">
 
-        <div class="row">
+          <div class="row">
             <div class="col-lg-6">
               Rol familiar:
               <b>
@@ -160,7 +160,28 @@
             <div class="col-lg-6">
             </div>
           </div>
+
+          @if ($member->preferences and !$member->death_date)
+            <div class="row">
+              <div class="col-md-12 mt-2">
+                Privilegios preferidos:
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-6 d-flex">
+                @foreach($member->preferences as $preference)
+                  <h5>
+                    <span class="badge badge-secondary mr-1">
+                      {{ $preference }}
+                    </span>
+                  </h5>
+                @endforeach
+              </div>
+            </div>
+          @endif
         </div>
+
         <div class="modal-footer">
           <button type="button" class="btn btn-danger mr-2" data-dismiss="modal">Cerrar</button>
         </div>
