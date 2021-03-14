@@ -100,7 +100,7 @@
 
   <!-- Show person info modal -->
   
-  @include('families.showmember')
+  @include('families.members.show')
 
   <!-- Add new person info modal -->
 
@@ -118,7 +118,7 @@
           </div>
           <div class="modal-body">
             
-            @include('families.addmemberpartial')
+            @include('families.members.addpartial')
 
           </div>
           <div class="modal-footer">

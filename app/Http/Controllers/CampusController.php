@@ -43,18 +43,12 @@ class CampusController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'village_id' => 'required',
-            'address' => 'required',
+            'address' => 'nullable',
             'longitude' => ['numeric', 'nullable'],
             'latitude' => ['numeric', 'nullable']
         ]);
 
-        Campus::create([
-            'name' => $data['name'],
-            'village_id' => $data['village_id'],
-            'address' => $data['address'],
-            'longitude' => $data['longitude'],
-            'latitude' => $data['latitude']
-        ]);
+        Campus::create($data);
 
         return redirect('/campus');
     }
@@ -84,7 +78,7 @@ class CampusController extends Controller
         $data = $request->validate([
             'name' => 'required',
             'address' => 'required',
-            'village_id' => 'required',
+            'village_id' => 'nullable',
             'longitude' => ['numeric', 'nullable'],
             'latitude' => ['numeric', 'nullable']
         ]);

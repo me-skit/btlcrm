@@ -13,7 +13,7 @@
               @csrf
               @method('PATCH')
 
-              @include('families.editmemberpartial')
+              @include('families.members.editpartial')
 
               <hr>
               <div class="row">

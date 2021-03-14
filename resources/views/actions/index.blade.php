@@ -12,13 +12,13 @@
     </div>
     <div class="row justify-content-center">
       <div class="col-md-10">
-        <table class="table table-hover">
-          <thead class="thead-dark">
+        <table class="table table-hover table-responsive-md">
+          <thead>
               <tr>
                   <th>No.</th>
                   <th>Descripción</th>
                   <th>Path</th>
-                  <th>Icono</th>
+                  <th class="d-none d-md-block">Icono</th>
                   <th>Acciones</th>
               </tr>
           </thead>
@@ -28,7 +28,7 @@
                 <td>{{ $key + 1 }}</td>
                 <td>{{ $action->description }}</td>
                 <td>{{ $action->path }}</td>
-                <td>{{ $action->icon }}</td>
+                <td class="d-none d-md-block">{{ $action->icon }}</td>
                 <td>
                   <div class="d-flex">
                     <a href="{{ route('action.edit', $action->id ) }}" class="btn btn-primary mr-3">Editar</a>

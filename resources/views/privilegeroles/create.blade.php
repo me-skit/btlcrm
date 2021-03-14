@@ -21,7 +21,6 @@
                     id="description"
                     class="form-control @error('description') is-invalid @enderror"
                     required
-                    autocomplete="description"
                     autofocus>
 
                   @error('description')
@@ -32,10 +31,10 @@
                 </div>
               </div>
 
-              <div class="row form-group mb-0">
-                <div class="col-md-6 offset-md-4">
+              <div class="row mb-0">
+                <div class="col-md-10 text-right">
+                  <a href="{{ route('privilegeroles.index') }}" class="btn btn-secondary mr-1">Cancelar</a>
                   <button type="submit" class="btn btn-primary">Agregar</button>
-                  <a href="{{ route('privilegeroles.index') }}" class="btn btn-secondary ml-1">Cancelar</a>
                 </div>
               </div>
             </form>

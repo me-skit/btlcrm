@@ -41,9 +41,7 @@ class VillageController extends Controller
             'name' => 'required'
         ]);
 
-        Village::create([
-            'name' => $data['name']
-        ]);
+        Village::create($data);
 
         return redirect('/villages');
     }

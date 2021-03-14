@@ -22,7 +22,6 @@
                     class="form-control @error('description') is-invalid @enderror"
                     value="{{ old('description') }}"
                     required
-                    autocomplete="description"
                     autofocus>
 
                   @error('description')
@@ -42,8 +41,7 @@
                     class="form-control @error('path') is-invalid @enderror"
                     value="{{ old('path') }}"
                     required
-                    autocomplete="path"
-                    autofocus>
+                    >
 
                   @error('path')
                     <span class="invalid-feedback" role="alert">
@@ -61,9 +59,7 @@
                     id="icon"
                     class="form-control @error('icon') is-invalid @enderror"
                     value="{{ old('icon') }}"
-                    required
-                    autocomplete="icon"
-                    autofocus>
+                    >
 
                   @error('icon')
                     <span class="invalid-feedback" role="alert">
@@ -73,10 +69,10 @@
                 </div>
               </div>
 
-              <div class="row form-group mb-0">
-                <div class="col-md-6 offset-md-4">
+              <div class="row mb-0">
+                <div class="col-md-10 text-right">
+                  <a href="{{ route('actions.index') }}" class="btn btn-secondary mr-1">Cancelar</a>
                   <button type="submit" class="btn btn-primary">Agregar</button>
-                  <a href="{{ route('actions.index') }}" class="btn btn-secondary ml-1">Cancelar</a>
                 </div>
               </div>
             </form>

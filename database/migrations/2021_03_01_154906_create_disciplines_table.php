@@ -16,9 +16,9 @@ class CreateDisciplinesTable extends Migration
         Schema::create('disciplines', function (Blueprint $table) {
             $table->id();
             $table->foreignId('person_id')->constrained();
-            $table->foreignId('discipline_type_id')->constrained();
+            $table->boolean('discipline_type');
             $table->string('act_number', 64);
-            $table->string('annotation')->nullable();
+            $table->text('annotation')->nullable();
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->timestamps();

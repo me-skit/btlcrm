@@ -12,8 +12,8 @@
     </div>
     <div class="row justify-content-center">
       <div class="col-md-10">
-        <table class="table table-hover">
-          <thead class="thead-dark">
+        <table class="table table-hover table-responsive-md">
+          <thead>
               <tr>
                   <th>No.</th>
                   <th>Nombre</th>
@@ -26,7 +26,7 @@
               <tr>
                 <td>{{ $key + 1 }}</td>
                 <td>{{ $village->name }}</td>
-                <td>{{ date_format($village->created_at, 'M jS Y H:i:s') }}</td>
+                <td>{{ date_format($village->created_at, 'd/m/Y H:i:s') }}</td>
                 <td>
                   <div class="d-flex">
                     <a href="{{ route('village.edit', $village->id ) }}" class="btn btn-primary mr-3">Editar</a>

@@ -31,8 +31,7 @@
                 <td>{{ $family->address }}</td>
                 <td>
                   <div class="d-flex">
-                  <a href="{{ route('family.show', $family->id ) }}" class="btn btn-primary mr-3">Detalles</a>
-
+                    <a href="{{ route('family.show', $family->id ) }}" class="btn btn-primary mr-3">Detalles</a>
                   </div>
                 </td>
               </tr>

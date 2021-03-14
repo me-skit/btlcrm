@@ -40,14 +40,10 @@ class ActionController extends Controller
         $data = $request->validate([
             'description' => 'required',
             'path' => 'required',
-            'icon' => 'required'
+            'icon' => 'nullable'
         ]);
 
-        Action::create([
-            'description' => $data['description'],
-            'path' => $data['path'],
-            'icon' => $data['icon'],
-        ]);
+        Action::create($data);
 
         return redirect('/actions');
     }
@@ -75,7 +71,7 @@ class ActionController extends Controller
         $data = $request->validate([
             'description' => 'required',
             'path' => 'required',
-            'icon' => 'required'            
+            'icon' => 'nullable'            
         ]);
 
         $action->fill($data);

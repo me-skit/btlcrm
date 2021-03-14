@@ -6,7 +6,7 @@
       <div class="col-md-8">
         <div class="card">
           <div class="card-header">
-            <span class="font-weight-bold">Editar Población</span>
+            <span class="font-weight-bold">Editar Poblado</span>
           </div>
 
           <div class="card-body">
@@ -34,10 +34,10 @@
                 </div>
               </div>
 
-              <div class="row form-group mb-0">
-                <div class="col-md-6 offset-md-4">
+              <div class="row mb-0">
+                <div class="col-md-10 text-right">
+                  <a href="{{ route('villages.index') }}" class="btn btn-secondary mr-1">Cancelar</a>
                   <button class="btn btn-primary">Modificar</button>
-                  <a href="{{ route('villages.index') }}" class="btn btn-secondary ml-1">Cancelar</a>
                 </div>
               </div>
             </form>

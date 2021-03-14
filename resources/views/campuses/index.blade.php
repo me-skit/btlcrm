@@ -12,13 +12,13 @@
     </div>
     <div class="row justify-content-center">
       <div class="col-md-10">
-        <table class="table table-hover">
-          <thead class="thead-dark">
+        <table class="table table-hover table-responsive-md">
+          <thead>
               <tr>
                   <th>No.</th>
                   <th>Nombre</th>
                   <th>Poblado</th>
-                  <th>Dirección</th>
+                  <th class="d-none d-md-block">Dirección</th>
                   <th>Acciones</th>
               </tr>
           </thead>
@@ -28,7 +28,7 @@
                 <td>{{ $key + 1 }}</td>
                 <td>{{ $campus->name }}</td>
                 <td>{{ $campus->village->name }}</td>
-                <td>{{ $campus->address }}</td>
+                <td class="d-none d-md-block">{{ $campus->address }}</td>
                 <td>
                   <div class="d-flex">
                     <a href="{{ route('campus.edit', $campus->id ) }}" class="btn btn-primary mr-3">Editar</a>

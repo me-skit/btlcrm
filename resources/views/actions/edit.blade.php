@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="containier">
+  <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-8">
         <div class="card">
@@ -23,7 +23,6 @@
                     class="form-control @error('description') is-invalid @enderror"
                     value="{{ old('description') ?? $action->description }}"
                     required
-                    autocomplete="description"
                     autofocus>
 
                   @error('description')
@@ -43,8 +42,7 @@
                     class="form-control @error('path') is-invalid @enderror"
                     value="{{ old('path') ?? $action->path }}"
                     required
-                    autocomplete="path"
-                    autofocus>
+                    >
 
                   @error('path')
                     <span class="invalid-feedback" role="alert">
@@ -62,8 +60,7 @@
                     id="icon"
                     class="form-control @error('icon') is-invalid @enderror"
                     value="{{ old('icon') ?? $action->icon }}"
-                    autocomplete="icon"
-                    autofocus>
+                    >
 
                   @error('icon')
                     <span class="invalid-feedback" role="alert">
@@ -73,12 +70,11 @@
                 </div>
               </div>
 
-              <div class="row form-group mb-0">
-                <div class="col-md6 offset-md-4">
+              <div class="row">
+                <div class="col-md-10 text-right">
+                  <a href="{{ route('actions.index') }}" class="btn btn-secondary mr-1">Cancelar</a>
                   <button class="btn btn-primary">Modificar</button>
                 </div>
-
-                <a href="{{ route('actions.index') }}" class="btn btn-secondary ml-1">Cancelar</a>
               </div>
             </form>
           </div>

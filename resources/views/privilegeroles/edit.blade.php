@@ -23,7 +23,6 @@
                     name="description"
                     value="{{ old('description') ?? $privilegeRole->description }}"
                     required
-                    autocomplete="description"
                     autofocus>
 
                   @error('description')
@@ -34,10 +33,10 @@
                 </div>
               </div>
 
-              <div class="form-group row mb-0">
-                <div class="col-md-6 offset-md-4">
+              <div class="row mb-0">
+                <div class="col-md-10 text-right">
+                  <a href="{{ route('privilegeroles.index') }}" class="btn btn-secondary mr-1">Cancelar</a>
                   <button class="btn btn-primary">Modificar</button>
-                  <a href="{{ route('privilegeroles.index') }}" class="btn btn-secondary ml-1">Cancelar</a>
                 </div>
               </div>
             </form>

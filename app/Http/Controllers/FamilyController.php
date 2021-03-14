@@ -183,7 +183,7 @@ class FamilyController extends Controller
         $sexes = array('M' => 'male', 'F' => 'female');
         $statuses = array(1 => 'married', 2 => 'single');
 
-        return view('families.editmember', compact('person', 'family', 'campuses', 'privileges', 'sexes', 'statuses'));
+        return view('families.members.edit', compact('person', 'family', 'campuses', 'privileges', 'sexes', 'statuses'));
     }
 
     /**

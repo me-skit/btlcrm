@@ -44,7 +44,7 @@
                 <label for="preferred_sex" class="col-md-4 col-form-label text-md-right">{{ __('Sexo') }}</label>
                 <div class="col-md-6">
                   <select name="preferred_sex" class="form-control">
-                    <option value selected>Ambos sexos</option>
+                    <option value selected>Masculino o femenino</option>
                     <option value="M">Masculino</option>
                     <option value="F">Femenino</option>
                   </select>
@@ -55,7 +55,7 @@
                 <label for="preferred_status" class="col-md-4 col-form-label text-md-right">{{ __('Estado civil') }}</label>
                 <div class="col-md-6">
                   <select name="preferred_status" class="form-control">
-                    <option value selected>Cualquier estado civil</option>
+                    <option value selected>Casado(a) o soltero(a)</option>
                     <option value="1">Casado(a)</option>
                     <option value="2">Soltero(a)</option>
                   </select>
@@ -98,9 +98,9 @@
                 </div>
               </div>
 
-                <div class="row form-group mb-0">
-                  <div class="col-md-6 offset-md-4 text-right">
-                    <a href="{{ route('privileges.index') }}" class="btn btn-secondary mr-2">Cancelar</a>
+                <div class="row mb-0">
+                  <div class="col-md-10 text-right">
+                    <a href="{{ route('privileges.index') }}" class="btn btn-secondary mr-1">Cancelar</a>
                     <button type="submit" class="btn btn-primary">Agregar</button>
                   </div>
                 </div>              

@@ -24,7 +24,6 @@
                     class="form-control @error('name') is-invalid @enderror"
                     value="{{ old('name') }}"
                     required
-                    autocomplete="name"
                     autofocus>
 
                   @error('name')
@@ -35,10 +34,10 @@
                 </div>
               </div>
 
-              <div class="row form-group mb-0">
-                <div class="col-md-6 offset-md-4">
+              <div class="row mb-0">
+                <div class="col-md-10 text-right">
+                  <a href="{{ route('villages.index') }}" class="btn btn-secondary mr-1">Cancelar</a>
                   <button type="submit" class="btn btn-primary">Agregar</button>
-                  <a href="{{ route('villages.index') }}" class="btn btn-secondary ml-1">Cancelar</a>
                 </div>
               </div>
             </form>

@@ -16,7 +16,7 @@
               <div class="row form-group">
                 <label for="village_id" class="col-md-3 col-form-label text-md-right">{{ __('Ubicación') }}<span class="text-danger">*</span></label>
                 <div class="col-md-7">
-                  <select name="village_id" class="form-control" autofocus>
+                  <select name="village_id" class="form-control" autofocus required>
                       @foreach ($villages as $village)
                         <option value="{{ $village->id }}">{{ $village->name }}</option>
                       @endforeach
@@ -27,7 +27,7 @@
               <div class="row form-group">
                 <label for="union_type" class="col-md-3 col-form-label text-md-right">{{ __('Tipo de Unión') }}<span class="text-danger">*</span></label>
                 <div class="col-md-7">
-                  <select name="union_type" class="form-control">
+                  <select name="union_type" class="form-control" required>
                     <option value="1">Casados</option>
                     <option value="2">Unidos</option>
                   </select>
@@ -73,16 +73,16 @@
               </div>              
 
               <div class="form-group row">
-                <label for="phone_nomber" class="col-md-3 col-form-label text-md-right">{{ __('Teléfono') }}</label>
+                <label for="phone_number" class="col-md-3 col-form-label text-md-right">{{ __('Teléfono') }}</label>
                 <div class="col-md-7">
                   <input type="text"
-                    name="phone_nomber"
-                    id="phone_nomber"
-                    class="form-control @error('phone_nomber') is-invalid @enderror"
-                    value="{{ old('phone_nomber') }}"
+                    name="phone_number"
+                    id="phone_number"
+                    class="form-control @error('phone_number') is-invalid @enderror"
+                    value="{{ old('phone_number') }}"
                   >
 
-                  @error('phone_nomber')
+                  @error('phone_number')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
                     </span>
@@ -93,7 +93,7 @@
               <div class="row form-group">
                 <label for="longitude" class="col-md-3 col-form-label text-md-right">{{ __('Longitud') }}</label>
                 <div class="col-md-7">
-                  <input type="number"
+                  <input type="number" step="any"
                     name="longitude"
                     id="longitude"
                     class="form-control @error('longitude') is-invalid @enderror"
@@ -111,7 +111,7 @@
               <div class="row form-group">
                 <label for="latitude" class="col-md-3 col-form-label text-md-right">{{ __('Latitud') }}</label>
                 <div class="col-md-7">
-                  <input type="number"
+                  <input type="number" step="any"
                     name="latitude"
                     id="latitude"
                     class="form-control @error('latitude') is-invalid @enderror"
@@ -128,7 +128,7 @@
 
               <div class="row form-group mb-0">
                 <div class="col-md-7 offset-md-3 text-right">
-                  <a href="{{ route('families.index') }}" class="btn btn-secondary mr-2">Cancelar</a>
+                  <a href="{{ route('families.index') }}" class="btn btn-secondary mr-1">Cancelar</a>
                   <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
               </div>

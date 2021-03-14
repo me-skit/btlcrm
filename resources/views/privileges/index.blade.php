@@ -3,7 +3,7 @@
 @section('content')
   <div class="container">
     <div class="row justify-content-center mb-3">
-      <div class="col-md-8 d-flex justify-content-between align-items-baseline">
+      <div class="col-md-10 d-flex justify-content-between align-items-baseline">
         <h2>Privilegios</h2>
         <div>
           <a href="{{ route('privilege.create') }}" class="btn btn-success">Agregar</a>
@@ -12,13 +12,13 @@
     </div>
 
     <div class="row justify-content-center">
-      <div class="col-md-8">
-        <table class="table table-hover">
+      <div class="col-md-10">
+        <table class="table table-hover table-responsive-md">
           <thead>
             <tr>
               <th>No.</th>
               <th>Nombre</th>
-              <th>Preferencias para el puesto</th>
+              <th>Preferencias</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -30,19 +30,19 @@
                 <td>
                   <?php 
                     $preferrences = '';
-                    $preferrences .= $privilege->preferred_sex ? ($privilege->preferred_sex == 'M' ? 'Sexo masculino' : 'Sexo femenino') : 'Ambos sexos';
+                    $preferrences .= $privilege->preferred_sex ? ($privilege->preferred_sex == 'M' ? 'Sexo masculino' : 'Sexo femenino') : 'Sexo masculino o femenino';
 
                     if ($privilege->preferred_status) {
                       if ($privilege->preferred_sex) {
                         if ($privilege->preferred_sex == 'M') {
-                          $preferrences .= $privilege->preferred_status == 1 ? ', casado' : ($privilege->preferred_status == 2 ? ', soltero' : ($privilege->preferred_status == 3 ? ', unido' : ', casado o unido'));
+                          $preferrences .= $privilege->preferred_status == 1 ? ', casado' : ', soltero';
                         }
                         else {
-                          $preferrences .= $privilege->preferred_status == 1 ? ', casada' : ($privilege->preferred_status == 2 ? ', soltera' : ($privilege->preferred_status == 3 ? ', unida' : ', casada o unida'));
+                          $preferrences .= $privilege->preferred_status == 1 ? ', casada' : ', soltera';
                         }
                       }
                       else {
-                        $preferrences .= $privilege->preferred_status == 1 ? ', casado(a)' : ($privilege->preferred_status == 2 ? ', soltero(a)' : ($privilege->preferred_status == 3 ? ', unido(a)' : 'casado(a) o soltero(a)'));
+                        $preferrences .= $privilege->preferred_status == 1 ? ', casado(a)' : ', soltero(a)';
                       }
                     }
                     else {

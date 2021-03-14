@@ -90,7 +90,7 @@
           <div class="row form-group">
             <label for="longitude" class="col-md-4 col-form-label text-md-right">{{ __('Longitud') }}</label>
             <div class="col-md-6">
-              <input type="number"
+              <input type="number" step="any"
                 name="longitude"
                 id="longitude"
                 class="form-control @error('longitude') is-invalid @enderror"
@@ -108,7 +108,7 @@
           <div class="row form-group">
             <label for="latitude" class="col-md-4 col-form-label text-md-right">{{ __('Latitud') }}</label>
             <div class="col-md-6">
-              <input type="number"
+              <input type="number" step="any"
                 name="latitude"
                 id="latitude"
                 class="form-control @error('latitude') is-invalid @enderror"
