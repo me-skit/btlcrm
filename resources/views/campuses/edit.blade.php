@@ -36,9 +36,9 @@
               <div class="row form-group">
                 <label for="village_id" class="col-md-3 col-form-label text-md-right">{{ __('Poblado') }}<span class="text-danger">*</span></label>
                 <div class="col-md-7">
-                  <select name="village_id" class="form-control">
+                  <select name="village_id" class="form-control" required>
                       @foreach ($villages as $village)
-                        <option value="{{ $village->id }}">{{ $village->name }}</option>
+                        <option value="{{ $village->id }}" {{ $village->id == $campus->village_id ? 'selected' : '' }}>{{ $village->name }}</option>
                       @endforeach
                   </select>
                 </div>

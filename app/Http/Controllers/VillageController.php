@@ -84,6 +84,10 @@ class VillageController extends Controller
      */
     public function destroy(Village $village)
     {
+        if ($village->campuses->count() || $village->families->count()) {
+            return back()->with('warning', 'No es posible borrar "' . $village->name . '", se encuentra asociado a alguna sede o familia');
+        }
+
         $village->delete();
 
         return redirect('/villages');

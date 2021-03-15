@@ -97,6 +97,10 @@ class CampusController extends Controller
      */
     public function destroy(Campus $campus)
     {
+        if ($campus->memberships->count()) {
+            return back()->with('warning', 'No es posible borrar "' . $campus->name . '", se encuentra asociado a alguna membresía');
+        }
+
         $campus->delete();
 
         return redirect('/campus');
