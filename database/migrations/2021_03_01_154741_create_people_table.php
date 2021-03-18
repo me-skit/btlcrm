@@ -26,9 +26,9 @@ class CreatePeopleTable extends Migration
             $table->date('death_date')->nullable();
             $table->string('e_mail', 128)->nullable();
             $table->string('cellphone', 16)->nullable();
-            $table->string('diseases')->nullable();
-            $table->string('handicaps')->nullable();
-            $table->json('preferences')->nullable();
+            $table->text('diseases')->nullable();
+            $table->text('handicaps')->nullable();
+            $table->text('preferences')->nullable();
             $table->timestamps();
         });
     }

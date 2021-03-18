@@ -210,6 +210,7 @@
           id="diseases"
           class="form-control @error('diseases') is-invalid @enderror"
           value="{{ old('diseases') }}"
+          data-role="tagsinput"
         >
 
         @error('diseases')
@@ -230,6 +231,7 @@
           id="handicaps"
           class="form-control @error('handicaps') is-invalid @enderror"
           value="{{ old('handicaps') }}"
+          data-role="tagsinput"
         >
 
         @error('handicaps')

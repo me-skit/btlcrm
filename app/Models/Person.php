@@ -12,7 +12,9 @@ class Person extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'preferences' => 'array'
+        'preferences' => 'array',
+        'diseases' => 'array',
+        'handicaps' => 'array'
     ];
 
     /**

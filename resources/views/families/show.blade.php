@@ -17,22 +17,22 @@
 
       <div class="row">
         <div class="col-md-6">
-          <strong>Ubicación:</strong>
-          {{ $family->village->name }}
+          Ubicación:
+          <b>{{ $family->village->name }}</b>
         </div>
         <div class="col-md-6">
-          <strong>Dirección:</strong>
-          {{ $family->address }}
+          Dirección:
+          <b>{{ $family->address }}</b>
         </div>
       </div>
       <div class="row">
         <div class="col-md-6">
-          <strong>Teléfono residencial:</strong>
-          {{ $family->phone_number }}
+          Teléfono residencial:
+          <b>{{ $family->phone_number }}</b>
         </div>
         <div class="col-md-6">
-          <strong>Tipo de unión:</strong>
-          {{ $family->union_type == 1 ? "Casados" : "Unidos" }}
+          Tipo de unión:
+          <b>{{ $family->union_type == 1 ? "Casados" : "Unidos" }}</b>
         </div>        
       </div>    
     </div>
@@ -66,7 +66,7 @@
                 <td>{{ $key + 1 }}</td>
                 <td>
                   {{ $member->first_name . " " . $member->second_name . " " . $member->third_name . " " . $member->first_surname . " " . $member->second_surname }} 
-                  {!! $member->death_date ? "<small>*</small>" : "" !!}
+                  {!! $member->death_date ? "<small class='badge badge-dark'>Q.D.E.P.</small>" : "" !!}
                 </td>
                 <td>{{ $member->pivot->family_role == 1 ? "Padre" : ($member->pivot->family_role == 2 ? "Madre" : ($member->pivot->family_role == 3 ? "Hijo" : "Hija")) }}</td>
                 <td>{{ $member->membership->accepted ? "Si" : "No" }}</td>

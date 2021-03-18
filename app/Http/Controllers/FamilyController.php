@@ -132,6 +132,14 @@ class FamilyController extends Controller
             'preferences' => 'nullable'
         ]);
 
+        if ($request->diseases) {
+            $person_data['diseases'] = explode(',', $request->diseases);
+        }
+
+        if ($request->handicaps) {
+            $person_data['handicaps'] = explode(',', $request->handicaps);
+        }
+
         $membership_data = $request->validate([
             'campus_id' => ['numeric', 'nullable'],
             'accepted' => ['required', 'numeric'],
@@ -157,7 +165,7 @@ class FamilyController extends Controller
         $person = Person::create($person_data);
 
         $membership_data['person_id'] = $person->id;
-        $membership = Membership::create($membership_data);
+        Membership::create($membership_data);
 
         $relation_data['family_id'] = $id;
         $relation_data['person_id'] = $person->id;
@@ -212,6 +220,14 @@ class FamilyController extends Controller
             'handicaps' => 'nullable',
             'preferences' => 'nullable'
         ]);
+
+        if ($request->diseases) {
+            $person_data['diseases'] = explode(',', $request->diseases);
+        }
+
+        if ($request->handicaps) {
+            $person_data['handicaps'] = explode(',', $request->handicaps);
+        }        
 
         $membership_data = $request->validate([
             'campus_id' => ['numeric', 'nullable'],

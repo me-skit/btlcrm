@@ -9,7 +9,7 @@
             </span>
           </h5>
           @if ($member->death_date)
-            <small class="font-weight-bold ml-3">Q.D.E.P. {{ \Carbon\Carbon::parse($member->death_date)->format('d/m/Y')}}</small>
+            <small class="badge badge-dark ml-3">Q.D.E.P. {{ \Carbon\Carbon::parse($member->death_date)->format('d/m/Y')}}</small>
           @endif
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
@@ -79,23 +79,39 @@
             </div>        
           </div>
 
-          <div class="row">
-            <div class="col-lg-12">
-              Enfermedades:
-              <b>
-                {{ $member->diseases }}
-              </b>
+          @if ($member->diseases)
+            <div class="row">
+              <div class="col-lg-12">
+                Enfermedades:
+                <b>
+                  @foreach($member->diseases as $disease)
+                    <h5 class="d-inline">
+                      <span class="badge badge-secondary font-weight-normal">
+                        {{ $disease }}
+                      </span>
+                    </h5>
+                  @endforeach
+                </b>
+              </div>
             </div>
-          </div>
+          @endif
 
-          <div class="row">
-            <div class="col-lg-12">
-              Discapacidades:
-              <b>
-                {{ $member->handicaps }}
-              </b>
+          @if($member->handicaps)
+            <div class="row">
+              <div class="col-lg-12">
+                Discapacidades:
+                <b>
+                  @foreach($member->handicaps as $handicap)
+                    <h5 class="d-inline">
+                      <span class="badge badge-secondary font-weight-normal">
+                        {{ $handicap }}
+                      </span>
+                    </h5>
+                  @endforeach
+                </b>
+              </div>
             </div>
-          </div>
+          @endif
 
           <hr>
 
@@ -169,10 +185,10 @@
             </div>
 
             <div class="row">
-              <div class="col-lg-6 d-flex">
+              <div class="col-lg-6">
                 @foreach($member->preferences as $preference)
-                  <h5>
-                    <span class="badge badge-secondary mr-1">
+                  <h5 class="d-inline">
+                    <span class="badge badge-primary font-weight-normal">
                       {{ $preference }}
                     </span>
                   </h5>
