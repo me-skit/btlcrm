@@ -13,6 +13,11 @@ use Illuminate\Http\Request;
 
 class FamilyController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +25,8 @@ class FamilyController extends Controller
      */
     public function index()
     {
-        $families = Family::with('village')->get();
+        //$families = Family::orderBy('family_name')->paginate(10);
+        $families = Family::orderBy('created_at', 'desc')->with('village')->paginate(5);
 
         return view('families.index', compact('families'));
     }

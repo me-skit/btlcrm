@@ -33,28 +33,49 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                        @auth
+                            <li class="nav-item dropdown">
+                                <a id="dropdownAdmin" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ __('Administrar') }}
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownAdmin">
+                                    <a class="dropdown-item" href="{{ route('users.index') }}">{{ __('Usuarios') }}</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ route('villages.index') }}">{{ __('Poblados') }}</a>
+                                    <a class="dropdown-item" href="{{ route('campus.index') }}">{{ __('Sedes') }}</a>
+                                    <a class="dropdown-item" href="{{ route('privileges.index') }}">{{ __('Privilegios') }}</a>
+                                    <a class="dropdown-item" href="{{ route('privilegeroles.index') }}" disabled>{{ __('Cargos en Privilegios') }}</a>
+                                </div>
+                            </li>
 
+                            <li class="nav-item dropdown">
+                                <a id="dropdownManage" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ __('Gestionar') }}
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownManage">
+                                    <a class="dropdown-item disabled" href="#">{{ __('Privilegios') }}</a>
+                                    <a class="dropdown-item disabled" href="#">{{ __('Disciplinas') }}</a>
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a id="dropdownFamilias" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ __('Ver') }}
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownFamilias">
+                                    <a class="dropdown-item" href="{{ route('families.index') }}">{{ __('Familias') }}</a>
+                                    <a class="dropdown-item disabled" href="#">{{ __('Personas') }}</a>
+                                </div>
+                            </li>
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-                            
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
+                        @auth
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::user()->role }}: {{ Auth::user()->email }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -69,7 +90,7 @@
                                     </form>
                                 </div>
                             </li>
-                        @endguest
+                        @endauth
                     </ul>
                 </div>
             </div>

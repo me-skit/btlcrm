@@ -2,16 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\UnionTypeController;
 use App\Http\Controllers\CampusController;
-use App\Http\Controllers\FamilyRoleController;
-use App\Http\Controllers\StatusController;
 use App\Http\Controllers\PrivilegeController;
 use App\Http\Controllers\PrivilegeRoleController;
-use App\Http\Controllers\DisciplineTypeController;
-use App\Http\Controllers\ActionController;
 use App\Http\Controllers\VillageController;
 use App\Http\Controllers\FamilyController;
+use App\Http\Controllers\UserController;
+
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,9 +22,9 @@ use App\Http\Controllers\FamilyController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::post('authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
+
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
 
@@ -57,16 +55,6 @@ Route::prefix('/privilegerole')->group( function() {
     Route::get('/{privilegeRole}/edit',  [PrivilegeRoleController::class, 'edit'])->name('privilegerole.edit');
 });
 
-// Route::resource('actions', ActionController::class);
-Route::get('actions', [ActionController::class, 'index'])->name('actions.index');
-Route::prefix('/action')->group( function() {
-    Route::get('/create',  [ActionController::class, 'create'])->name('action.create');
-    Route::post('/store',  [ActionController::class, 'store'])->name('action.store');
-    Route::patch('/{action}',  [ActionController::class, 'update'])->name('action.update');
-    Route::delete('/{action}',  [ActionController::class, 'destroy'])->name('action.destroy');
-    Route::get('/{action}/edit',  [ActionController::class, 'edit'])->name('action.edit');
-});
-
 // Route::resource('villages', VillageController::class);
 Route::get('villages', [VillageController::class, 'index'])->name('villages.index');
 Route::prefix('/village')->group( function() {
@@ -93,6 +81,16 @@ Route::prefix('/family')->group( function() {
     Route::get('/{family}/edit',  [FamilyController::class, 'edit'])->name('family.edit');
 });
 
+// // Route::resource('users', UserController::class);
+Route::get('users', [UserController::class, 'index'])->name('users.index');
+Route::prefix('/user')->group( function() {
+    Route::get('/create',  [UserController::class, 'create'])->name('user.create');
+//     Route::get('/{id}',  [UserController::class, 'show'])->name('user.show');
+    Route::post('/store',  [UserController::class, 'store'])->name('user.store');
+    Route::patch('/{user}',  [UserController::class, 'update'])->name('user.update');
+    // Route::delete('/{user}',  [UserController::class, 'destroy'])->name('user.destroy');
+    Route::get('/{user}/edit',  [UserController::class, 'edit'])->name('user.edit');
+});
 
 // // Route::resource('people', PersonController::class);
 // Route::get('people', [PersonController::class, 'index'])->name('people.index');
