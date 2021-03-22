@@ -4,7 +4,7 @@
   <div class="container">
     <div class="row justify-content-center mb-3">
       <div class="col-md-10 d-flex justify-content-between align-items-baseline">
-        <h2>Cargos en Privilegios</h2>
+        <h2>Puestos en Privilegios</h2>
         <div>
           <a href="{{ route('privilegerole.create') }}" class="btn btn-success">Agregar</a>
         </div>
@@ -43,6 +43,12 @@
             @endforeach
           </tbody>
         </table>
+
+        <div class="row">
+          <div class="col-12 d-flex justify-content-center">
+            {{ $privilegeRoles->links("pagination::bootstrap-4") }}
+          </div>
+        </div>
       </div>
     </div>
   </div>

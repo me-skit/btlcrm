@@ -19,7 +19,7 @@ class PrivilegeController extends Controller
      */
     public function index()
     {
-        $privileges = Privilege::all();
+        $privileges = Privilege::orderBy('description')->paginate(10);
 
         return view('privileges.index', compact('privileges'));
     }
@@ -43,7 +43,7 @@ class PrivilegeController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'description' => 'required',
+            'description' => ['required', 'unique:privileges'],
             'preferred_sex' => 'nullable',
             'preferred_status' => 'nullable',
             'min_age' => ['numeric', 'nullable'],

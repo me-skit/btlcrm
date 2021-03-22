@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ __('Iglesia Bethel') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -23,8 +23,8 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                <a class="navbar-brand py-0" href="{{ url('/') }}">
+                    <img src="{{ asset('images/bethel_logo_white.png') }}" alt="" width="75">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -34,38 +34,31 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         @auth
-                            <li class="nav-item dropdown">
-                                <a id="dropdownAdmin" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ __('Administrar') }}
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="dropdownAdmin">
-                                    <a class="dropdown-item" href="{{ route('users.index') }}">{{ __('Usuarios') }}</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{{ route('villages.index') }}">{{ __('Poblados') }}</a>
-                                    <a class="dropdown-item" href="{{ route('campus.index') }}">{{ __('Sedes') }}</a>
-                                    <a class="dropdown-item" href="{{ route('privileges.index') }}">{{ __('Privilegios') }}</a>
-                                    <a class="dropdown-item" href="{{ route('privilegeroles.index') }}" disabled>{{ __('Cargos en Privilegios') }}</a>
-                                </div>
-                            </li>
-
-                            <li class="nav-item dropdown">
-                                <a id="dropdownManage" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ __('Gestionar') }}
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="dropdownManage">
-                                    <a class="dropdown-item disabled" href="#">{{ __('Privilegios') }}</a>
-                                    <a class="dropdown-item disabled" href="#">{{ __('Disciplinas') }}</a>
-                                </div>
-                            </li>
 
                             <li class="nav-item dropdown">
                                 <a id="dropdownFamilias" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ __('Ver') }}
+                                    {{ __('Miembros') }}
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownFamilias">
-                                    <a class="dropdown-item" href="{{ route('families.index') }}">{{ __('Familias') }}</a>
-                                    <a class="dropdown-item disabled" href="#">{{ __('Personas') }}</a>
+                                    <a class="dropdown-item" href="{{ route('families.index') }}">{{ __('Por familias') }}</a>
+                                    <a class="dropdown-item disabled" href="#">{{ __('Personas y consultas') }}</a>
                                 </div>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a id="dropdownAdmin" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ __('Catálogos') }}
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownAdmin">
+                                    <a class="dropdown-item" href="{{ route('villages.index') }}">{{ __('Poblados') }}</a>
+                                    <a class="dropdown-item" href="{{ route('campus.index') }}">{{ __('Sedes') }}</a>
+                                    <a class="dropdown-item" href="{{ route('privileges.index') }}">{{ __('Privilegios') }}</a>
+                                    <a class="dropdown-item" href="{{ route('privilegeroles.index') }}" disabled>{{ __('Puestos en Privilegios') }}</a>
+                                </div>
+                            </li>                            
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('users.index') }}">{{ __('Usuarios') }}</a>
                             </li>
                         @endauth
                     </ul>

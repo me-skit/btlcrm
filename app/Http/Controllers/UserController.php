@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\WelcomeMail;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -44,9 +46,12 @@ class UserController extends Controller
             'role' => 'required'
         ]);
 
-        $data['password'] = Hash::make(Str::random(8));
+        $pass = Str::random(8);
+        $data['password'] = Hash::make($pass);
         $data['active'] = 1;
-        User::create($data);
+        $user = User::create($data);
+
+        Mail::to($user->email)->send(new WelcomeMail($pass));
 
         return redirect('/users');
     }

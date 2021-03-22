@@ -19,7 +19,7 @@ class PrivilegeRoleController extends Controller
      */
     public function index()
     {
-        $privilegeRoles = PrivilegeRole::all();
+        $privilegeRoles = PrivilegeRole::orderBy('description')->paginate(10);
 
         return view('privilegeroles.index', compact('privilegeRoles'));
     }
@@ -43,7 +43,7 @@ class PrivilegeRoleController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'description' => 'required'
+            'description' => ['required', 'unique:privilege_roles']
         ]);
 
         PrivilegeRole::create([
