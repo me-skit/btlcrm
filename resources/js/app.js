@@ -101,3 +101,47 @@ if (birthday) {
 
   birthday.addEventListener('change', () => hideByAge(birthday.value, allchecks));
 }
+
+// the search in family table thing
+searchByFamilyName = (query, page = 1) => {
+  const pagination = document.getElementById('pagination');
+  const title = document.getElementById('title');
+
+  fetch('/' + title.dataset.name + '?page=' + page + '&query=' + query)
+  .then(response => {
+    if (response.ok) return  response.text();
+    
+    throw new Error('Something went wrong');
+  })
+  .then(data => {
+    pagination.innerHTML = data;
+    paginate();
+  })
+  .catch(error => {
+    pagination.innerHTML = '';
+  });
+}
+
+const search = document.getElementById('search');
+
+if (search) {
+  search.addEventListener('keyup', () => searchByFamilyName(search.value));
+}
+
+pagination = (event, item) => {
+  event.preventDefault();
+  let page = String(item);
+  page = page.split('page=')[1];
+  let value = search ? search.value : '';
+  searchByFamilyName(value, page);
+}
+
+paginate = () => {
+  const paginations = document.getElementsByClassName('page-link');
+  if (paginations)
+  {
+    Array.prototype.forEach.call(paginations, item => item.addEventListener('click', () => pagination(event, item)));
+  }
+}
+
+paginate();

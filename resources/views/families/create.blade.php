@@ -34,7 +34,7 @@
                 </div>
               </div>
 
-              <div class="form-group row">
+              <div class="row form-group">
                 <label for="family_name" class="col-md-3 col-form-label text-md-right">{{ __('Apellidos de Familia') }}<span class="text-danger">*</span></label>
                 <div class="col-md-7">
                   <input type="text"
@@ -53,7 +53,7 @@
                 </div>
               </div>
 
-              <div class="form-group row">
+              <div class="row form-group">
                 <label for="address" class="col-md-3 col-form-label text-md-right">{{ __('Dirección') }}<span class="text-danger">*</span></label>
                 <div class="col-md-7">
                   <input type="text"
@@ -72,7 +72,7 @@
                 </div>
               </div>              
 
-              <div class="form-group row">
+              <div class="row form-group">
                 <label for="phone_number" class="col-md-3 col-form-label text-md-right">{{ __('Teléfono') }}</label>
                 <div class="col-md-7">
                   <input type="text"

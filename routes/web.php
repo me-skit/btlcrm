@@ -2,12 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\CampusController;
 use App\Http\Controllers\PrivilegeController;
 use App\Http\Controllers\PrivilegeRoleController;
 use App\Http\Controllers\VillageController;
 use App\Http\Controllers\FamilyController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\PersonController;
 
 use App\Http\Controllers\Auth\LoginController;
 
@@ -67,6 +68,13 @@ Route::prefix('/village')->group( function() {
 
 // Route::resource('families', FamilyController::class);
 Route::get('families', [FamilyController::class, 'index'])->name('families.index');
+
+// Route::prefix('/families')->group( function() {
+//     Route::get('/', [FamilyController::class, 'index'])->name('families.index');
+//     Route::get('/search', [FamilyController::class, 'search'])->name('families.search');
+// });
+
+
 Route::prefix('/family')->group( function() {
     Route::get('/create',  [FamilyController::class, 'create'])->name('family.create');
     Route::get('/{id}',  [FamilyController::class, 'show'])->name('family.show');
@@ -85,20 +93,18 @@ Route::prefix('/family')->group( function() {
 Route::get('users', [UserController::class, 'index'])->name('users.index');
 Route::prefix('/user')->group( function() {
     Route::get('/create',  [UserController::class, 'create'])->name('user.create');
-//     Route::get('/{id}',  [UserController::class, 'show'])->name('user.show');
     Route::post('/store',  [UserController::class, 'store'])->name('user.store');
     Route::patch('/{user}',  [UserController::class, 'update'])->name('user.update');
-    // Route::delete('/{user}',  [UserController::class, 'destroy'])->name('user.destroy');
     Route::get('/{user}/edit',  [UserController::class, 'edit'])->name('user.edit');
 });
 
 // // Route::resource('people', PersonController::class);
-// Route::get('people', [PersonController::class, 'index'])->name('people.index');
-// Route::prefix('/person')->group( function() {
-//     Route::get('/create',  [PersonController::class, 'create'])->name('person.create');
-//     Route::get('/{id}',  [PersonController::class, 'show'])->name('person.show');
-//     Route::post('/store',  [PersonController::class, 'store'])->name('person.store');
-//     Route::patch('/{person}',  [PersonController::class, 'update'])->name('person.update');
-//     Route::delete('/{person}',  [PersonController::class, 'destroy'])->name('person.destroy');
-//     Route::get('/{person}/edit',  [PersonController::class, 'edit'])->name('person.edit');
-// });
+Route::get('people', [PersonController::class, 'index'])->name('people.index');
+Route::prefix('/person')->group( function() {
+    Route::get('/create',  [PersonController::class, 'create'])->name('person.create');
+    Route::get('/{id}',  [PersonController::class, 'show'])->name('person.show');
+    Route::post('/store',  [PersonController::class, 'store'])->name('person.store');
+    Route::patch('/{person}',  [PersonController::class, 'update'])->name('person.update');
+    // Route::delete('/{person}',  [PersonController::class, 'destroy'])->name('person.destroy');
+    Route::get('/{person}/edit',  [PersonController::class, 'edit'])->name('person.edit');
+});

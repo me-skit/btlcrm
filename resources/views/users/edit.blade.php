@@ -40,9 +40,9 @@
               <label for="active" class="col-md-3 col-form-label text-md-right">{{ __('Activar/desactivar') }}<span class="text-danger">*</span></label>
               <div class="col-md-7">
                   <select name="active" id="active" class="form-control" required>
-                    <option value="0" {{ $user->active ? '' : 'selected' }}>Desactivar</option>
                     <option value="1" {{ $user->active ? 'selected' : '' }}>Activo</option>
-                  </select>
+                    <option value="0" {{ $user->active ? '' : 'selected' }}>Desactivar</option>
+                  </select>       
               </div>
             </div>      
             

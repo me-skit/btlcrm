@@ -41,7 +41,8 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownFamilias">
                                     <a class="dropdown-item" href="{{ route('families.index') }}">{{ __('Por familias') }}</a>
-                                    <a class="dropdown-item disabled" href="#">{{ __('Personas y consultas') }}</a>
+                                    <a class="dropdown-item" href="{{ route('people.index') }}">{{ __('Miembros y Consultas') }}</a>
+                                    <a class="dropdown-item" href="#">{{ __('No Miembros') }}</a>
                                 </div>
                             </li>
 
@@ -53,7 +54,7 @@
                                     <a class="dropdown-item" href="{{ route('villages.index') }}">{{ __('Poblados') }}</a>
                                     <a class="dropdown-item" href="{{ route('campus.index') }}">{{ __('Sedes') }}</a>
                                     <a class="dropdown-item" href="{{ route('privileges.index') }}">{{ __('Privilegios') }}</a>
-                                    <a class="dropdown-item" href="{{ route('privilegeroles.index') }}" disabled>{{ __('Puestos en Privilegios') }}</a>
+                                    <a class="dropdown-item" href="{{ route('privilegeroles.index') }}">{{ __('Puestos en Privilegios') }}</a>
                                 </div>
                             </li>                            
 
@@ -72,10 +73,11 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="#">{{ __('Cambiar Contraseña') }}</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('Cerrar Sesión') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

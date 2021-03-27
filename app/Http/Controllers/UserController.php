@@ -14,11 +14,29 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::orderBy('created_at', 'desc')->paginate(10);
+        if ($request->get('query'))
+        {
+            $query = $request->get('query');
+            $users = User::where('email', 'like', '%' . $query . '%')
+                            ->orderBy('created_at', 'desc')
+                            ->paginate(7);
+
+            return view('users.pagination', compact('users'));
+        }
+
+        if ($request->get('page'))
+        {
+            $users = User::orderBy('created_at', 'desc')->paginate(7);
+
+            return view('users.pagination', compact('users'));
+        }
+        
+        $users = User::orderBy('created_at', 'desc')->paginate(7);
 
         return view('users.index', compact('users'));
     }

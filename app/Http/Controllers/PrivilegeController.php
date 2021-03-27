@@ -15,11 +15,29 @@ class PrivilegeController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $privileges = Privilege::orderBy('description')->paginate(10);
+        if ($request->get('query'))
+        {
+            $query = str_replace(" ", "%", $request->get('query'));
+            $privileges = Privilege::where('description', 'like', '%' . $query . '%')
+                            ->orderBy('description')
+                            ->paginate(7);
+
+            return view('privileges.pagination', compact('privileges'));
+        }
+
+        if ($request->get('page'))
+        {
+            $privileges = Privilege::orderBy('description')->paginate(7);
+
+            return view('privileges.pagination', compact('privileges'));
+        }
+
+        $privileges = Privilege::orderBy('description')->paginate(7);
 
         return view('privileges.index', compact('privileges'));
     }

@@ -21,12 +21,36 @@ class FamilyController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //$families = Family::orderBy('family_name')->paginate(10);
-        $families = Family::orderBy('created_at', 'desc')->with('village')->paginate(5);
+        if ($request->get('query'))
+        {
+            $query = str_replace(" ", "%", $request->get('query'));
+            $families = Family::where('active', 1)
+                            ->where('family_name', 'like', '%' . $query . '%')
+                            ->orderBy('family_name')
+                            ->paginate(7);
+
+            return view('families.pagination', compact('families'));
+        }
+
+        if ($request->get('page'))
+        {
+            $families = Family::where('active', 1)
+            ->orderBy('family_name')
+            ->with('village')
+            ->paginate(7);
+
+            return view('families.pagination', compact('families'));
+        }
+
+        $families = Family::where('active', 1)
+                        ->orderBy('family_name')
+                        ->with('village')
+                        ->paginate(7);
 
         return view('families.index', compact('families'));
     }
@@ -219,7 +243,7 @@ class FamilyController extends Controller
             'sex' => 'required',
             'status' => ['required', 'numeric'],
             'birthday' => ['required', 'date', 'before:today'],
-            'death_date' => ['date', 'nullable'],
+            'death_date' => ['date', 'before:tomorrow', 'nullable'],
             'e_mail' => ['email', 'nullable'],
             'cellphone' => ['numeric', 'nullable'],
             'diseases' => 'nullable',
