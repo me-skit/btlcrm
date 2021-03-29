@@ -9,7 +9,7 @@
           class="form-control @error('first_name') is-invalid @enderror"
           value="{{ old('first_name') ?? $person->first_name }}"
           required
-          autofocus>
+          >
 
         @error('first_name')
           <span class="invalid-feedback" role="alert">

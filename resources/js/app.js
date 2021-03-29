@@ -2,6 +2,8 @@ const { Alert } = require('bootstrap');
 
 require('./bootstrap');
 
+// attend church selector change
+
 changeCampusValue = (value, campus) => {
   if (value == 0) {
     campus.value = '';
@@ -29,6 +31,7 @@ if (attend) {
   attend.addEventListener('change', () => changeCampusValue(attend.value, campus));
 }
 
+// hiding privileges
 
 toggleHidePrivilege = (value, allchecks, males, females, singles, married, sex_select, status_select) => {
   Array.prototype.forEach.call(allchecks, item => item.classList.remove('d-none'));
@@ -102,12 +105,12 @@ if (birthday) {
   birthday.addEventListener('change', () => hideByAge(birthday.value, allchecks));
 }
 
-// the search in family table thing
-searchByFamilyName = (query, page = 1) => {
+// the search thing
+searchQuery = (query, page = 1, type, id) => {
   const pagination = document.getElementById('pagination');
   const title = document.getElementById('title');
 
-  fetch('/' + title.dataset.name + '?page=' + page + '&query=' + query)
+  fetch('/' + title.dataset.name + '?page=' + page + '&query=' + query + (type ? '&type=' + type : '') + (id ? '&id=' + id : ''))
   .then(response => {
     if (response.ok) return  response.text();
     
@@ -125,23 +128,91 @@ searchByFamilyName = (query, page = 1) => {
 const search = document.getElementById('search');
 
 if (search) {
-  search.addEventListener('keyup', () => searchByFamilyName(search.value));
+  search.addEventListener('keyup', () => searchQuery(search.value));
 }
 
-pagination = (event, item) => {
+pagination = (event, item, querytype) => {
   event.preventDefault();
   let page = String(item);
   page = page.split('page=')[1];
   let value = search ? search.value : '';
-  searchByFamilyName(value, page);
+  searchQuery(value, page, querytype);
 }
 
 paginate = () => {
   const paginations = document.getElementsByClassName('page-link');
+
   if (paginations)
   {
-    Array.prototype.forEach.call(paginations, item => item.addEventListener('click', () => pagination(event, item)));
+    const query_type = document.getElementById('query_type');
+
+    if (query_type)
+    {
+      if (query_type.value == '2')
+      {
+        let campus = document.getElementById('campus');
+        Array.prototype.forEach.call(paginations, item => item.addEventListener('click', () => pagination(event, item, query_type.value, campus.value)));
+      } else if (query_type == '3')
+      {
+        let privilege = document.getElementById('privilege');
+        Array.prototype.forEach.call(paginations, item => item.addEventListener('click', () => pagination(event, item, query_type.value, privilege.value)));
+      }
+      else
+      {
+        Array.prototype.forEach.call(paginations, item => item.addEventListener('click', () => pagination(event, item, query_type.value)));
+      }
+    }
+    else
+    {
+      Array.prototype.forEach.call(paginations, item => item.addEventListener('click', () => pagination(event, item)));
+    }
   }
 }
 
 paginate();
+
+// the consult list on change
+const query_type = document.getElementById('query_type');
+
+if (query_type)
+{
+  const for_queries = document.getElementsByClassName('for-query');
+
+  query_type.addEventListener('change', (event) => {
+    Array.prototype.forEach.call(for_queries, item => item.classList.add('d-none'));
+    document.getElementById('btn-search').classList.remove('d-none');
+
+    switch(event.target.value) {
+      case '1':
+        document.getElementById('by-name').classList.remove('d-none');
+        document.getElementById('btn-search').classList.add('d-none');
+        break;
+      case '2':
+        document.getElementById('by-campus').classList.remove('d-none');
+        break;
+      case '3':
+        document.getElementById('by-privilege').classList.remove('d-none');
+        break;
+    }
+  });
+}
+
+const btn_search = document.getElementById('btn-search');
+
+if (btn_search)
+{
+  btn_search.addEventListener('click', () => {
+    switch(query_type.value) {
+      case '2':
+        let campus = document.getElementById('campus');
+        searchQuery('', 1, query_type.value, campus.value);
+        break;
+      case '3':
+        let privilege = document.getElementById('privilege');
+        searchQuery('', 1, query_type.value, privilege.value);
+        break;
+      default:
+        searchQuery('', 1, query_type.value);
+    }
+  });
+}

@@ -68,13 +68,6 @@ Route::prefix('/village')->group( function() {
 
 // Route::resource('families', FamilyController::class);
 Route::get('families', [FamilyController::class, 'index'])->name('families.index');
-
-// Route::prefix('/families')->group( function() {
-//     Route::get('/', [FamilyController::class, 'index'])->name('families.index');
-//     Route::get('/search', [FamilyController::class, 'search'])->name('families.search');
-// });
-
-
 Route::prefix('/family')->group( function() {
     Route::get('/create',  [FamilyController::class, 'create'])->name('family.create');
     Route::get('/{id}',  [FamilyController::class, 'show'])->name('family.show');
@@ -99,8 +92,9 @@ Route::prefix('/user')->group( function() {
 });
 
 // // Route::resource('people', PersonController::class);
-Route::get('people', [PersonController::class, 'index'])->name('people.index');
-Route::prefix('/person')->group( function() {
+Route::get('members', [PersonController::class, 'index'])->name('people.index');
+Route::get('nomembers', [PersonController::class, 'no_members'])->name('people.nomembers');
+Route::prefix('/member')->group( function() {
     Route::get('/create',  [PersonController::class, 'create'])->name('person.create');
     Route::get('/{id}',  [PersonController::class, 'show'])->name('person.show');
     Route::post('/store',  [PersonController::class, 'store'])->name('person.store');

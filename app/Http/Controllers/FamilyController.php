@@ -185,6 +185,7 @@ class FamilyController extends Controller
         if ($attend == '0' or $attend == '2')
         {
             // status in membership could be: 0:inactive, 1:active, 2:passed away
+            // if person don't attend church or attend another church, membership is inactive
             $membership_data['status'] = '0';
         }
 
@@ -306,7 +307,7 @@ class FamilyController extends Controller
         $family_members->fill($relation_data);
         $family_members->save();
 
-        // check if all family members are active, if there is no one active=1 family active=0, meninng inactive
+        // check if all family members are active=0, if there is no one family is set inactive (active=0)
         $plucked = $family_members->pluck('active')->toArray();
         if (!in_array(1, $plucked))
         {

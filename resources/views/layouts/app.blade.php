@@ -40,9 +40,9 @@
                                     {{ __('Miembros') }}
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownFamilias">
-                                    <a class="dropdown-item" href="{{ route('families.index') }}">{{ __('Por familias') }}</a>
-                                    <a class="dropdown-item" href="{{ route('people.index') }}">{{ __('Miembros y Consultas') }}</a>
-                                    <a class="dropdown-item" href="#">{{ __('No Miembros') }}</a>
+                                    <a class="dropdown-item" href="{{ route('people.index') }}">{{ __('Listado General') }}</a>
+                                    <a class="dropdown-item" href="{{ route('families.index') }}">{{ __('Por Familias') }}</a>
+                                    <a class="dropdown-item" href="{{ route('people.nomembers') }}">{{ __('No Miembros') }}</a>
                                 </div>
                             </li>
 
