@@ -7,7 +7,6 @@
       <div class="col-md-10 d-flex justify-content-between align-items-baseline">
         <h2 id="title" data-name="members">No Miembros</h2>
         <div>
-          {{-- <a href="{{ route('user.create') }}" class="btn btn-success">Agregar</a> --}}
         </div>
       </div>
     </div>
@@ -49,7 +48,14 @@
                 </td>
                 <td>
                   <div class="d-flex">
-                    <a href="{{ route('person.show', $person->id ) }}" class="btn btn-secondary mr-3">Detalles</a>
+                    <button type="button"
+                      class="btn btn-secondary mr-3 btn-p-details"
+                      data-toggle="modal"
+                      data-target="#detailsModal"
+                      data-id="{{ $person->id }}">
+                      Detalles
+                      </button>
+
                     <a href="{{ route('person.edit', $person->id ) }}" class="btn btn-primary mr-3">Editar</a>
                     <a href="{{ route('family.show', $person->family()->id ) }}" class="btn btn-link mr-3">Familia</a>
                   </div>
@@ -61,6 +67,14 @@
         </div>
       </div>
     </div>
-
   </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" id="modal-content">
+
+      </div>
+    </div>
+  </div>  
 @endsection

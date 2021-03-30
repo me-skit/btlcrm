@@ -33,32 +33,60 @@ if (attend) {
 
 // hiding privileges
 
-toggleHidePrivilege = (value, allchecks, males, females, singles, married, sex_select, status_select) => {
+toggleHidePrivilege = (value, allchecks, males, females, singles, married, sex_select, status_select, role) => {
   Array.prototype.forEach.call(allchecks, item => item.classList.remove('d-none'));
-
+  let family_name = document.getElementById('family_name');
+  let first_surname = document.getElementById('first_surname');
+  let second_surname = document.getElementById('second_surname');
+  let names;
+  if (family_name && role)
+  {
+    names = family_name.innerText.split(' ');
+  }
+  
   if (value == 1) {
     Array.prototype.forEach.call(females, item => item.classList.add('d-none'))
     Array.prototype.forEach.call(singles, item => item.classList.add('d-none'));
     sex_select.value = 'M';
     status_select.value = 1;
+    if (family_name && role)
+    {
+      first_surname.value = names[0] ? names[0] : '';
+      second_surname.value = '';
+    }
   }
   else if (value == 2){
     Array.prototype.forEach.call(males, item => item.classList.add('d-none'))
     Array.prototype.forEach.call(singles, item => item.classList.add('d-none'));
     sex_select.value = 'F';
     status_select.value = 1;
+    if (family_name && role)
+    {
+      first_surname.value = names[1] ? names[1] : '';
+      second_surname.value = '';
+    }
   }
   else if (value == 3) {
     Array.prototype.forEach.call(females, item => item.classList.add('d-none'))
     Array.prototype.forEach.call(married, item => item.classList.add('d-none'));
     sex_select.value = 'M';
     status_select.value = 2;
+    if (family_name && role)
+    {
+      first_surname.value = names[0] ? names[0] : '';
+      second_surname.value = names[1] ? names[1] : '';
+    }
   }
   else {
     Array.prototype.forEach.call(males, item => item.classList.add('d-none'))    
     Array.prototype.forEach.call(married, item => item.classList.add('d-none'));
     sex_select.value = 'F';
     status_select.value = 2;
+    if (family_name && role)
+    {
+      first_surname.value = names[0] ? names[0] : '';
+      second_surname.value = names[1] ? names[1] : '';
+    }
   }
 }
 
@@ -72,9 +100,9 @@ const sex_select = document.getElementById('sex');
 const status_select = document.getElementById('status');
 
 if (frole) {
-  toggleHidePrivilege(frole.value, allchecks, males, females, singles, married, sex_select, status_select);
+  toggleHidePrivilege(frole.value, allchecks, males, females, singles, married, sex_select, status_select, 1);
 
-  frole.addEventListener('change', () => toggleHidePrivilege(frole.value, allchecks, males, females, singles, married, sex_select, status_select));
+  frole.addEventListener('change', () => toggleHidePrivilege(frole.value, allchecks, males, females, singles, married, sex_select, status_select, 1));
 }
 
 hideByAge = (value, allchecks) => {
@@ -119,9 +147,10 @@ searchQuery = (query, page = 1, type, id) => {
   .then(data => {
     pagination.innerHTML = data;
     paginate();
+    addShowFunction();
   })
   .catch(error => {
-    pagination.innerHTML = '';
+    pagination.innerHTML = error;
   });
 }
 
@@ -131,12 +160,12 @@ if (search) {
   search.addEventListener('keyup', () => searchQuery(search.value));
 }
 
-pagination = (event, item, querytype) => {
+pagination = (event, item, querytype, id) => {
   event.preventDefault();
   let page = String(item);
   page = page.split('page=')[1];
   let value = search ? search.value : '';
-  searchQuery(value, page, querytype);
+  searchQuery(value, page, querytype, id);
 }
 
 paginate = () => {
@@ -152,7 +181,7 @@ paginate = () => {
       {
         let campus = document.getElementById('campus');
         Array.prototype.forEach.call(paginations, item => item.addEventListener('click', () => pagination(event, item, query_type.value, campus.value)));
-      } else if (query_type == '3')
+      } else if (query_type.value == '3')
       {
         let privilege = document.getElementById('privilege');
         Array.prototype.forEach.call(paginations, item => item.addEventListener('click', () => pagination(event, item, query_type.value, privilege.value)));
@@ -216,3 +245,33 @@ if (btn_search)
     }
   });
 }
+
+// person details
+
+showPersonDetails = (event, button) => {
+  event.preventDefault();
+  let modal_content = document.getElementById('modal-content');
+  fetch('/member/' + button.dataset.id)
+  .then(response => {
+    if (response.ok) return  response.text();
+    
+    throw new Error('Error al cargar los datos, intente de nuevo');
+  })
+  .then(data => {
+    modal_content.innerHTML = data;
+  })
+  .catch(error => {
+    modal_content.innerHTML = error;
+  });  
+}
+
+addShowFunction = () => {
+  let d_buttons = document.getElementsByClassName('btn-p-details');
+  if (d_buttons)
+  {
+    Array.prototype.forEach.call(d_buttons, item => item.addEventListener('click', () => showPersonDetails(event, item)));
+  }
+}
+
+addShowFunction();
+

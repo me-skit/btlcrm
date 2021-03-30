@@ -94,23 +94,6 @@
 
 <div class="row">
   <div class="col-lg-6">
-    Cede:
-    <b>
-      {{ $member->membership->campus_id ? $member->membership->campus->name : "" }}
-    </b>
-  </div>
-  <div class="col-lg-6">
-    @if (!$member->death_date)
-    Asiste a la iglesia:
-      <b>
-        {!! $member->membership->attend_church ? ($member->membership->attend_church == 1 ? "Si" : "Asiste a otra iglesia") : "<span class='font-weight-bold'>No</span>" !!}
-      </b>
-    @endif
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-6">
     Aceptado:
     <b>
       {!! $member->membership->accepted ? "Si" : "<span class='text-danger'>No</span>" !!}
@@ -139,6 +122,23 @@
     Fecha de bautizo:
     <b>
       {{ $member->membership->date_accepted }}
+    </b>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-6">
+    @if (!$member->death_date)
+    Asiste a la iglesia:
+      <b>
+        {!! $member->membership->attend_church ? ($member->membership->attend_church == 1 ? "Si" : "Asiste a otra iglesia") : "<span class='font-weight-bold'>No</span>" !!}
+      </b>
+    @endif
+  </div>
+  <div class="col-lg-6">
+    Cede:
+    <b>
+      {{ $member->membership->campus_id ? $member->membership->campus->name : "" }}
     </b>
   </div>
 </div>

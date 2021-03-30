@@ -95,9 +95,9 @@ Route::prefix('/user')->group( function() {
 Route::get('members', [PersonController::class, 'index'])->name('people.index');
 Route::get('nomembers', [PersonController::class, 'no_members'])->name('people.nomembers');
 Route::prefix('/member')->group( function() {
-    Route::get('/create',  [PersonController::class, 'create'])->name('person.create');
-    Route::get('/{id}',  [PersonController::class, 'show'])->name('person.show');
-    Route::post('/store',  [PersonController::class, 'store'])->name('person.store');
+    // Route::get('/create',  [PersonController::class, 'create'])->name('person.create');
+    Route::get('/{person}',  [PersonController::class, 'show'])->name('person.show');
+    // Route::post('/store',  [PersonController::class, 'store'])->name('person.store');
     Route::patch('/{person}',  [PersonController::class, 'update'])->name('person.update');
     // Route::delete('/{person}',  [PersonController::class, 'destroy'])->name('person.destroy');
     Route::get('/{person}/edit',  [PersonController::class, 'edit'])->name('person.edit');

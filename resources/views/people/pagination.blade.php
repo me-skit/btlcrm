@@ -21,7 +21,7 @@
       <tbody>
         @foreach ($people as $key => $person)
         <tr>
-          <td>{{ $key + 1 }}</td>
+          <td>{{ ($people->currentPage() - 1) * 7 + $key + 1 }}</td>
           <td>
             {{ $person->first_name . " " . $person->second_name . " " . $person->third_name . " " . $person->first_surname . " " . $person->second_surname }} 
             {!! $person->death_date ? "<small class='badge badge-dark'>Q.D.E.P.</small>" : "" !!}
@@ -36,7 +36,14 @@
           <td class="d-none d-md-block">{{ $person->membership->campus_id ? $person->membership->campus->name : "" }}</td>
           <td>
             <div class="d-flex">
-              <a href="{{ route('person.show', $person->id ) }}" class="btn btn-secondary mr-3">Detalles</a>
+              <button type="button"
+                class="btn btn-secondary mr-3 btn-p-details"
+                data-toggle="modal"
+                data-target="#detailsModal"
+                data-id="{{ $person->id }}">
+                Detalles
+              </button>
+              {{-- <a href="{{ route('person.show', $person->id ) }}" class="btn btn-secondary mr-3">Detalles</a> --}}
               <a href="{{ route('person.edit', $person->id ) }}" class="btn btn-primary mr-3">Editar</a>
               <a href="{{ route('family.show', $person->family()->id ) }}" class="btn btn-link mr-3">Familia</a>
             </div>

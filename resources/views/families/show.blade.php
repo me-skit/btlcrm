@@ -6,12 +6,9 @@
       <div class="row d-flex justify-content-center">
         <div class="col-md-10">
           <div class="pull-left d-flex align-items-baseline justify-content-between">
-            <h3>{{ $family->family_name }}</h3>
+            <h3 id="family_name">{{ $family->family_name }}</h3>
             <a href="#" class="btn btn-primary ml-2" data-toggle="modal" data-target="#editModal">Editar</a>
           </div>
-          <!-- <div class="pull-right">
-            <a class="btn btn-primary" href="{{ route('families.index') }}" title="Go back"> <i class="fas fa-backward ">Regresar</i></a>
-          </div> -->
         </div>
       </div>
 

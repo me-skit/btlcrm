@@ -34,7 +34,6 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         @auth
-
                             <li class="nav-item dropdown">
                                 <a id="dropdownFamilias" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ __('Miembros') }}
@@ -47,19 +46,24 @@
                             </li>
 
                             <li class="nav-item dropdown">
-                                <a id="dropdownAdmin" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="dropdownCatal" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ __('Catálogos') }}
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="dropdownAdmin">
+                                <div class="dropdown-menu" aria-labelledby="dropdownCatal">
                                     <a class="dropdown-item" href="{{ route('villages.index') }}">{{ __('Poblados') }}</a>
                                     <a class="dropdown-item" href="{{ route('campus.index') }}">{{ __('Sedes') }}</a>
                                     <a class="dropdown-item" href="{{ route('privileges.index') }}">{{ __('Privilegios') }}</a>
                                     <a class="dropdown-item" href="{{ route('privilegeroles.index') }}">{{ __('Puestos en Privilegios') }}</a>
                                 </div>
-                            </li>                            
+                            </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('users.index') }}">{{ __('Usuarios') }}</a>
+                            <li class="nav-item dropdown">
+                                <a id="dropdownAdmin" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ __('Administrar') }}
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownAdmin">
+                                    <a class="dropdown-item" href="{{ route('users.index') }}">{{ __('Usuarios') }}</a>
+                                </div>
                             </li>
                         @endauth
                     </ul>

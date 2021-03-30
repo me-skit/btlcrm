@@ -18,7 +18,7 @@ class PersonController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->get('type'))
+        if ($request->get('type') and $request->get('type') > 1)
         {
             $query_type = $request->get('type');
             $people = null;
@@ -160,27 +160,6 @@ class PersonController extends Controller
     }    
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\Models\Person  $person
@@ -188,7 +167,8 @@ class PersonController extends Controller
      */
     public function show(Person $person)
     {
-        //
+        $family = $person->family();
+        return view('people.show', compact('person', 'family'));
     }
 
     /**
@@ -199,7 +179,14 @@ class PersonController extends Controller
      */
     public function edit(Person $person)
     {
-        //
+        $family = $person->family();
+        $campuses = Campus::all();
+        $privileges = Privilege::all();
+
+        $sexes = array('M' => 'male', 'F' => 'female');
+        $statuses = array(1 => 'married', 2 => 'single');
+
+        return view('people.edit', compact('person', 'family', 'campuses', 'privileges', 'sexes', 'statuses'));
     }
 
     /**
@@ -211,17 +198,86 @@ class PersonController extends Controller
      */
     public function update(Request $request, Person $person)
     {
-        //
-    }
+        $person_data = $request->validate([
+            'first_name' => 'required',
+            'second_name' => 'nullable',
+            'third_name' => 'nullable',
+            'first_surname' => 'required',
+            'second_surname' => 'nullable',
+            'sex' => 'required',
+            'status' => ['required', 'numeric'],
+            'birthday' => ['required', 'date', 'before:today'],
+            'death_date' => ['date', 'before:tomorrow', 'nullable'],
+            'e_mail' => ['email', 'nullable'],
+            'cellphone' => ['numeric', 'nullable'],
+            'diseases' => 'nullable',
+            'handicaps' => 'nullable',
+            'preferences' => 'nullable'
+        ]);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Person  $person
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Person $person)
-    {
-        //
+        if ($request->diseases) {
+            $person_data['diseases'] = explode(',', $request->diseases);
+        }
+
+        if ($request->handicaps) {
+            $person_data['handicaps'] = explode(',', $request->handicaps);
+        }        
+
+        $membership_data = $request->validate([
+            'campus_id' => ['numeric', 'nullable'],
+            'accepted' => ['required', 'numeric'],
+            'date_accepted' =>['date', 'before:tomorrow', 'nullable'],
+            'baptized' => ['required', 'numeric'],
+            'date_baptized' =>['date', 'before:tomorrow', 'nullable'],
+            'discipleship' => ['required', 'numeric'],
+            'attend_church' => ['required', 'numeric']
+        ]);
+
+        // attend_church in membership could be: 0:no, 1:yes, 2:another church
+        $attend = $membership_data['attend_church'];
+        if ($attend == '1')
+        {
+            // status in membership could be: 0:inactive, 1:active, 2:passed away
+            $membership_data['status'] = '1';
+        }
+        else
+        {
+            $membership_data['status'] = '0';
+        }
+
+        $relation_data = $request->validate([
+            'family_role' => ['required', 'numeric']
+        ]);
+
+        // setting death_date means the person passed away
+        if ($person_data['death_date'])
+        {
+            // status in membership and family_members could be: 0:inactive, 1:active, 2:passed away
+            $membership_data['status'] = '2';
+            $relation_data['active'] = '2';
+        }
+        
+        $person->fill($person_data);
+        $person->save();
+
+        $membership = $person->membership;
+        $membership->fill( $membership_data);
+        $membership->save();
+
+        $family = $person->family();
+
+        $family_members = $family->pivot;
+        $family_members->fill($relation_data);
+        $family_members->save();
+
+        // check if all family members are active=0, if there is no one family is set inactive (active=0)
+        $plucked = $family_members->pluck('active')->toArray();
+        if (!in_array(1, $plucked))
+        {
+            $family->active = 0;
+            $family->save();
+        }
+
+        return redirect('/members');
     }
 }

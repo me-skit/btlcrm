@@ -7,7 +7,7 @@
       <div class="col-md-10 d-flex justify-content-between align-items-baseline">
         <h2 id="title" data-name="members">Miembros</h2>
         <div>
-          {{-- <a href="{{ route('user.create') }}" class="btn btn-success">Agregar</a> --}}
+          <a href="{{ route('people.index') }}" class="btn btn-light">Recargar</a>
         </div>
       </div>
     </div>
@@ -70,6 +70,15 @@
     <div id="pagination">
       @include('people.pagination')
     </div>
-
   </div>
+
+<!-- Modal -->
+<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" id="modal-content">
+
+    </div>
+  </div>
+</div>
+
 @endsection
