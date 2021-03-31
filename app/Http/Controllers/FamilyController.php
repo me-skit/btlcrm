@@ -96,7 +96,7 @@ class FamilyController extends Controller
      * @param  \App\Models\Family  $family
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
         $family = Family::findOrFail($id);
         $villages = Village::all();
@@ -106,7 +106,9 @@ class FamilyController extends Controller
         $sexes = array('M' => 'male', 'F' => 'female');
         $statuses = array(1 => 'married', 2 => 'single');
 
-        return view('families.show', compact('family', 'villages', 'campuses', 'privileges', 'sexes', 'statuses'));
+        $back = $request->get('back') ? $request->get('back') : '';
+
+        return view('families.show', compact('family', 'villages', 'campuses', 'privileges', 'sexes', 'statuses', 'back'));
     }
 
     /**

@@ -30,14 +30,12 @@ class PrivilegeController extends Controller
             return view('privileges.pagination', compact('privileges'));
         }
 
+        $privileges = Privilege::orderBy('description')->paginate(7);
+        
         if ($request->get('page'))
         {
-            $privileges = Privilege::orderBy('description')->paginate(7);
-
             return view('privileges.pagination', compact('privileges'));
         }
-
-        $privileges = Privilege::orderBy('description')->paginate(7);
 
         return view('privileges.index', compact('privileges'));
     }

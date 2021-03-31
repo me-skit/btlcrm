@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -107,13 +112,37 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function change()
     {
-        //
+        return view('users.password.change');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function reset(Request $request)
+    {
+        $data = $request->validate([
+            'current_password' => 'required',
+            'password' => ['required', 'min:8', 'confirmed'],
+            'password_confirmation' => ['required', 'min:8']
+        ]);
+
+        if (!Hash::check($data['current_password'], auth()->user()->password)) {
+            return back()->with('error', 'Su contraseña actual no es correcta');
+        }
+
+        $user = auth()->user();
+        $user->password = Hash::make($data['password']);
+        $user->save();
+
+        return back()->with("success","Su contraseña fue cambiada correctamente");
     }
 }

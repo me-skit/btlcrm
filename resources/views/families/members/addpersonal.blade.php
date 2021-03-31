@@ -160,7 +160,7 @@
 <div class="row">
   <div class="col-lg-6">
     <div class="row form-group">
-      <label for="cellphone" class="col-md-5 col-form-label text-md-right">{{ __('Teléfono Celular') }}</label>
+      <label for="cellphone" class="col-md-5 col-form-label text-md-right">{{ __('Teléfono celular') }}</label>
       <div class="col-md-7">
         <input type="text"
           name="cellphone"

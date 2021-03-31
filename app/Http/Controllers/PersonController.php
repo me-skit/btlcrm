@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\DB;
 
 class PersonController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -141,8 +146,27 @@ class PersonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function no_members()
+    public function no_members(Request $request)
     {
+        if ($request->get('query'))
+        {
+            $query = str_replace(" ", "%", $request->get('query'));
+            $people = Person::where('death_date', null)
+                        ->join('memberships', function($query) {
+                            $query->on('people.id', '=', 'memberships.person_id')
+                                ->where('memberships.attend_church', 0);
+                        })
+                        ->where(DB::raw('CONCAT_WS(" ", first_name, second_name, third_name, first_surname, second_surname)'), 'like', '%' . $query . '%')
+                        ->orderBy('first_name')
+                        ->orderBy('second_name')
+                        ->orderBy('third_name')
+                        ->orderBy('first_surname')
+                        ->orderBy('second_surname')
+                        ->paginate(7);
+
+            return view('people.nomembers.pagination', compact('people'));
+        }
+
         $people = Person::where('death_date', null)
                     ->join('memberships', function($query) {
                         $query->on('people.id', '=', 'memberships.person_id')
@@ -153,11 +177,15 @@ class PersonController extends Controller
                     ->orderBy('third_name')
                     ->orderBy('first_surname')
                     ->orderBy('second_surname')
-                    ->with('membership')
-                    ->paginate(10);
+                    ->paginate(7);
+        
+        if ($request->get('page'))
+        {
+            return view('people.nomembers.pagination', compact('people'));
+        }
 
-        return view('people.nomembers', compact('people'));
-    }    
+        return view('people.nomembers.index', compact('people'));
+    }
 
     /**
      * Display the specified resource.

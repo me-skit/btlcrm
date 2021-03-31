@@ -18,7 +18,11 @@
               <hr>
               <div class="row">
                 <div class="col-lg-12 text-right">
-                  <a href="{{ route('people.index') }}" class="btn btn-secondary mr-2">Cancelar</a>
+                  @if ($person->membership->attend_church)
+                    <a href="{{ route('people.index') }}" class="btn btn-secondary mr-2">Cancelar</a>
+                  @else
+                    <a href="{{ route('people.nomembers') }}" class="btn btn-secondary mr-2">Cancelar</a>                      
+                  @endif
                   <button class="btn btn-primary">Modificar</button>
                 </div>
               </div>

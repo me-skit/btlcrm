@@ -73,7 +73,8 @@
 
     <div class="row">
       <div class="col-md-10 offset-md-1">
-        <a href="{{ route('families.index') }}" class="btn btn-dark mr-3">&laquo; Listado de Familias</a>
+        {{-- <a href="{{ route('families.index') }}" class="btn btn-dark mr-3">&laquo; Listado de Familias</a> --}}
+        <a href="{{ route('root') . '/' . $back }}" class="btn btn-dark mr-3">&laquo; Regresar</a>
       </div>
     </div>
   </div>

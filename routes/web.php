@@ -25,13 +25,12 @@ use App\Http\Controllers\Auth\LoginController;
 
 Route::post('authenticate', [LoginController::class, 'authenticate'])->name('authenticate');
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('root');
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Route::resource('campus', CampusController::class);
 Route::resource('campus', CampusController::class)->except([
     'show'
 ]);
@@ -86,6 +85,10 @@ Route::prefix('/family')->group( function() {
 Route::get('users', [UserController::class, 'index'])->name('users.index');
 Route::prefix('/user')->group( function() {
     Route::get('/create',  [UserController::class, 'create'])->name('user.create');
+
+    Route::get('/change',  [UserController::class, 'change'])->name('user.change');
+    Route::patch('/reset',  [UserController::class, 'reset'])->name('user.reset');
+
     Route::post('/store',  [UserController::class, 'store'])->name('user.store');
     Route::patch('/{user}',  [UserController::class, 'update'])->name('user.update');
     Route::get('/{user}/edit',  [UserController::class, 'edit'])->name('user.edit');
@@ -95,10 +98,7 @@ Route::prefix('/user')->group( function() {
 Route::get('members', [PersonController::class, 'index'])->name('people.index');
 Route::get('nomembers', [PersonController::class, 'no_members'])->name('people.nomembers');
 Route::prefix('/member')->group( function() {
-    // Route::get('/create',  [PersonController::class, 'create'])->name('person.create');
     Route::get('/{person}',  [PersonController::class, 'show'])->name('person.show');
-    // Route::post('/store',  [PersonController::class, 'store'])->name('person.store');
     Route::patch('/{person}',  [PersonController::class, 'update'])->name('person.update');
-    // Route::delete('/{person}',  [PersonController::class, 'destroy'])->name('person.destroy');
     Route::get('/{person}/edit',  [PersonController::class, 'edit'])->name('person.edit');
 });

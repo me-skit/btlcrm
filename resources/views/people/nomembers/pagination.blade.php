@@ -14,14 +14,13 @@
             <th>Aceptado</th>
             <th>Bautizado</th>
             <th>Asiste</th>
-            <th class="d-none d-md-block">Sede</th>
             <th>Acciones</th>
           </tr>
       </thead>
       <tbody>
         @foreach ($people as $key => $person)
         <tr>
-          <td>{{ ($people->currentPage() - 1) * 7 + $key + 1 }}</td>
+          <td>{{ ($people->currentPage() - 1) * 7 +$key + 1 }}</td>
           <td>
             {{ $person->first_name . " " . $person->second_name . " " . $person->third_name . " " . $person->first_surname . " " . $person->second_surname }} 
             {!! $person->death_date ? "<small class='badge badge-dark'>Q.D.E.P.</small>" : "" !!}
@@ -33,7 +32,6 @@
               {{ $person->attend_church ? ($person->attend_church == 1 ? "Si" : "Otra iglesia") : "No" }}
             @endif
           </td>
-          <td class="d-none d-md-block">{{ $person->membership->campus_id ? $person->membership->campus->name : "" }}</td>
           <td>
             <div class="d-flex">
               <button type="button"
@@ -42,9 +40,10 @@
                 data-target="#detailsModal"
                 data-id="{{ $person->id }}">
                 Detalles
-              </button>
+                </button>
+
               <a href="{{ route('person.edit', $person->id ) }}" class="btn btn-primary mr-3">Editar</a>
-              <a href="{{ route('family.show', $person->family()->id ) . '?back=' . 'members' }}" class="btn btn-link mr-3">Familia</a>
+              <a href="{{ route('family.show', $person->family()->id ) . '?back=' . 'nomembers' }}" class="btn btn-link">Familia</a>
             </div>
           </td>
         </tr>

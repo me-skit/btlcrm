@@ -12,6 +12,7 @@ class WelcomeMail extends Mailable
     use Queueable, SerializesModels;
 
     private $pass;
+    
 
     /**
      * Create a new message instance.
@@ -30,6 +31,7 @@ class WelcomeMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.welcome')->with(['pass' => $this->pass]);
+        return $this->subject('Correo de Bienvenida')
+                    ->markdown('emails.welcome')->with(['pass' => $this->pass]);
     }
 }

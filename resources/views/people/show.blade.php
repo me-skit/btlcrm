@@ -1,7 +1,9 @@
 <div class="modal-header">
-  <h4 class="modal-title" id="detailsModalLabel">
-    {{ $person->first_name . " " . $person->second_name . " " . $person->third_name . " " . $person->first_surname . " " . $person->second_surname }} 
-  </h4>
+  <h5 class="modal-title" id="detailsModalLabel">
+    <b>
+      {{ $person->first_name . " " . $person->second_name . " " . $person->third_name . " " . $person->first_surname . " " . $person->second_surname }}
+    </b>
+  </h5>
   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
