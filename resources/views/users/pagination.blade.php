@@ -22,7 +22,7 @@
             <td>{{ ($users->currentPage() - 1) * 7 + $key + 1 }}</td>
             <td>{{ $user->email }}</td>
             <td>{{ $user->active ? 'Activo' : 'Desactivado' }}</td>
-            <td class="d-none d-md-block">{{ $user->role }}</td>
+            <td class="d-none d-md-block">{{ $user->role_name }}</td>
             <td>
               <div class="d-flex">
                 <a href="{{ route('user.edit', $user->id) }}" class="btn btn-primary mr-3">Editar</a>

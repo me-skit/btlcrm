@@ -51,7 +51,7 @@
               <div class="card-header bg-secondary py-2" id="heading-{{ $member->id }}">
                 <h5 class="mb-0 d-flex justify-content-between">
                   <button class="btn btn-link text-light collapsed py-0" data-toggle="collapse" data-target="#collapse-{{ $member->id }}" aria-expanded="false" aria-controls="collapse-{{ $member->id }}">
-                    {{ $member->first_name . " " . $member->second_name . " " . $member->third_name . " " . $member->first_surname . " " . $member->second_surname }} 
+                    {{ $member->full_name }}
                     {!! $member->death_date ? "<small class='badge badge-dark'>Q.D.E.P.</small>" : "" !!}
                   </button>
                   <a href="{{ route('family.editmember', [$family->id, $member->id]) }}" class="btn btn-primary mr-3 py-0 {{  $member->death_date ? 'disabled' : '' }}">Editar</a>

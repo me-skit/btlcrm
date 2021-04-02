@@ -29,11 +29,22 @@
                             <label for="role" class="col-md-3 col-form-label text-md-right">{{ __('Rol') }}<span class="text-danger">*</span></label>
                             <div class="col-md-7">
                               <select name="role" class="form-control" required>
-                                <option value="Registrador">Registrador</option>
-                                <option value="Admin">Administrador</option>
+                                <option value="2">Censador(a)</option>
+                                <option value="1">Secretario(a)</option>
+                                <option value="0">Administrador(a)</option>
                               </select>
                             </div>
                         </div>
+
+                        <div class="row form-group">
+                            <label for="sex" class="col-md-3 col-form-label text-md-right">{{ __('Sexo') }}<span class="text-danger">*</span></label>
+                            <div class="col-md-7">
+                              <select name="sex" class="form-control" required>
+                                <option value="0">Masculino</option>
+                                <option value="1">Femenino</option>
+                              </select>
+                            </div>
+                        </div>                        
 
                         <div class="row form-group mb-0">
                             <div class="col-md-10 text-right">

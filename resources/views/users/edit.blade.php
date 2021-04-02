@@ -27,14 +27,25 @@
             </div>
 
             <div class="row form-group">
-                <label for="role" class="col-md-3 col-form-label text-md-right">{{ __('Rol') }}<span class="text-danger">*</span></label>
-                <div class="col-md-7">
-                    <select name="role" class="form-control" required>
-                    <option value="Registrador" {{ $user->role == 'Registrador' ? 'selected' : '' }}>Registrador</option>
-                    <option value="Admin" {{ $user->role == 'Admin' ? 'selected' : '' }}>Administrador</option>
-                    </select>
-                </div>
-            </div>
+              <label for="role" class="col-md-3 col-form-label text-md-right">{{ __('Rol') }}<span class="text-danger">*</span></label>
+              <div class="col-md-7">
+                <select name="role" class="form-control" required>
+                  <option value="2" {{ $user->role === 2 ? 'selected' : '' }} >Censador(a)</option>
+                  <option value="1" {{ $user->role === 1 ? 'selected' : '' }}>Secretario(a)</option>
+                  <option value="0" {{ $user->role === 0 ? 'selected' : '' }}>Administrador(a)</option>
+                </select>
+              </div>
+          </div>            
+
+            <div class="row form-group">
+              <label for="sex" class="col-md-3 col-form-label text-md-right">{{ __('Sexo') }}<span class="text-danger">*</span></label>
+              <div class="col-md-7">
+                <select name="sex" class="form-control" required>
+                  <option value="0" {{ $user->sex ? '' : 'selected' }}>Masculino</option>
+                  <option value="1" {{ $user->sex ? 'selected' : '' }}>Femenino</option>
+                </select>
+              </div>
+          </div>             
 
             <div class="row form-group">
               <label for="active" class="col-md-3 col-form-label text-md-right">{{ __('Activar/desactivar') }}<span class="text-danger">*</span></label>

@@ -177,18 +177,19 @@ paginate = () => {
 
     if (query_type)
     {
-      if (query_type.value == '2')
+      const query_value = query_type.value;
+      if (query_value === '2')
       {
-        let campus = document.getElementById('campus');
-        Array.prototype.forEach.call(paginations, item => item.addEventListener('click', () => pagination(event, item, query_type.value, campus.value)));
-      } else if (query_type.value == '3')
+        let campus = document.getElementById('campus_query').value;
+        Array.prototype.forEach.call(paginations, item => item.addEventListener('click', () => pagination(event, item, query_value, campus)));
+      } else if (query_value === '3')
       {
-        let privilege = document.getElementById('privilege');
-        Array.prototype.forEach.call(paginations, item => item.addEventListener('click', () => pagination(event, item, query_type.value, privilege.value)));
+        let privilege = document.getElementById('privilege_query').value;
+        Array.prototype.forEach.call(paginations, item => item.addEventListener('click', () => pagination(event, item, query_value, privilege)));
       }
       else
       {
-        Array.prototype.forEach.call(paginations, item => item.addEventListener('click', () => pagination(event, item, query_type.value)));
+        Array.prototype.forEach.call(paginations, item => item.addEventListener('click', () => pagination(event, item, query_value)));
       }
     }
     else
@@ -200,7 +201,7 @@ paginate = () => {
 
 paginate();
 
-// the consult list on change
+// hiding options and inputs when the type of query changes making a query at once
 const query_type = document.getElementById('query_type');
 
 if (query_type)
@@ -209,41 +210,41 @@ if (query_type)
 
   query_type.addEventListener('change', (event) => {
     Array.prototype.forEach.call(for_queries, item => item.classList.add('d-none'));
-    document.getElementById('btn-search').classList.remove('d-none');
+    let query_type = event.target.value;
 
-    switch(event.target.value) {
+    switch(query_type) {
       case '1':
+        let search = document.getElementById('search');
+        search.value = '';
         document.getElementById('by-name').classList.remove('d-none');
-        document.getElementById('btn-search').classList.add('d-none');
+        searchQuery('', 1, query_type);
         break;
       case '2':
+        let campus = document.getElementById('campus_query').value;
         document.getElementById('by-campus').classList.remove('d-none');
+        searchQuery('', 1, query_type, campus);
         break;
       case '3':
+        let privilege = document.getElementById('privilege_query').value;
         document.getElementById('by-privilege').classList.remove('d-none');
+        searchQuery('', 1, query_type, privilege);
         break;
-    }
+      default:
+        searchQuery('', 1, query_type);
+        break;
+      }
   });
 }
 
-const btn_search = document.getElementById('btn-search');
+// when the second query option changes
+const campus_query = document.getElementById('campus_query');
+if (campus_query) {
+  campus_query.addEventListener('change', (event) => searchQuery('', 1, 2, event.target.value));
+}
 
-if (btn_search)
-{
-  btn_search.addEventListener('click', () => {
-    switch(query_type.value) {
-      case '2':
-        let campus = document.getElementById('campus');
-        searchQuery('', 1, query_type.value, campus.value);
-        break;
-      case '3':
-        let privilege = document.getElementById('privilege');
-        searchQuery('', 1, query_type.value, privilege.value);
-        break;
-      default:
-        searchQuery('', 1, query_type.value);
-    }
-  });
+const privilege_query = document.getElementById('privilege_query');
+if (privilege_query) {
+  privilege_query.addEventListener('change', (event) => searchQuery('', 1, 3, event.target.value));
 }
 
 // person details

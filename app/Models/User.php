@@ -51,5 +51,17 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification($token));
-    }    
+    }
+
+    public function getRoleNameAttribute()
+    {
+        switch ($this->role) {
+            case 0:
+                return $this->sex ? 'Admra' : 'Admin';
+            case 1:
+                return $this->sex ? 'Secretaria' : 'Secretario';
+            default:
+                return $this->sex ? 'Censadora' : 'Censador';                
+        }
+    }
 }

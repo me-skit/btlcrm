@@ -23,7 +23,7 @@
         <tr>
           <td>{{ ($people->currentPage() - 1) * 7 + $key + 1 }}</td>
           <td>
-            {{ $person->first_name . " " . $person->second_name . " " . $person->third_name . " " . $person->first_surname . " " . $person->second_surname }} 
+            {{ $person->full_name }} 
             {!! $person->death_date ? "<small class='badge badge-dark'>Q.D.E.P.</small>" : "" !!}
           </td>
           <td>{{ $person->accepted ? "Si" : "No" }}</td>

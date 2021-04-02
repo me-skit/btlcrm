@@ -17,9 +17,9 @@ class CreatePrivilegeHistoriesTable extends Migration
             $table->id();
             $table->foreignId('person_id')->constrained();
             $table->foreignId('privilege_id')->constrained();
-            $table->foreignId('privilege_role_id')->constrained();
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->foreignId('privilege_role_id')->nullable();
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->date('real_end_date')->nullable();
             $table->timestamps();
         });

@@ -66,6 +66,7 @@ class UserController extends Controller
     {
         $data = $request->validate([
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'sex' => 'required',
             'role' => 'required'
         ]);
 
@@ -101,10 +102,12 @@ class UserController extends Controller
     {
         $data = $request->validate([
             'role' => 'required',
+            'sex' => 'required',
             'active' => 'required'
         ]);
 
         $user->role = $data['role'];
+        $user->sex = $data['sex'];
         $user->active = $data['active'];
         $user->save();
 

@@ -56,4 +56,9 @@ class Person extends Model
     {
         return $this->hasOne(Membership::class);
     }
+
+    public function getFullNameAttribute() {
+        $fullname = [$this->first_name, $this->second_name, $this->third_name, $this->first_surname, $this->second_surname];
+        return implode(' ', array_filter($fullname));
+    }    
 }

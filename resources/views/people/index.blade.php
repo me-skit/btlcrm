@@ -45,7 +45,7 @@
           </div>
 
           <div class="col-md-8 form-group for-query d-none" id="by-campus">
-            <select name="campus" id="campus" class="form-control" required>
+            <select name="campus_query" id="campus_query" class="form-control" required>
               @foreach ($campuses as $campus)
                 <option value="{{ $campus->id }}">{{ $campus->name }}</option>                    
               @endforeach
@@ -53,16 +53,12 @@
           </div>
 
           <div class="col-md-8 form-group for-query d-none" id="by-privilege">
-            <select name="privilege" id="privilege" class="form-control" required>
+            <select name="privilege_query" id="privilege_query" class="form-control" required>
               @foreach ($privileges as $privilege)
                 <option value="{{ $privilege->id }}">{{ $privilege->description }}</option>                    
               @endforeach
             </select>
           </div>          
-          
-          <div class="col-md-2 form-group d-none" id="btn-search">
-            <a href="#" class="btn btn-primary">Buscar</a>
-          </div>
         </div>
       </div>
     </div>
