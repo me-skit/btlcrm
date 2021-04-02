@@ -1,4 +1,4 @@
-<form action="{{ route('family.update', $family->id) }}" method="POST">
+<form action="{{ route('family.update', $family->id) . '?back=' . $back }}" method="POST">
   @csrf
   @method('PATCH')
 

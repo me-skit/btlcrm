@@ -10,7 +10,7 @@
           </div>
 
           <div class="card-body">
-            <form action="{{ route('family.store') }}" method="POST">
+            <form action="{{ route('family.store') . '?back=families' }}" method="POST">
               @csrf
 
               <div class="row form-group">

@@ -44,7 +44,7 @@
                 Detalles
               </button>
               <a href="{{ route('person.edit', $person->id ) }}" class="btn btn-primary mr-3">Editar</a>
-              <a href="{{ route('family.show', $person->family()->id ) . '?back=' . 'members' }}" class="btn btn-link mr-3">Familia</a>
+              <a href="{{ route('family.show', $person->family()->id ) . '?back=members' }}" class="btn btn-link mr-3">Familia</a>
             </div>
           </td>
         </tr>

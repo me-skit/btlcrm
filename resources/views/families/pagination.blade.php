@@ -10,9 +10,9 @@
       <thead>
           <tr>
               <th>No.</th>
-              <th>Apellidos de Familia</th>
+              <th>Apellidos</th>
               <th>Lugar</th>
-              <th>Dirección</th>
+              {{-- <th>Dirección</th> --}}
               <th>Acciones</th>
           </tr>
       </thead>
@@ -22,16 +22,16 @@
             <td>{{ ($families->currentPage() - 1) * 7 + $key + 1 }}</td>
             <td>{{ $family->family_name }}</td>
             <td>{{ $family->village->name }}</td>
-            <td>{{ $family->address }}</td>
+            {{-- <td>{{ $family->address }}</td> --}}
             <td>
               <div class="d-flex">
                 {{-- <a href="{{ route('family.show', $family->id ) . '?back=' . route('families.index') }}" class="btn btn-primary mr-3">Detalles</a> --}}
-                <a href="{{ route('family.show', $family->id ) . '?back=' . 'families' }}" class="btn btn-primary mr-3">Detalles</a>
+                <a href="{{ route('family.show', $family->id ) . '?back=families' }}" class="btn btn-primary mr-3">Detalles</a>
               </div>
             </td>
           </tr>
         @endforeach
       </tbody>
-    </table>
+    </table>   
   </div>
 </div>

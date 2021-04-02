@@ -51,13 +51,12 @@
               </div>
             </div>            
 
-            <div class="form-group row mb-0">
-              <div class="col-md-8 offset-md-4">
-                <button type="submit" class="btn btn-primary">
-                  {{ __('Cambiar Contraseña') }}
-                </button>
+            <div class="row form-group mb-0">
+              <div class="col-md-10 text-right">
+                <a href="{{ url()->previous() }}" class="btn btn-secondary mr-1">Cancelar</a>
+                <button type="submit" class="btn btn-primary"> {{ __('Cambiar Contraseña') }}</button>
               </div>
-            </div>
+            </div>            
           </form>
         </div>
       </div>

@@ -38,7 +38,7 @@
       <div class="col-md-10 d-flex justify-content-between align-items-baseline">
         <h4>Miembros:</h4>
         <div>
-          <a href="#" class="btn btn-success" data-toggle="modal" data-target="#personAddModal">Agregar</a>
+          <a href="{{ route('family.createmember', $family->id) . '?back=' . $back }}" class="btn btn-success">Agregar</a>
         </div>
       </div>
     </div>
@@ -54,7 +54,7 @@
                     {{ $member->full_name }}
                     {!! $member->death_date ? "<small class='badge badge-dark'>Q.D.E.P.</small>" : "" !!}
                   </button>
-                  <a href="{{ route('family.editmember', [$family->id, $member->id]) }}" class="btn btn-primary mr-3 py-0 {{  $member->death_date ? 'disabled' : '' }}">Editar</a>
+                  <a href="{{ route('family.editmember', [$family->id, $member->id]) . '?back=' . $back }}" class="btn btn-primary mr-3 py-0 {{  $member->death_date ? 'disabled' : '' }}">Editar</a>
                 </h5>
               </div>
           
@@ -78,34 +78,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Add new person info modal -->
-
-  <form action="{{ route('family.addmember', $family->id) }}" method="POST">
-    @csrf
-
-    <div class="modal fade" id="personAddModal" tabindex="-1" role="dialog" aria-labelledby="personAddModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="personAddModalLabel"><span class="font-weight-bold">Agregar miembro</span></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            
-            @include('families.members.addpartial')
-
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal">Cancelar</button>
-            <button type="submit" class="btn btn-primary">Guardar</button>
-          </div>
-        </div>
-      </div>
-    </div>  
-  </form>
 
   <!-- Edit family's modal -->
 

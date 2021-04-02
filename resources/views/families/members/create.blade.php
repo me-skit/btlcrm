@@ -6,20 +6,20 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
-            <span class="font-weight-bold">Editar Datos de Persona</span>
+            <span class="font-weight-bold">Agregar Miembro</span>
           </div>
           <div class="card-body">
-            <form action="{{ route('family.updatemember', [$family->id, $person->id]) . '?back=' . $back }}" method="POST">
+            <div id="family_names" data-first="{{ $family->family_names[0] ?? '' }}" data-second="{{ $family->family_names[1] ?? '' }}"></div>
+            <form action="{{ route('family.addmember', $family->id) . '?back=' . $back }}" method="POST">
               @csrf
-              @method('PATCH')
 
-              @include('families.members.editpartial')
+              @include('families.members.createpartial')
 
               <hr>
               <div class="row">
                 <div class="col-lg-12 text-right">
                   <a href="{{ route('family.show', $family->id) . '?back=' . $back }}" class="btn btn-secondary mr-2">Cancelar</a>
-                  <button class="btn btn-primary">Modificar</button>
+                  <button class="btn btn-primary">Guardar</button>
                 </div>
               </div>
             </form>

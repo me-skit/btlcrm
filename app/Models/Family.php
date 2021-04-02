@@ -26,4 +26,8 @@ class Family extends Model
     {
         return $this->belongsToMany(Person::class, 'family_members')->withPivot('family_role', 'active');
     }
+
+    public function getFamilyNamesAttribute() {
+        return explode(' ', $this->family_name);
+    }
 }

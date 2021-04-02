@@ -87,7 +87,8 @@ class FamilyController extends Controller
         
         $family = Family::create($data);
 
-        return redirect('/family/' . $family->id);
+        $back = $request->get('back') ? $request->get('back') : '';
+        return redirect('/family/' . $family->id . '?back=' . $back);
     }
 
     /**
@@ -107,7 +108,6 @@ class FamilyController extends Controller
         $statuses = array(1 => 'married', 2 => 'single');
 
         $back = $request->get('back') ? $request->get('back') : '';
-
         return view('families.show', compact('family', 'villages', 'campuses', 'privileges', 'sexes', 'statuses', 'back'));
     }
 
@@ -123,21 +123,38 @@ class FamilyController extends Controller
         $data = $request->validate([
             'village_id' => 'required',
             'union_type' => 'required',
-            'av_st_number' => ['numeric', 'nullable'],
-            'is_av_st' => 'numeric',
-            'house_number' => 'nullable',
-            'zone' => ['numeric', 'nullable'],
-            'addr_extra_info' => 'nullable',
+            'family_name' => 'required',
+            'address' => 'required',
             'phone_number' => 'nullable',
             'longitude' => ['numeric', 'nullable'],
             'latitude' => ['numeric', 'nullable']
-        ]);
-        
+        ]);        
+
         $family->fill($data);
         $family->save();
 
-        return redirect('/family/' . $family->id);
+        $back = $request->get('back') ? $request->get('back') : '';
+        return redirect('/family/' . $family->id . '?back=' . $back);
     }
+
+    /**
+     * Show the form to create a new member.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Family  $family
+     * @return \Illuminate\Http\Response
+     */
+    public function createmember(Request $request, Family $family)
+    {
+        $campuses = Campus::all();
+        $privileges = Privilege::all();
+
+        $sexes = array('M' => 'male', 'F' => 'female');
+        $statuses = array(1 => 'married', 2 => 'single');
+
+        $back = $request->get('back') ? $request->get('back') : '';
+        return view('families.members.create', compact('family', 'campuses', 'privileges', 'sexes', 'statuses', 'back'));
+    }    
 
     /**
      * Store a newly created person resource in storage.
@@ -146,7 +163,7 @@ class FamilyController extends Controller
      * @param  $id
      * @return \Illuminate\Http\Response
      */
-    public function addmember(Request $request, $id)
+    public function addmember(Request $request, $family_id)
     {
         $person_data = $request->validate([
             'first_name' => 'required',
@@ -200,11 +217,12 @@ class FamilyController extends Controller
         $membership_data['person_id'] = $person->id;
         Membership::create($membership_data);
 
-        $relation_data['family_id'] = $id;
+        $relation_data['family_id'] = $family_id;
         $relation_data['person_id'] = $person->id;
         FamilyMember::create($relation_data);
 
-        return redirect('/family/' . $id);
+        $back = $request->get('back') ? $request->get('back') : '';
+        return redirect('/family/' . $family_id . '?back=' . $back);
     }
 
     /**
@@ -224,7 +242,8 @@ class FamilyController extends Controller
         $sexes = array('M' => 'male', 'F' => 'female');
         $statuses = array(1 => 'married', 2 => 'single');
 
-        return view('families.members.edit', compact('person', 'family', 'campuses', 'privileges', 'sexes', 'statuses'));
+        $back = $request->get('back') ? $request->get('back') : '';
+        return view('families.members.edit', compact('person', 'family', 'campuses', 'privileges', 'sexes', 'statuses', 'back'));
     }
 
     /**
@@ -317,6 +336,7 @@ class FamilyController extends Controller
             $family->save();
         }
 
-        return redirect('/family/' . $family_id);
+        $back = $request->get('back') ? $request->get('back') : '';
+        return redirect('/family/' . $family_id . '?back=' . $back);
     }
 }

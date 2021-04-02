@@ -35,23 +35,19 @@ if (attend) {
 
 toggleHidePrivilege = (value, allchecks, males, females, singles, married, sex_select, status_select, role) => {
   Array.prototype.forEach.call(allchecks, item => item.classList.remove('d-none'));
-  let family_name = document.getElementById('family_name');
+  let family_names = document.getElementById('family_names');
   let first_surname = document.getElementById('first_surname');
   let second_surname = document.getElementById('second_surname');
-  let names;
-  if (family_name && role)
-  {
-    names = family_name.innerText.split(' ');
-  }
+
   
   if (value == 1) {
     Array.prototype.forEach.call(females, item => item.classList.add('d-none'))
     Array.prototype.forEach.call(singles, item => item.classList.add('d-none'));
     sex_select.value = 'M';
     status_select.value = 1;
-    if (family_name && role)
+    if (family_names && role)
     {
-      first_surname.value = names[0] ? names[0] : '';
+      first_surname.value = family_names ? family_names.dataset.first : '';
       second_surname.value = '';
     }
   }
@@ -60,9 +56,9 @@ toggleHidePrivilege = (value, allchecks, males, females, singles, married, sex_s
     Array.prototype.forEach.call(singles, item => item.classList.add('d-none'));
     sex_select.value = 'F';
     status_select.value = 1;
-    if (family_name && role)
+    if (family_names && role)
     {
-      first_surname.value = names[1] ? names[1] : '';
+      first_surname.value = family_names ? family_names.dataset.second : '';
       second_surname.value = '';
     }
   }
@@ -71,10 +67,10 @@ toggleHidePrivilege = (value, allchecks, males, females, singles, married, sex_s
     Array.prototype.forEach.call(married, item => item.classList.add('d-none'));
     sex_select.value = 'M';
     status_select.value = 2;
-    if (family_name && role)
+    if (family_names && role)
     {
-      first_surname.value = names[0] ? names[0] : '';
-      second_surname.value = names[1] ? names[1] : '';
+      first_surname.value = family_names ? family_names.dataset.first : '';
+      second_surname.value = family_names ? family_names.dataset.second : '';
     }
   }
   else {
@@ -82,10 +78,10 @@ toggleHidePrivilege = (value, allchecks, males, females, singles, married, sex_s
     Array.prototype.forEach.call(married, item => item.classList.add('d-none'));
     sex_select.value = 'F';
     status_select.value = 2;
-    if (family_name && role)
+    if (family_names && role)
     {
-      first_surname.value = names[0] ? names[0] : '';
-      second_surname.value = names[1] ? names[1] : '';
+      first_surname.value = family_names ? family_names.dataset.first : '';
+      second_surname.value = family_names ? family_names.dataset.second : '';
     }
   }
 }

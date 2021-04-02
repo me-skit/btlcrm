@@ -17,7 +17,7 @@
 <hr>
 <!-- * * * * * * * personal info  * * * * * * *-->
 
-@include('families.members.addpersonal')
+@include('families.members.createpersonal')
 
 <hr>
 <!-- * * * * * * * membership section  * * * * * * *-->
@@ -137,4 +137,4 @@
 <hr>
 <!-- * * * * * * * preferences  * * * * * * *-->
 
-@include('families.members.addprivileges')
+@include('families.members.createprivileges')
