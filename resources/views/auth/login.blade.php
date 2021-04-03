@@ -56,7 +56,7 @@
               </div>
 
               <div class="form-group row mb-0">
-                <div class="col-md-8 text-right">
+                <div class="col-md-10 text-right">
                   @if (Route::has('password.request'))
                     <a class="btn btn-link" href="{{ route('password.request') }}">
                       {{ __('Olvido su contraseña?') }}

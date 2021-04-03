@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -24,6 +25,8 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        Gate::authorize('administer');
+
         if ($request->get('query'))
         {
             $query = $request->get('query');
@@ -53,6 +56,8 @@ class UserController extends Controller
      */
     public function create()
     {
+        Gate::authorize('administer');
+
         return view('users.create');
     }
 
@@ -64,6 +69,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('administer');
+
         $data = $request->validate([
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'sex' => 'required',
@@ -88,6 +95,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        Gate::authorize('administer');
+
         return view('users.edit', compact('user'));
     }
 
@@ -100,6 +109,8 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        Gate::authorize('administer');
+
         $data = $request->validate([
             'role' => 'required',
             'sex' => 'required',

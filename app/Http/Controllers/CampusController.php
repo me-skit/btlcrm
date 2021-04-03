@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Campus;
 use App\Models\Village;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CampusController extends Controller
 {
@@ -20,6 +21,8 @@ class CampusController extends Controller
      */
     public function index()
     {
+        Gate::authorize('administer');
+
         $campuses = Campus::with('village')->get();
 
         return view('campuses.index', compact('campuses'));
@@ -32,6 +35,8 @@ class CampusController extends Controller
      */
     public function create()
     {
+        Gate::authorize('administer');
+
         $villages = Village::all();
 
         return view('campuses.create', compact('villages'));
@@ -45,6 +50,8 @@ class CampusController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('administer');
+
         $data = $request->validate([
             'name' => 'required',
             'village_id' => 'required',
@@ -66,6 +73,8 @@ class CampusController extends Controller
      */
     public function edit(Campus $campus)
     {
+        Gate::authorize('administer');
+
         $villages = Village::all();
 
         return view('campuses.edit', compact('campus', 'villages'));
@@ -80,6 +89,8 @@ class CampusController extends Controller
      */
     public function update(Request $request, Campus $campus)
     {
+        Gate::authorize('administer');
+
         $data = $request->validate([
             'name' => 'required',
             'address' => 'required',
@@ -102,6 +113,8 @@ class CampusController extends Controller
      */
     public function destroy(Campus $campus)
     {
+        Gate::authorize('administer');
+
         if ($campus->memberships->count()) {
             return back()->with('warning', 'No es posible borrar "' . $campus->name . '", se encuentra asociado a alguna membresía');
         }

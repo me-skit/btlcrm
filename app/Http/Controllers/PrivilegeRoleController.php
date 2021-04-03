@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PrivilegeRole;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class PrivilegeRoleController extends Controller
 {
@@ -20,6 +21,8 @@ class PrivilegeRoleController extends Controller
      */
     public function index(Request $request)
     {
+        Gate::authorize('administer');
+
         if ($request->get('query'))
         {
             $query = str_replace(" ", "%", $request->get('query'));
@@ -30,14 +33,12 @@ class PrivilegeRoleController extends Controller
             return view('privilegeroles.pagination', compact('privilegeRoles'));
         }
 
+        $privilegeRoles = PrivilegeRole::orderBy('description')->paginate(7);
+
         if ($request->get('page'))
         {
-            $privilegeRoles = PrivilegeRole::orderBy('description')->paginate(7);
-
             return view('privilegeroles.pagination', compact('privilegeRoles'));
         }
-
-        $privilegeRoles = PrivilegeRole::orderBy('description')->paginate(7);
 
         return view('privilegeroles.index', compact('privilegeRoles'));
     }
@@ -49,6 +50,8 @@ class PrivilegeRoleController extends Controller
      */
     public function create()
     {
+        Gate::authorize('administer');
+
         return view('privilegeroles.create');
     }
 
@@ -60,6 +63,8 @@ class PrivilegeRoleController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('administer');
+
         $data = $request->validate([
             'description' => ['required', 'unique:privilege_roles']
         ]);
@@ -79,6 +84,8 @@ class PrivilegeRoleController extends Controller
      */
     public function edit(PrivilegeRole $privilegeRole)
     {
+        Gate::authorize('administer');
+
         return view('privilegeroles.edit', compact('privilegeRole'));
     }
 
@@ -91,6 +98,8 @@ class PrivilegeRoleController extends Controller
      */
     public function update(Request $request, PrivilegeRole $privilegeRole)
     {
+        Gate::authorize('administer');
+
         $data = $request->validate([
             'description' => 'required'
         ]);
@@ -109,6 +118,8 @@ class PrivilegeRoleController extends Controller
      */
     public function destroy(PrivilegeRole $privilegeRole)
     {
+        Gate::authorize('administer');
+
         $privilegeRole->delete();
 
         return redirect('/privilegeroles');

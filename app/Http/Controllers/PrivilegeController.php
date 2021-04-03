@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Privilege;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class PrivilegeController extends Controller
 {
@@ -20,6 +21,8 @@ class PrivilegeController extends Controller
      */
     public function index(Request $request)
     {
+        Gate::authorize('administer');
+
         if ($request->get('query'))
         {
             $query = str_replace(" ", "%", $request->get('query'));
@@ -47,6 +50,8 @@ class PrivilegeController extends Controller
      */
     public function create()
     {
+        Gate::authorize('administer');
+
         return view('privileges.create');
     }
 
@@ -58,6 +63,8 @@ class PrivilegeController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('administer');
+
         $data = $request->validate([
             'description' => ['required', 'unique:privileges'],
             'preferred_sex' => 'nullable',
@@ -79,6 +86,8 @@ class PrivilegeController extends Controller
      */
     public function edit(Privilege $privilege)
     {
+        Gate::authorize('administer');
+
         return view('privileges.edit', compact('privilege'));
     }
 
@@ -91,6 +100,8 @@ class PrivilegeController extends Controller
      */
     public function update(Request $request, Privilege $privilege)
     {
+        Gate::authorize('administer');
+
         $date = $request->validate([
             'description' => 'required',
             'preferred_sex' => 'nullable',
@@ -113,6 +124,8 @@ class PrivilegeController extends Controller
      */
     public function destroy(Privilege $privilege)
     {
+        Gate::authorize('administer');
+
         $privilege->delete();
 
         return redirect('/privileges');

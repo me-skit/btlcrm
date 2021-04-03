@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Village;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class VillageController extends Controller
 {
@@ -19,6 +20,8 @@ class VillageController extends Controller
      */
     public function index()
     {
+        Gate::authorize('administer');
+
         $villages = Village::all();
 
         return view('villages.index', compact('villages'));
@@ -31,6 +34,8 @@ class VillageController extends Controller
      */
     public function create()
     {
+        Gate::authorize('administer');
+
         return view('villages.create');
     }
 
@@ -42,6 +47,8 @@ class VillageController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('administer');
+
         $data = $request->validate([
             'name' => 'required'
         ]);
@@ -59,6 +66,8 @@ class VillageController extends Controller
      */
     public function edit(Village $village)
     {
+        Gate::authorize('administer');
+
         return view('villages.edit', compact('village'));
     }
 
@@ -71,6 +80,8 @@ class VillageController extends Controller
      */
     public function update(Request $request, Village $village)
     {
+        Gate::authorize('administer');
+
         $data = $request->validate([
             'name' => 'required'
         ]);
@@ -89,6 +100,8 @@ class VillageController extends Controller
      */
     public function destroy(Village $village)
     {
+        Gate::authorize('administer');
+
         if ($village->campuses->count() || $village->families->count()) {
             return back()->with('warning', 'No es posible borrar "' . $village->name . '", se encuentra asociado a alguna sede o familia');
         }

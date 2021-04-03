@@ -35,31 +35,36 @@
               </a>
               <div class="dropdown-menu" aria-labelledby="dropdownFamilias">
                 <a class="dropdown-item" href="{{ route('families.index') }}">{{ __('Por Familias') }}</a>
-                <a class="dropdown-item" href="{{ route('people.index') }}">{{ __('Listado General') }}</a>
-                <a class="dropdown-item" href="{{ route('people.nomembers') }}">{{ __('No Miembros') }}</a>
+                @can('consult')
+                  <a class="dropdown-item" href="{{ route('people.index') }}">{{ __('Listado General') }}</a>
+                  <a class="dropdown-item" href="{{ route('people.nomembers') }}">{{ __('No Miembros') }}</a>                  
+                @endcan
               </div>
             </li>
 
-            <li class="nav-item dropdown">
-                <a id="dropdownCatal" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                  {{ __('Catálogos') }}
+            @can('administer')
+              <li class="nav-item dropdown">
+                  <a id="dropdownCatal" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                    {{ __('Catálogos') }}
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="dropdownCatal">
+                    <a class="dropdown-item" href="{{ route('villages.index') }}">{{ __('Poblados') }}</a>
+                    <a class="dropdown-item" href="{{ route('campus.index') }}">{{ __('Sedes') }}</a>
+                    <a class="dropdown-item" href="{{ route('privileges.index') }}">{{ __('Privilegios') }}</a>
+                    <a class="dropdown-item" href="{{ route('privilegeroles.index') }}">{{ __('Puestos en Privilegios') }}</a>
+                  </div>
+              </li>
+
+              <li class="nav-item dropdown">
+                <a id="dropdownAdmin" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                  {{ __('Administrar') }}
                 </a>
-                <div class="dropdown-menu" aria-labelledby="dropdownCatal">
-                  <a class="dropdown-item" href="{{ route('villages.index') }}">{{ __('Poblados') }}</a>
-                  <a class="dropdown-item" href="{{ route('campus.index') }}">{{ __('Sedes') }}</a>
-                  <a class="dropdown-item" href="{{ route('privileges.index') }}">{{ __('Privilegios') }}</a>
-                  <a class="dropdown-item" href="{{ route('privilegeroles.index') }}">{{ __('Puestos en Privilegios') }}</a>
+                <div class="dropdown-menu" aria-labelledby="dropdownAdmin">
+                  <a class="dropdown-item" href="{{ route('users.index') }}">{{ __('Usuarios') }}</a>
                 </div>
-            </li>
+              </li>
+            @endcan
 
-            <li class="nav-item dropdown">
-              <a id="dropdownAdmin" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                {{ __('Administrar') }}
-              </a>
-              <div class="dropdown-menu" aria-labelledby="dropdownAdmin">
-                <a class="dropdown-item" href="{{ route('users.index') }}">{{ __('Usuarios') }}</a>
-              </div>
-            </li>
             @endauth
           </ul>
 

@@ -7,6 +7,7 @@ use App\Models\Campus;
 use App\Models\Privilege;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class PersonController extends Controller
 {
@@ -23,6 +24,8 @@ class PersonController extends Controller
      */
     public function index(Request $request)
     {
+        Gate::authorize('consult');
+
         if ($request->get('type') and $request->get('type') > 1)
         {
             $query_type = $request->get('type');
@@ -148,6 +151,8 @@ class PersonController extends Controller
      */
     public function no_members(Request $request)
     {
+        Gate::authorize('consult');
+
         if ($request->get('query'))
         {
             $query = str_replace(" ", "%", $request->get('query'));
@@ -195,6 +200,8 @@ class PersonController extends Controller
      */
     public function show(Person $person)
     {
+        Gate::authorize('consult');
+
         $family = $person->family();
         return view('people.show', compact('person', 'family'));
     }
@@ -207,6 +214,8 @@ class PersonController extends Controller
      */
     public function edit(Person $person)
     {
+        Gate::authorize('consult');
+
         $family = $person->family();
         $campuses = Campus::all();
         $privileges = Privilege::all();
@@ -226,6 +235,8 @@ class PersonController extends Controller
      */
     public function update(Request $request, Person $person)
     {
+        Gate::authorize('consult');
+
         $person_data = $request->validate([
             'first_name' => 'required',
             'second_name' => 'nullable',

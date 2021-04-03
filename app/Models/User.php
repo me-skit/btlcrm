@@ -64,4 +64,9 @@ class User extends Authenticatable
                 return $this->sex ? 'Censadora' : 'Censador';                
         }
     }
+
+    public function isAdministrator()
+    {
+        return $this->role ? false : true;
+    }
 }
