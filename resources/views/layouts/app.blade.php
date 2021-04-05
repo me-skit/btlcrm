@@ -45,7 +45,7 @@
             @can('administer')
               <li class="nav-item dropdown">
                   <a id="dropdownCatal" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                    <i class="fas fa-clipboard-list"></i> {{ __('Catálogos') }}
+                    <i class="fas fa-user-tie"></i> {{ __('Privilegios') }}
                   </a>
                   <div class="dropdown-menu" aria-labelledby="dropdownCatal">
                     <a class="dropdown-item" href="{{ route('villages.index') }}"><i class="fas fa-map-marked fa-fw"></i> {{ __('Poblados') }}</a>
@@ -57,11 +57,16 @@
 
               <li class="nav-item dropdown">
                 <a id="dropdownAdmin" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                  <i class="fas fa-user-tie"></i> {{ __('Administrar') }}
+                  <i class="fas fa-user-shield"></i> {{ __('Administrar') }}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownAdmin">
                   <a class="dropdown-item" href="{{ route('users.index') }}"><i class="fas fa-user-cog fa-fw"></i> {{ __('Usuarios') }}</a>
-                </div>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="{{ route('villages.index') }}"><i class="fas fa-map-marked fa-fw"></i> {{ __('Poblados') }}</a>
+                  <a class="dropdown-item" href="{{ route('campus.index') }}"><i class="fas fa-place-of-worship fa-fw"></i> {{ __('Sedes') }}</a>
+                  <a class="dropdown-item" href="{{ route('privileges.index') }}"><i class="fas fa-user-tie fa-fw"></i> {{ __('Privilegios') }}</a>
+                  <a class="dropdown-item" href="{{ route('privilegeroles.index') }}"><i class="fas fa-id-card-alt fa-fw"></i> {{ __('Puestos en Privilegios') }}</a>
+              </div>
               </li>
             @endcan
 

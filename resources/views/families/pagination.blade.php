@@ -25,7 +25,7 @@
             <td>{{ $family->address }}</td>
             <td>
               <div class="d-flex">
-                <a href="{{ route('family.show', $family->id ) . '?back=families' }}" class="btn btn-primary mr-3"><i class="far fa-eye fa-fw"></i> Detalles</a>
+                <a href="{{ route('family.show', $family->id ) . '?back=families' }}" class="btn btn-primary mr-3"><i class="far fa-eye"></i> Detalles</a>
               </div>
             </td>
           </tr>
