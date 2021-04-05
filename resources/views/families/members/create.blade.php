@@ -6,7 +6,7 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
-            <span class="font-weight-bold">Agregar Miembro</span>
+            <span class="font-weight-bold"><i class="fas fa-user-plus"></i> Agregar Miembro</span>
           </div>
           <div class="card-body">
             <div id="family_names" data-first="{{ $family->family_names[0] ?? '' }}" data-second="{{ $family->family_names[1] ?? '' }}"></div>

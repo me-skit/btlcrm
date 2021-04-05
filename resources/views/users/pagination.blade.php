@@ -25,7 +25,7 @@
             <td class="d-none d-md-block">{{ $user->role_name }}</td>
             <td>
               <div class="d-flex">
-                <a href="{{ route('user.edit', $user->id) }}" class="btn btn-primary mr-3">Editar</a>
+                <a href="{{ route('user.edit', $user->id) }}" class="btn btn-primary mr-3"><i class="fas fa-pencil-alt"></i> Editar</a>
               </div>
             </td>
           </tr>

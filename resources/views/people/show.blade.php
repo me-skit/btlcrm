@@ -1,7 +1,7 @@
 <div class="modal-header">
   <h5 class="modal-title" id="detailsModalLabel">
     <b>
-      {{ $person->first_name . " " . $person->second_name . " " . $person->third_name . " " . $person->first_surname . " " . $person->second_surname }}
+      <i class="fas fa-address-card"></i> {{ $person->full_name }}
     </b>
   </h5>
   <button type="button" class="close" data-dismiss="modal" aria-label="Close">

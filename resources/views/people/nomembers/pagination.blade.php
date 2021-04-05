@@ -39,11 +39,11 @@
                 data-toggle="modal"
                 data-target="#detailsModal"
                 data-id="{{ $person->id }}">
-                Detalles
+                  <i class="far fa-eye"></i> Detalles
                 </button>
 
-              <a href="{{ route('person.edit', $person->id ) }}" class="btn btn-primary mr-3">Editar</a>
-              <a href="{{ route('family.show', $person->family()->id ) . '?back=nomembers' }}" class="btn btn-link">Familia</a>
+              <a href="{{ route('person.edit', $person->id ) }}" class="btn btn-primary mr-3"><i class="fas fa-pencil-alt"></i> Editar</a>
+              <a href="{{ route('family.show', $person->family()->id ) . '?back=nomembers' }}" class="btn btn-link"><i class="fas fa-house-user"></i> Familia</a>
             </div>
           </td>
         </tr>

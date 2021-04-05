@@ -20,6 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'email',
         'role',
+        'sex',
         'password'
     ];
 
@@ -63,6 +64,11 @@ class User extends Authenticatable
             default:
                 return $this->sex ? 'Censadora' : 'Censador';                
         }
+    }
+
+    public function getNicknameAttribute()
+    {
+        return explode('@', $this->email)[0];
     }
 
     public function isAdministrator()

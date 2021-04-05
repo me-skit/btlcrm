@@ -23,13 +23,13 @@
             <td>{{ date_format($privilegeRole->created_at, 'd/m/Y H:i:s') }}</td>
             <td>
               <div class="d-flex">
-                <a href="{{ route('privilegerole.edit', $privilegeRole->id) }}" class="btn btn-primary mr-3">Editar</a>
+                <a href="{{ route('privilegerole.edit', $privilegeRole->id) }}" class="btn btn-primary mr-3"><i class="fas fa-pencil-alt"></i> Editar</a>
 
                 <form action="{{ route('privilegerole.destroy', $privilegeRole->id) }}" method="post">
                   @csrf
                   @method('DELETE')
 
-                  <button type="submit" class="btn btn-danger">Eliminar</button>
+                  <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i> Eliminar</button>
                 </form>
               </div>
             </td>

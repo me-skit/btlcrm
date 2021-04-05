@@ -6,8 +6,8 @@
       <div class="row d-flex justify-content-center">
         <div class="col-md-10">
           <div class="pull-left d-flex align-items-baseline justify-content-between">
-            <h3 id="family_name">{{ $family->family_name }}</h3>
-            <a href="#" class="btn btn-primary ml-2" data-toggle="modal" data-target="#editModal">Editar</a>
+            <h3 id="family_name"><i class="fa fa-home"></i> {{ $family->family_name }}</h3>
+            <a href="#" class="btn btn-primary ml-2" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i> Editar</a>
           </div>
         </div>
       </div>
@@ -38,7 +38,7 @@
       <div class="col-md-10 d-flex justify-content-between align-items-baseline">
         <h4>Miembros:</h4>
         <div>
-          <a href="{{ route('family.createmember', $family->id) . '?back=' . $back }}" class="btn btn-success">Agregar</a>
+          <a href="{{ route('family.createmember', $family->id) . '?back=' . $back }}" class="btn btn-success"><i class="fas fa-plus"></i> Agregar</a>
         </div>
       </div>
     </div>
@@ -51,10 +51,10 @@
               <div class="card-header bg-secondary py-2" id="heading-{{ $member->id }}">
                 <h5 class="mb-0 d-flex justify-content-between">
                   <button class="btn btn-link text-light collapsed py-0" data-toggle="collapse" data-target="#collapse-{{ $member->id }}" aria-expanded="false" aria-controls="collapse-{{ $member->id }}">
-                    {{ $member->full_name }}
+                    <i class="far fa-address-card"></i> {{ $member->full_name }}
                     {!! $member->death_date ? "<small class='badge badge-dark'>Q.D.E.P.</small>" : "" !!}
                   </button>
-                  <a href="{{ route('family.editmember', [$family->id, $member->id]) . '?back=' . $back }}" class="btn btn-primary mr-3 py-0 {{  $member->death_date ? 'disabled' : '' }}">Editar</a>
+                  <a href="{{ route('family.editmember', [$family->id, $member->id]) . '?back=' . $back }}" class="btn btn-primary mr-3 py-0 {{  $member->death_date ? 'disabled' : '' }}"><i class="fas fa-pencil-alt"></i> Editar</a>
                 </h5>
               </div>
           
@@ -73,13 +73,11 @@
 
     <div class="row">
       <div class="col-md-10 offset-md-1">
-        {{-- <a href="{{ route('families.index') }}" class="btn btn-dark mr-3">&laquo; Listado de Familias</a> --}}
-        <a href="{{ route('root') . '/' . $back }}" class="btn btn-dark mr-3">&laquo; Regresar</a>
+        <a href="{{ route('root') . '/' . $back }}" class="btn btn-dark mr-3"><i class="fas fa-angle-double-left"></i> Regresar</a>
       </div>
     </div>
   </div>
 
   <!-- Edit family's modal -->
-
   @include('families.edit')
 @endsection

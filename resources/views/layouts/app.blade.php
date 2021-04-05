@@ -10,13 +10,13 @@
   <script src="{{ asset('js/app.js') }}" defer></script>
   <!-- Fonts -->
   <link rel="dns-prefetch" href="//fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+  {{-- <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> --}}
   <!-- Styles -->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body class="bg-white">
   <div id="app">
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm fixed-top">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm fixed-top py-1">
       <div class="container">
         <a class="navbar-brand py-0" href="{{ url('/') }}">
           <img src="{{ asset('images/bethel_logo_white.png') }}" alt="" width="75">
@@ -31,13 +31,13 @@
             @auth
             <li class="nav-item dropdown">
               <a id="dropdownFamilias" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                {{ __('Miembros') }}
+                <i class="fas fa-church"></i> {{ __('Miembros') }}
               </a>
               <div class="dropdown-menu" aria-labelledby="dropdownFamilias">
-                <a class="dropdown-item" href="{{ route('families.index') }}">{{ __('Por Familias') }}</a>
+                <a class="dropdown-item" href="{{ route('families.index') }}"><i class="fas fa-house-user fa-fw"></i> {{ __('Por Familias') }}</a>
                 @can('consult')
-                  <a class="dropdown-item" href="{{ route('people.index') }}">{{ __('Listado General') }}</a>
-                  <a class="dropdown-item" href="{{ route('people.nomembers') }}">{{ __('No Miembros') }}</a>                  
+                  <a class="dropdown-item" href="{{ route('people.index') }}"><i class="fas fa-users fa-fw"></i> {{ __('Listado General') }}</a>
+                  <a class="dropdown-item" href="{{ route('people.nomembers') }}"><i class="far fa-user fa-fw"></i> {{ __('No Miembros') }}</a>                  
                 @endcan
               </div>
             </li>
@@ -45,22 +45,22 @@
             @can('administer')
               <li class="nav-item dropdown">
                   <a id="dropdownCatal" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                    {{ __('Catálogos') }}
+                    <i class="fas fa-clipboard-list"></i> {{ __('Catálogos') }}
                   </a>
                   <div class="dropdown-menu" aria-labelledby="dropdownCatal">
-                    <a class="dropdown-item" href="{{ route('villages.index') }}">{{ __('Poblados') }}</a>
-                    <a class="dropdown-item" href="{{ route('campus.index') }}">{{ __('Sedes') }}</a>
-                    <a class="dropdown-item" href="{{ route('privileges.index') }}">{{ __('Privilegios') }}</a>
-                    <a class="dropdown-item" href="{{ route('privilegeroles.index') }}">{{ __('Puestos en Privilegios') }}</a>
+                    <a class="dropdown-item" href="{{ route('villages.index') }}"><i class="fas fa-map-marked fa-fw"></i> {{ __('Poblados') }}</a>
+                    <a class="dropdown-item" href="{{ route('campus.index') }}"><i class="fas fa-place-of-worship fa-fw"></i> {{ __('Sedes') }}</a>
+                    <a class="dropdown-item" href="{{ route('privileges.index') }}"><i class="fas fa-user-tie fa-fw"></i> {{ __('Privilegios') }}</a>
+                    <a class="dropdown-item" href="{{ route('privilegeroles.index') }}"><i class="fas fa-id-card-alt fa-fw"></i> {{ __('Puestos en Privilegios') }}</a>
                   </div>
               </li>
 
               <li class="nav-item dropdown">
                 <a id="dropdownAdmin" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                  {{ __('Administrar') }}
+                  <i class="fas fa-user-tie"></i> {{ __('Administrar') }}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownAdmin">
-                  <a class="dropdown-item" href="{{ route('users.index') }}">{{ __('Usuarios') }}</a>
+                  <a class="dropdown-item" href="{{ route('users.index') }}"><i class="fas fa-user-cog fa-fw"></i> {{ __('Usuarios') }}</a>
                 </div>
               </li>
             @endcan
@@ -73,13 +73,13 @@
             @auth
               <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                  {{ Auth::user()->role_name }}: {{ Auth::user()->email }}
+                  {{ Auth::user()->role_name }}: {{ Auth::user()->nickname }}
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="{{ route('user.change') }}">{{ __('Cambiar Contraseña') }}</a>
+                  <a class="dropdown-item" href="{{ route('user.change') }}"><i class="fas fa-key fa-fw"></i> {{ __('Cambiar Contraseña') }}</a>
                   <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    {{ __('Cerrar Sesión') }}
+                    <i class="fas fa-door-open fa-fw"></i> {{ __('Cerrar Sesión') }}
                   </a>
 
                   <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -94,7 +94,7 @@
     </nav>
 
     <main class="py-5">
-      <div class="content pt-4 pb-2">
+      <div class="content pt-3 pb-2">
         <div class="container">
           @include('layouts.flash-message')
         </div>

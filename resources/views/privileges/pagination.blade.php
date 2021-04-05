@@ -54,13 +54,13 @@
             </td>
             <td>
               <div class="d-flex">
-                <a href="{{ route('privilege.edit', $privilege->id) }}" class="btn btn-primary mr-3">Editar</a>
+                <a href="{{ route('privilege.edit', $privilege->id) }}" class="btn btn-primary mr-3"><i class="fas fa-pencil-alt"></i> Editar</a>
                 
                 <form action="{{ route('privilege.destroy', $privilege->id) }}" method="POST">
                   @csrf
                   @method('DELETE')
 
-                  <button type="submit" class="btn btn-danger">Eliminar</button>
+                  <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i> Eliminar</button>
                 </form>
               </div>
             </td>

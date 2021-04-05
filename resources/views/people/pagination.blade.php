@@ -5,16 +5,16 @@
 </div>
 
 <div class="row justify-content-center">
-  <div class="col-md-10">
+  <div class="col-md-12">
     <table class="table table-hover table-responsive-md table-responsive-lg">
       <thead>
           <tr>
             <th>No.</th>
             <th>Nombre</th>
-            <th>Aceptado</th>
-            <th>Bautizado</th>
+            <th>Acept.</th>
+            <th>Baut.</th>
             <th>Asiste</th>
-            <th class="d-none d-md-block">Sede</th>
+            <th class="d-md-none d-lg-block">Sede</th>
             <th>Acciones</th>
           </tr>
       </thead>
@@ -33,7 +33,7 @@
               {{ $person->attend_church ? ($person->attend_church == 1 ? "Si" : "Otra iglesia") : "No" }}
             @endif
           </td>
-          <td class="d-none d-md-block">{{ $person->membership->campus_id ? $person->membership->campus->name : "" }}</td>
+          <td class="d-md-none d-lg-block">{{ $person->membership->campus_id ? $person->membership->campus->name : "" }}</td>
           <td>
             <div class="d-flex">
               <button type="button"
@@ -41,10 +41,10 @@
                 data-toggle="modal"
                 data-target="#detailsModal"
                 data-id="{{ $person->id }}">
-                Detalles
+                <i class="far fa-eye"></i> Detalles
               </button>
-              <a href="{{ route('person.edit', $person->id ) }}" class="btn btn-primary mr-3">Editar</a>
-              <a href="{{ route('family.show', $person->family()->id ) . '?back=members' }}" class="btn btn-link mr-3">Familia</a>
+              <a href="{{ route('person.edit', $person->id ) }}" class="btn btn-primary mr-3"><i class="fas fa-pencil-alt"></i> Editar</a>
+              <a href="{{ route('family.show', $person->family()->id ) . '?back=members' }}" class="btn btn-link mr-3"><i class="fas fa-house-user"></i> Familia</a>
             </div>
           </td>
         </tr>

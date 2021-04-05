@@ -5,7 +5,10 @@
     <div class="row justify-content-center mt-2">
       <div class="col-md-8 mt-2">
         <div class="card">
-          <div class="card-header font-weight-bold">{{ __('Inicio de Sesión') }}</div>
+          <div class="card-header font-weight-bold">
+            <i class="fas fa-user-circle"></i>
+            {{ __('Inicio de Sesión') }}
+          </div>
 
           <div class="card-body">
             <form method="POST" action="{{ route('authenticate') }}">

@@ -6,7 +6,7 @@
       <div class="col-md-10">
         <div class="card">
           <div class="card-header">
-            <span class="font-weight-bold">Datos de Familia</span>
+            <span class="font-weight-bold"><i class="fas fa-house-user"></i> Datos de Familia</span>
           </div>
 
           <div class="card-body">

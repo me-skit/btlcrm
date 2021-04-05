@@ -6,7 +6,7 @@
       <div class="col-md-8">
         <div class="card">
           <div class="card-header">
-            <span class="font-weight-bold">Editar Sede</span>
+            <span class="font-weight-bold"><i class="fas fa-place-of-worship"></i> Editar Sede</span>
           </div>
 
           <div class="card-body">

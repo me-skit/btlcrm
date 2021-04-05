@@ -6,7 +6,7 @@
       <div class="col-md-8">
         <div class="card">
           <div class="card-header">
-            <span class="font-weight-bold">Privilegio</span>
+            <span class="font-weight-bold"><i class="fas fa-user-tie"></i> Privilegio</span>
           </div>
 
           <div class="card-body">
@@ -44,7 +44,7 @@
                 <label for="preferred_sex" class="col-md-4 col-form-label text-md-right">{{ __('Sexo') }}</label>
                 <div class="col-md-6">
                   <select name="preferred_sex" class="form-control">
-                    <option value selected>Masculino o femenino</option>
+                    <option value selected>Ambos sexos</option>
                     <option value="M">Masculino</option>
                     <option value="F">Femenino</option>
                   </select>
@@ -55,7 +55,7 @@
                 <label for="preferred_status" class="col-md-4 col-form-label text-md-right">{{ __('Estado civil') }}</label>
                 <div class="col-md-6">
                   <select name="preferred_status" class="form-control">
-                    <option value selected>Casado(a) o soltero(a)</option>
+                    <option value selected>Cualquier estado civil</option>
                     <option value="1">Casado(a)</option>
                     <option value="2">Soltero(a)</option>
                   </select>

@@ -6,7 +6,7 @@
       <div class="col-md-8">
         <div class="card">
           <div class="card-header">
-            <span class="font-weight-bold">Editar Privilegio</span>
+            <span class="font-weight-bold"><i class="fas fa-user-tie"></i> Editar Privilegio</span>
           </div>
 
           <div class="card-body">

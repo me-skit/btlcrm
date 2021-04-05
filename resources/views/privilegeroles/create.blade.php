@@ -6,7 +6,7 @@
       <div class="col-md-8">
         <div class="card">
           <div class="card-header">
-            <span class="font-weight-bold">Nombre del Puesto</span>
+            <span class="font-weight-bold"><i class="fas fa-id-card-alt"></i> Nombre del Puesto</span>
           </div>
 
           <div class="card-body">

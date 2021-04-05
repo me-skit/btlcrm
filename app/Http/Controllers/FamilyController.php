@@ -32,17 +32,8 @@ class FamilyController extends Controller
             $families = Family::where('active', 1)
                             ->where('family_name', 'like', '%' . $query . '%')
                             ->orderBy('family_name')
+                            ->with('village')
                             ->paginate(7);
-
-            return view('families.pagination', compact('families'));
-        }
-
-        if ($request->get('page'))
-        {
-            $families = Family::where('active', 1)
-            ->orderBy('family_name')
-            ->with('village')
-            ->paginate(7);
 
             return view('families.pagination', compact('families'));
         }
@@ -51,6 +42,11 @@ class FamilyController extends Controller
                         ->orderBy('family_name')
                         ->with('village')
                         ->paginate(7);
+
+        if ($request->get('page'))
+        {
+            return view('families.pagination', compact('families'));
+        }
 
         return view('families.index', compact('families'));
     }

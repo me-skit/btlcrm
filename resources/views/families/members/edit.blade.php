@@ -6,7 +6,7 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
-            <span class="font-weight-bold">Editar Datos de Persona</span>
+            <span class="font-weight-bold"><i class="fas fa-user-edit"></i> Editar Datos de Persona</span>
           </div>
           <div class="card-body">
             <form action="{{ route('family.updatemember', [$family->id, $person->id]) . '?back=' . $back }}" method="POST">

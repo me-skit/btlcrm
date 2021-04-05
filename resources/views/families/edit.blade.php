@@ -6,7 +6,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="editModalLabel"><span class="font-weight-bold">Editar Datos de Familia</span></h5>
+          <h5 class="modal-title" id="editModalLabel"><span class="font-weight-bold"><i class="fas fa-home"></i> Editar Datos de Familia</span></h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>

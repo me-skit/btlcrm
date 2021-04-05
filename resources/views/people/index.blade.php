@@ -5,9 +5,9 @@
     <!-- the query thing -->
     <div class="row justify-content-center mb-3">
       <div class="col-md-10 d-flex justify-content-between align-items-baseline">
-        <h2 id="title" data-name="members">Miembros</h2>
+        <h2 id="title" data-name="members"><i class="fas fa-users"></i> Miembros</h2>
         <div>
-          <a href="{{ route('people.index') }}" class="btn btn-light">Recargar</a>
+          <a href="{{ route('people.index') }}" class="btn btn-light"><i class="fas fa-redo-alt"></i> Recargar</a>
         </div>
       </div>
     </div>
@@ -35,13 +35,18 @@
       <div class="col-md-5">
         <div class="row">
           <div class="col-md-8 form-group for-query" id="by-name">
-            <input type="text"
-              name="search"
-              id="search"
-              class="form-control @error('search') is-invalid @enderror"
-              value="{{ old('search') }}"
-              autofocus
-            >
+            <div class="input-group">
+              <input type="text"
+                name="search"
+                id="search"
+                class="form-control border-right-0 border @error('search') is-invalid @enderror"
+                value="{{ old('search') }}"
+                autofocus
+                >
+                <span class="input-group-append">
+                  <div class="input-group-text bg-transparent"><i class="fa fa-search"></i></div>
+                </span>
+            </div>
           </div>
 
           <div class="col-md-8 form-group for-query d-none" id="by-campus">
