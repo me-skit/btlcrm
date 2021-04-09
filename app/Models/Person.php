@@ -46,7 +46,7 @@ class Person extends Model
      */
     public function familyBefore()
     {
-        return $this->belongsToMany(Family::class, 'family_members')->withPivot('family_role', 'active')->wherePivot('active', 0)->first();
+        return $this->belongsToMany(Family::class, 'family_members')->withPivot('family_role', 'active')->wherePivot('active', 0);
     }
   
     /**
@@ -55,6 +55,14 @@ class Person extends Model
     public function membership()
     {
         return $this->hasOne(Membership::class);
+    }
+
+    public function privileges()
+    {
+        return $this->belongsToMany(Privilege::class, 'privilege_histories')
+                    ->withPivot('privilege_role_id', 'start_date', 'end_date')
+                    ->using(PrivilegeHistory::class)
+                    ->orderBy('privilege_histories.created_at', 'DESC');
     }
 
     public function getFullNameAttribute() {

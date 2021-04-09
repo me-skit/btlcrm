@@ -6,6 +6,7 @@ use App\Models\Person;
 use App\Models\Campus;
 use App\Models\Privilege;
 use Illuminate\Http\Request;
+use App\Models\PrivilegeRole;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
@@ -203,8 +204,29 @@ class PersonController extends Controller
         Gate::authorize('consult');
 
         $family = $person->family();
-        return view('people.show', compact('person', 'family'));
+        $privs_assigned = $person->privileges;
+        $privileges = Privilege::orderBy('description')
+                        ->where(function ($query) use ($person) {
+                            $query->whereNull('preferred_sex')
+                                  ->orWhere('preferred_sex', $person->sex);
+                        })
+                        ->where(function ($query) use ($person) {
+                            $query->whereNull('preferred_status')
+                                  ->orWhere('preferred_status', $person->status);
+                        })
+                        ->get();
+        $privilege_roles = PrivilegeRole::orderBy('description')->get();
+
+        return view('people.show', compact('person', 'family', 'privileges', 'privs_assigned', 'privilege_roles'));
     }
+
+    public function show_nomember(Person $person)
+    {
+        Gate::authorize('consult');
+
+        $family = $person->family();
+        return view('people.nomembers.show', compact('person', 'family'));
+    }    
 
     /**
      * Show the form for editing the specified resource.

@@ -35,7 +35,7 @@
           <td>
             <div class="d-flex">
               <button type="button"
-                class="btn btn-secondary mr-3 btn-p-details"
+                class="btn btn-secondary mr-3 btn-f-details"
                 data-toggle="modal"
                 data-target="#detailsModal"
                 data-id="{{ $person->id }}">

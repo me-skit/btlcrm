@@ -37,24 +37,29 @@
                 <a class="dropdown-item" href="{{ route('families.index') }}"><i class="fas fa-house-user fa-fw"></i> {{ __('Por Familias') }}</a>
                 @can('consult')
                   <a class="dropdown-item" href="{{ route('people.index') }}"><i class="fas fa-users fa-fw"></i> {{ __('Listado General') }}</a>
-                  <a class="dropdown-item" href="{{ route('people.nomembers') }}"><i class="far fa-user fa-fw"></i> {{ __('No Miembros') }}</a>                  
+                  <a class="dropdown-item" href="{{ route('people.nomembers') }}"><i class="far fa-user fa-fw"></i> {{ __('No Miembros') }}</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item disabled" href="#"><i class="fas fa-chart-pie fa-fw"></i> {{ __('Estadísticas') }}</a>
+                  <a class="dropdown-item disabled" href="#"><i class="fas fa-map-marked-alt fa-fw"></i> {{ __('Mapeo') }}</a>
                 @endcan
               </div>
             </li>
 
-            @can('administer')
+            @can('consult')
               <li class="nav-item dropdown">
                   <a id="dropdownCatal" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                    <i class="fas fa-user-tie"></i> {{ __('Privilegios') }}
+                    <i class="fas fa-sitemap"></i> {{ __('Organización') }}
                   </a>
                   <div class="dropdown-menu" aria-labelledby="dropdownCatal">
-                    <a class="dropdown-item" href="{{ route('villages.index') }}"><i class="fas fa-map-marked fa-fw"></i> {{ __('Poblados') }}</a>
-                    <a class="dropdown-item" href="{{ route('campus.index') }}"><i class="fas fa-place-of-worship fa-fw"></i> {{ __('Sedes') }}</a>
-                    <a class="dropdown-item" href="{{ route('privileges.index') }}"><i class="fas fa-user-tie fa-fw"></i> {{ __('Privilegios') }}</a>
-                    <a class="dropdown-item" href="{{ route('privilegeroles.index') }}"><i class="fas fa-id-card-alt fa-fw"></i> {{ __('Puestos en Privilegios') }}</a>
+                    <a class="dropdown-item" href="#"><i class="fas fa-user-tie fa-fw"></i> {{ __('Privilegios') }}</a>
+                    @can('administer')
+                      <a class="dropdown-item disabled" href="#"><i class="fas fa-user-lock fa-fw"></i> {{ __('Disciplinas') }}</a>                      
+                    @endcan
                   </div>
               </li>
+            @endcan
 
+            @can('administer')              
               <li class="nav-item dropdown">
                 <a id="dropdownAdmin" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                   <i class="fas fa-user-shield"></i> {{ __('Administrar') }}
@@ -62,7 +67,7 @@
                 <div class="dropdown-menu" aria-labelledby="dropdownAdmin">
                   <a class="dropdown-item" href="{{ route('users.index') }}"><i class="fas fa-user-cog fa-fw"></i> {{ __('Usuarios') }}</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{{ route('villages.index') }}"><i class="fas fa-map-marked fa-fw"></i> {{ __('Poblados') }}</a>
+                  <a class="dropdown-item" href="{{ route('villages.index') }}"><i class="fas fa-map-marked-alt fa-fw"></i> {{ __('Poblados') }}</a>
                   <a class="dropdown-item" href="{{ route('campus.index') }}"><i class="fas fa-place-of-worship fa-fw"></i> {{ __('Sedes') }}</a>
                   <a class="dropdown-item" href="{{ route('privileges.index') }}"><i class="fas fa-user-tie fa-fw"></i> {{ __('Privilegios') }}</a>
                   <a class="dropdown-item" href="{{ route('privilegeroles.index') }}"><i class="fas fa-id-card-alt fa-fw"></i> {{ __('Puestos en Privilegios') }}</a>
@@ -78,7 +83,7 @@
             @auth
               <li class="nav-item dropdown">
                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                  {{ Auth::user()->role_name }}: {{ Auth::user()->nickname }}
+                  <i class="fas fa-user-circle"></i> {{ Auth::user()->role_name }}: {{ Auth::user()->nickname }}
                 </a>
 
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

@@ -3,9 +3,24 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class PrivilegeHistory extends Model
+class PrivilegeHistory extends Pivot
 {
     use HasFactory;
+
+    protected $table = 'privilege_histories';
+
+    protected $fillable = [
+        'person_id',
+        'privilege_id',
+        'privilege_role_id',
+        'start_date',
+        'end_date'
+    ];
+
+    public function role()
+    {
+        return $this->belongsTo(PrivilegeRole::class, 'privilege_role_id');
+    }
 }

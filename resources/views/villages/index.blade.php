@@ -4,7 +4,7 @@
   <div class="container">
     <div class="row justify-content-center mb-3">
       <div class="col-md-10 d-flex justify-content-between align-items-baseline">
-        <h2><i class="fas fa-map-marked"></i> Poblados</h2>
+        <h2><i class="fas fa-map-marked-alt"></i> Poblados</h2>
         <div>
           <a href="{{ route('village.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Agregar</a>
         </div>

@@ -9,6 +9,7 @@ use App\Http\Controllers\PrivilegeRoleController;
 use App\Http\Controllers\VillageController;
 use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\PersonController;
+use App\Http\Controllers\AssignmentController;
 
 use App\Http\Controllers\Auth\LoginController;
 
@@ -98,8 +99,11 @@ Route::prefix('/user')->group( function() {
 // // Route::resource('people', PersonController::class);
 Route::get('members', [PersonController::class, 'index'])->name('people.index');
 Route::get('nomembers', [PersonController::class, 'no_members'])->name('people.nomembers');
+Route::get('nomember/{person}', [PersonController::class, 'show_nomember']);
 Route::prefix('/member')->group( function() {
     Route::get('/{person}',  [PersonController::class, 'show'])->name('person.show');
     Route::patch('/{person}',  [PersonController::class, 'update'])->name('person.update');
     Route::get('/{person}/edit',  [PersonController::class, 'edit'])->name('person.edit');
 });
+
+Route::resource('assignments', AssignmentController::class);

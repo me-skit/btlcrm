@@ -1,185 +1,149 @@
-<div class="modal-header">
-  <h5 class="modal-title" id="detailsModalLabel">
-    <b>
-      <i class="fas fa-address-card"></i> {{ $person->full_name }}
-    </b>
-  </h5>
-  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-</div>
-<div class="modal-body">
-  <div class="row">
-    <div class="col-lg-6">
-      Rol familiar:
-      <b>
-        {{ $family->pivot->family_role == 1 ? "Padre" : ($family->pivot->family_role == 2 ? "Madre" : ($family->pivot->family_role == 3 ? "Hijo" : "Hija")) }}
-      </b>
-    </div>
-  </div>
-  
-  <div class="row">
-    <div class="col-lg-6">
-      Estado civil:
-      <b>
-        @if ($person->sex == 'M')
-          {{ $person->status == 1 ? "Casado" : ($person->status == 2 ? "Soltero" : "Unido") }}
-        @else
-          {{ $person->status == 1 ? "Casada" : ($person->status == 2 ? "Soltera" : "Unida") }}
-        @endif
-      </b>
-    </div>
-    <div class="col-lg-6">
-      Sexo:
-      <b>
-        {{ $person->sex == 'M' ? "Masculino" : "Femenino" }}
-      </b>
-    </div>
-  </div>            
-  
-  <div class="row">
-    <div class="col-lg-6">
-      Fecha de nacimiento:
-      <b>
-        {{ \Carbon\Carbon::parse($person->birthday)->format('d/m/Y')}}
-      </b>
-    </div>
-    <div class="col-lg-6">
-      Edad:
-      <b>
-        @if ($person->death_date)
-          {{ floor((strtotime($person->death_date) -  strtotime($person->birthday)) / 31536000) }}
-        @else
-          {{ \Carbon\Carbon::parse($person->birthday)->age }}
-        @endif
-      </b>
-    </div>
-  </div>
-  
-  <div class="row">
-    <div class="col-lg-6">
-      Teléfono personal:
-      <b>
-        {{ $person->cellphone }}
-      </b>
-    </div>
-    <div class="col-lg-6">
-      e-mail:
-      <b>
-        {{ $person->e_mail }}
-      </b>
-    </div>        
-  </div>
-  
-  @if ($person->diseases)
-    <div class="row">
-      <div class="col-lg-12">
-        Enfermedades:
-        @foreach($person->diseases as $disease)
-          <h5 class="d-inline">
-            <span class="badge badge-danger font-weight-normal">
-              {{ $disease }}
-            </span>
-          </h5>
-        @endforeach
-      </div>
-    </div>
-  @endif
-  
-  @if($person->handicaps)
-    <div class="row">
-      <div class="col-lg-12">
-        Discapacidades:
-        @foreach($person->handicaps as $handicap)
-          <h5 class="d-inline">
-            <span class="badge badge-danger font-weight-normal">
-              {{ $handicap }}
-            </span>
-          </h5>
-        @endforeach
-      </div>
-    </div>
-  @endif
-  
-  <hr>
-  
-  <div class="row">
-    <div class="col-lg-6">
-      Aceptado:
-      <b>
-        {!! $person->membership->accepted ? "Si" : "<span class='text-danger'>No</span>" !!}
-      </b>
-    </div>
-    <div class="col-lg-6">
-      Fecha que aceptó:
-      <b>
-        {{ $person->membership->date_accepted }}
-      </b>
-    </div>
-  </div>
-  
-  <div class="row">
-    <div class="col-lg-6">
-      @if ($person->sex == 'M')
-        Bautizado:
-      @else
-        Bautizada:
-      @endif
-      <b>
-        {!! $person->membership->baptized ? "Si" : "<span class='text-danger'>No</span>" !!}
-      </b>
-    </div>
-    <div class="col-lg-6">
-      Fecha de bautizo:
-      <b>
-        {{ $person->membership->date_accepted }}
-      </b>
-    </div>
-  </div>
+@extends('layouts.app')
 
-  <div class="row">
-    <div class="col-lg-6">
-      @if (!$person->death_date)
-      Asiste a la iglesia:
-        <b>
-          {!! $person->membership->attend_church ? ($person->membership->attend_church == 1 ? "Si" : "Asiste a otra iglesia") : "<span class='font-weight-bold'>No</span>" !!}
-        </b>
-      @endif
+@section('content')
+<div class="container">
+  <div class="card">
+    <div class="card-header" id="card-header" data-id="{{ $person->id }}">
+      <b><i class="fas fa-address-card"></i> {{ $person->full_name }}</b>
     </div>
-    <div class="col-lg-6">
-      Cede:
-      <b>
-        {{ $person->membership->campus_id ? $person->membership->campus->name : "" }}
-      </b>
-    </div>
-  </div>
+    <div class="card-body">
 
-  <div class="row">
-    <div class="col-lg-6">
-      Recibió discipulado:
-      <b>
-        {{ $person->membership->discipleship ? "Si" : "No"}}
-      </b>
-    </div>
-    <div class="col-lg-6">
+      @include('people.details')
+
+      <div id="privileges" class="mt-1 mb-2">
+        @if ($privs_assigned->count())
+          @include('privilegehistory.index')
+        @endif
+      </div>
+
+      <div id="disciplines" class="mt-1 mb-2 ">
+      </div>
+
+      @if ($person->membership->baptized)
+      <hr>
+
+        <p><b>Agregar Privilegios:</b></p>
+
+        <div class="row">
+          <div class="form-group col-sm-7 col-md-7 col-lg-4">
+            <label for="privilege_select">{{ __('Nombre del privilegio') }}<span class="text-danger">*</span></label>
+            <select name="privilege_select" id="privilege_select" class="form-control selectpicker show-tick" data-live-search="true" required>
+              @foreach ($privileges as $privilege)
+                <option value="{{ $privilege->id }}">{{ $privilege->description }}</option>
+              @endforeach
+            </select>
+          </div>
+
+          <div class="form-group col-sm-5 col-md-5 col-lg-3">
+            <label for="privilege_start">{{ __('Inicio (opcional)') }}</label>
+            <input type="date"
+              name="privilege_start"
+              id="privilege_start"
+              class="form-control @error('privilege_start') is-invalid @enderror"
+              value="{{ old('privilege_start') }}"
+            >
+
+            @error('privilege_start')
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+            @enderror
+          </div>
+
+          <div class="form-group col-sm-5 col-md-5 col-lg-3">
+            <label for="privilege_end">{{ __('Fin (opcional)') }}</label>
+            <input type="date"
+              name="privilege_end"
+              id="privilege_end"
+              class="form-control @error('privilege_end') is-invalid @enderror"
+              value="{{ old('privilege_end') }}"
+            >
+
+            @error('privilege_end')
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+            @enderror
+          </div>
+
+          <div class="form-group col-sm-7 col-md-7 col-lg-4">
+            <label for="privilege_role_id">{{ __('Puesto (opcional)') }}</label>
+            <select name="privilege_role_id" id="privilege_role_id" class="form-control selectpicker show-tick" data-live-search="true">
+              <option value="">...</option>
+              @foreach ($privilege_roles as $privilege_role)
+                <option value="{{ $privilege_role->id }}">{{ $privilege_role->description }}</option>
+              @endforeach
+            </select>
+          </div>
+
+          <div class="form-group col-sm-12 col-md-12 col-lg-8 text-right">
+            <label for="" class="text-white d-none d-sm-block">Boton</label>
+            <div>
+              <button class="btn btn-success" id="btn-add-privilege">Agregar</button>
+            </div>
+          </div>
+        </div>
+    
+        <hr>
+
+        <p><b>Agregar Disciplinas:</b></p>
+
+        <div class="row">
+          <div class="form-group col-sm-7 col-md-7 col-lg-4">
+            <label for="discipline_list">{{ __('Tipo') }}<span class="text-danger">*</span></label>
+            <select name="discipline_list" id="discipline_list" class="form-control selectpicker show-tick" required>
+              <option value="3">Tres meses</option>
+              <option value="6">Seis meses</option>
+              <option value="0">Tiempo indefinido</option>
+            </select>
+          </div>
+
+          <div class="form-group col-sm-5 col-md-5 col-lg-3">
+            <label for="discipline_start">{{ __('Inicio') }}<span class="text-danger">*</span></label>
+            <input type="date"
+              name="discipline_start"
+              id="discipline_start"
+              class="form-control @error('discipline_start') is-invalid @enderror"
+              value="{{ old('discipline_start') }}"
+              required
+            >
+
+            @error('discipline_start')
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+            @enderror
+          </div>
+
+          <div class="form-group col-sm-5 col-md-5 col-lg-3">
+            <label for="discipline_end">{{ __('Fin') }}</label>
+            <input type="date"
+              name="discipline_end"
+              id="discipline_end"
+              class="form-control @error('discipline_end') is-invalid @enderror"
+              value="{{ old('discipline_end') }}"
+            >
+
+            @error('discipline_end')
+              <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+              </span>
+            @enderror
+          </div>
+
+          <div class="form-group col-sm-7 col-md-7 col-lg-2 text-right">
+            <label for="" class="text-white d-none d-sm-block">Boton</label>
+            <div>
+              <button class="btn btn-success">Agregar</button>
+            </div>
+          </div>
+        </div>
+      @endif
+
     </div>
   </div>
-  
-  @if ($person->preferences and !$person->death_date)
-    <div class="row">
-      <div class="col-lg-12">
-        Privilegios preferidos:
-        @foreach($person->preferences as $preference)
-          <h5 class="d-inline">
-            <span class="badge badge-warning font-weight-normal">
-              {{ $preference }}
-            </span>
-          </h5>
-        @endforeach
-      </div>
-    </div>
-  @endif
+  <div class="mt-2 text-right">
+    <a href="{{ route('people.index') }}" class="btn btn-dark"><i class="fas fa-angle-double-left"></i> Regresar</a>
+  </div>
 </div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-</div>
+@endsection

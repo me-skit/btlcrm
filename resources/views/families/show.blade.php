@@ -72,8 +72,8 @@
     </div>
 
     <div class="row">
-      <div class="col-md-10 offset-md-1">
-        <a href="{{ route('root') . '/' . $back }}" class="btn btn-dark mr-3"><i class="fas fa-angle-double-left"></i> Regresar</a>
+      <div class="col-md-10 offset-md-1 text-right">
+        <a href="{{ route('root') . '/' . $back }}" class="btn btn-dark"><i class="fas fa-angle-double-left"></i> Regresar</a>
       </div>
     </div>
   </div>

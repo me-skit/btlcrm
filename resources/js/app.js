@@ -138,7 +138,7 @@ searchQuery = (query, page = 1, type, id) => {
   .then(response => {
     if (response.ok) return  response.text();
     
-    throw new Error('Something went wrong');
+    throw new Error('Algo salio mal, intente de nuevo');
   })
   .then(data => {
     pagination.innerHTML = data;
@@ -248,7 +248,7 @@ if (privilege_query) {
 showPersonDetails = (event, button) => {
   event.preventDefault();
   let modal_content = document.getElementById('modal-content');
-  fetch('/member/' + button.dataset.id)
+  fetch('/nomember/' + button.dataset.id)
   .then(response => {
     if (response.ok) return  response.text();
     
@@ -263,7 +263,7 @@ showPersonDetails = (event, button) => {
 }
 
 addShowFunction = () => {
-  let d_buttons = document.getElementsByClassName('btn-p-details');
+  let d_buttons = document.getElementsByClassName('btn-f-details');
   if (d_buttons)
   {
     Array.prototype.forEach.call(d_buttons, item => item.addEventListener('click', () => showPersonDetails(event, item)));
@@ -272,3 +272,43 @@ addShowFunction = () => {
 
 addShowFunction();
 
+// adding privileges
+const addp_button = document.getElementById('btn-add-privilege');
+if (addp_button) {
+  addp_button.addEventListener('click', (event) => {
+    let privilege = document.getElementById('privilege_select');
+    let start = document.getElementById('privilege_start');
+    let end = document.getElementById('privilege_end');
+    let person = document.getElementById('card-header');
+    let meta = document.querySelectorAll('meta[name="csrf-token"]')[0];
+    let privileges = document.getElementById('privileges');
+    let privilege_role = document.getElementById('privilege_role_id')
+
+    let _data = {
+      person_id: person.dataset.id,
+      privilege_id: privilege.value,
+      privilege_role_id: privilege_role.value,
+      start_date: start.value,
+      end_date: end.value
+    }
+
+    if (meta) {
+      fetch('/assignments', {
+        method: "POST",
+        body: JSON.stringify(_data),
+        headers: { 
+          "X-CSRF-TOKEN": meta.getAttribute('content'),
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      })
+      .then(response => response.text())
+      .then(text => { 
+        privileges.innerHTML = text;
+        start.value = '';
+        end.value = '';
+        privilege_role.value = '';
+      })
+      .catch(err => console.log(err));
+    }
+  });
+}

@@ -19,8 +19,8 @@
             <div class="col-md-9">
               <select name="query_type" id="query_type" class="form-control" required>
                 <option value="1">Por nombre</option>
-                <option value="2">Por Cede</option>
-                <option value="3">Por Preferencia de Privilegio</option>
+                <option value="2">Por cede</option>
+                <option value="3">Por preferencia de privilegio</option>
                 <option value="4">Bautizados</option>
                 <option value="5">No bautizados</option>
                 <option value="6">Aceptados</option>
@@ -75,7 +75,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     <div class="modal-content" id="modal-content">
 
     </div>
