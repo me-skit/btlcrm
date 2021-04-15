@@ -16,130 +16,153 @@
         @endif
       </div>
 
-      <div id="disciplines" class="mt-1 mb-2 ">
-      </div>
+      @can('administer')
+        <div id="disciplines" class="mt-1 mb-2 ">
+          @if ($disciplines->count())
+            @include('disciplinehistory.index')
+          @endif
+        </div>
 
-      @if ($person->membership->baptized)
-      <hr>
+        @if ($person->membership->baptized)
+          <hr>
 
-        <p><b>Agregar Privilegios:</b></p>
+          <p><b>Agregar Privilegios:</b></p>
 
-        <div class="row">
-          <div class="form-group col-sm-7 col-md-7 col-lg-4">
-            <label for="privilege_select">{{ __('Nombre del privilegio') }}<span class="text-danger">*</span></label>
-            <select name="privilege_select" id="privilege_select" class="form-control selectpicker show-tick" data-live-search="true" required>
-              @foreach ($privileges as $privilege)
-                <option value="{{ $privilege->id }}">{{ $privilege->description }}</option>
-              @endforeach
-            </select>
-          </div>
+          <div class="row" id="add-privileges">
+            <div class="form-group col-sm-7 col-md-7 col-lg-4">
+              <label for="privilege_select">{{ __('Nombre del privilegio') }}<span class="text-danger">*</span></label>
+              <select name="privilege_select" id="privilege_select" class="form-control selectpicker show-tick" data-live-search="true" required>
+                @foreach ($privileges as $privilege)
+                  <option value="{{ $privilege->id }}">{{ $privilege->description }}</option>
+                @endforeach
+              </select>
+            </div>
 
-          <div class="form-group col-sm-5 col-md-5 col-lg-3">
-            <label for="privilege_start">{{ __('Inicio (opcional)') }}</label>
-            <input type="date"
-              name="privilege_start"
-              id="privilege_start"
-              class="form-control @error('privilege_start') is-invalid @enderror"
-              value="{{ old('privilege_start') }}"
-            >
+            <div class="form-group col-sm-5 col-md-5 col-lg-3">
+              <label for="privilege_start">{{ __('Inicio (opcional)') }}</label>
+              <input type="date"
+                name="privilege_start"
+                id="privilege_start"
+                class="form-control @error('privilege_start') is-invalid @enderror"
+                value="{{ old('privilege_start') }}"
+              >
 
-            @error('privilege_start')
-              <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-              </span>
-            @enderror
-          </div>
+              @error('privilege_start')
+                <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+              @enderror
+            </div>
 
-          <div class="form-group col-sm-5 col-md-5 col-lg-3">
-            <label for="privilege_end">{{ __('Fin (opcional)') }}</label>
-            <input type="date"
-              name="privilege_end"
-              id="privilege_end"
-              class="form-control @error('privilege_end') is-invalid @enderror"
-              value="{{ old('privilege_end') }}"
-            >
+            <div class="form-group col-sm-5 col-md-5 col-lg-3">
+              <label for="privilege_end">{{ __('Fin (opcional)') }}</label>
+              <input type="date"
+                name="privilege_end"
+                id="privilege_end"
+                class="form-control @error('privilege_end') is-invalid @enderror"
+                value="{{ old('privilege_end') }}"
+              >
 
-            @error('privilege_end')
-              <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-              </span>
-            @enderror
-          </div>
+              @error('privilege_end')
+                <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+              @enderror
+            </div>
 
-          <div class="form-group col-sm-7 col-md-7 col-lg-4">
-            <label for="privilege_role_id">{{ __('Puesto (opcional)') }}</label>
-            <select name="privilege_role_id" id="privilege_role_id" class="form-control selectpicker show-tick" data-live-search="true">
-              <option value="">...</option>
-              @foreach ($privilege_roles as $privilege_role)
-                <option value="{{ $privilege_role->id }}">{{ $privilege_role->description }}</option>
-              @endforeach
-            </select>
-          </div>
+            <div class="form-group col-sm-7 col-md-7 col-lg-4">
+              <label for="privilege_role_id">{{ __('Puesto (opcional)') }}</label>
+              <select name="privilege_role_id" id="privilege_role_id" class="form-control selectpicker show-tick" data-live-search="true">
+                <option value="">Sin puesto</option>
+                @foreach ($privilege_roles as $privilege_role)
+                  <option value="{{ $privilege_role->id }}">{{ $privilege_role->description }}</option>
+                @endforeach
+              </select>
+            </div>
 
-          <div class="form-group col-sm-12 col-md-12 col-lg-8 text-right">
-            <label for="" class="text-white d-none d-sm-block">Boton</label>
-            <div>
-              <button class="btn btn-success" id="btn-add-privilege">Agregar</button>
+            <div class="form-group col-sm-12 col-md-12 col-lg-8 text-right">
+              <label for="" class="text-white d-none d-lg-block d-xl-block">Boton</label>
+              <div>
+                <button class="btn btn-success" id="btn-add-privilege">Agregar</button>
+              </div>
             </div>
           </div>
-        </div>
-    
-        <hr>
+      
+          <hr>
 
-        <p><b>Agregar Disciplinas:</b></p>
+          <p><b>Agregar Disciplinas:</b></p>
 
-        <div class="row">
-          <div class="form-group col-sm-7 col-md-7 col-lg-4">
-            <label for="discipline_list">{{ __('Tipo') }}<span class="text-danger">*</span></label>
-            <select name="discipline_list" id="discipline_list" class="form-control selectpicker show-tick" required>
-              <option value="3">Tres meses</option>
-              <option value="6">Seis meses</option>
-              <option value="0">Tiempo indefinido</option>
-            </select>
-          </div>
+          <form action="#">
+            <div class="row">
+              <div class="form-group col-sm-7 col-md-7 col-lg-4">
+                <label for="discipline_select">{{ __('Tipo') }}<span class="text-danger">*</span></label>
+                <select name="discipline_select" id="discipline_select" class="form-control selectpicker show-tick" required>
+                  <option value="3">Tres meses</option>
+                  <option value="6">Seis meses</option>
+                  <option value="0">Tiempo indefinido</option>
+                </select>
+              </div>
 
-          <div class="form-group col-sm-5 col-md-5 col-lg-3">
-            <label for="discipline_start">{{ __('Inicio') }}<span class="text-danger">*</span></label>
-            <input type="date"
-              name="discipline_start"
-              id="discipline_start"
-              class="form-control @error('discipline_start') is-invalid @enderror"
-              value="{{ old('discipline_start') }}"
-              required
-            >
+              <div class="form-group col-sm-5 col-md-5 col-lg-3">
+                <label for="discipline_start">{{ __('Inicio') }}<span class="text-danger">*</span></label>
+                <input type="date"
+                  name="discipline_start"
+                  id="discipline_start"
+                  class="form-control @error('discipline_start') is-invalid @enderror"
+                  value="{{ old('discipline_start') }}"
+                  required
+                >
 
-            @error('discipline_start')
-              <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-              </span>
-            @enderror
-          </div>
+                @error('discipline_start')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
+              </div>
 
-          <div class="form-group col-sm-5 col-md-5 col-lg-3">
-            <label for="discipline_end">{{ __('Fin') }}</label>
-            <input type="date"
-              name="discipline_end"
-              id="discipline_end"
-              class="form-control @error('discipline_end') is-invalid @enderror"
-              value="{{ old('discipline_end') }}"
-            >
+              <div class="form-group col-sm-5 col-md-5 col-lg-3">
+                <label for="discipline_end">{{ __('Fin') }}</label>
+                <input type="date"
+                  name="discipline_end"
+                  id="discipline_end"
+                  class="form-control @error('discipline_end') is-invalid @enderror"
+                  value="{{ old('discipline_end') }}"
+                >
 
-            @error('discipline_end')
-              <span class="invalid-feedback" role="alert">
-                <strong>{{ $message }}</strong>
-              </span>
-            @enderror
-          </div>
+                @error('discipline_end')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
+              </div>
 
-          <div class="form-group col-sm-7 col-md-7 col-lg-2 text-right">
-            <label for="" class="text-white d-none d-sm-block">Boton</label>
-            <div>
-              <button class="btn btn-success">Agregar</button>
+              <div class="form-group col-sm-4 col-md-3 col-lg-2">
+                <label for="act_number">{{ __('No. Acta') }}<span class="text-danger">*</span></label>
+                <input type="number" min="1"
+                  name="act_number"
+                  id="act_number"
+                  class="form-control @error('act_number') is-invalid @enderror"
+                  value="{{ old('act_number') }}"
+                  required
+                >
+
+                @error('act_number')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
+              </div>
+
+              <div class="form-group col-sm-3 col-md-4 col-lg-12 text-right">
+                <label for="" class="text-white d-none d-sm-block d-md-block d-lg-none">Boton</label>
+                <div>
+                  <button class="btn btn-success" id="btn-add-discipline">Agregar</button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      @endif
-
+          </form>
+        @endif
+      @endcan
     </div>
   </div>
   <div class="mt-2 text-right">

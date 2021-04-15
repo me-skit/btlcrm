@@ -135,7 +135,7 @@
     @if (!$member->death_date)
     Asiste a la iglesia:
       <b>
-        {!! $member->membership->attend_church ? ($member->membership->attend_church == 1 ? "Si" : "Asiste a otra iglesia") : "<span class='font-weight-bold'>No</span>" !!}
+        {{ $member->membership->attendance }}
       </b>
     @endif
   </div>

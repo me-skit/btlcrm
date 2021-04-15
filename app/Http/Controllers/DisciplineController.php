@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Person;
-use App\Models\PrivilegeHistory;
+use App\Models\Discipline;
 
-class AssignmentController extends Controller
+class DisciplineController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -38,18 +38,18 @@ class AssignmentController extends Controller
     {
         $data = $request->validate([
             'person_id' => 'required',
-            'privilege_id' => 'required',
-            'privilege_role_id' => 'nullable',
-            'start_date' => ['nullable', 'date'],
-            'end_date' => ['nullable', 'date']
+            'discipline_type' =>'required',
+            'act_number' => 'required',
+            'start_date' => ['required', 'date'],
+            'end_date' => ['date', 'nullable']
         ]);
 
-        PrivilegeHistory::create($data);
+        Discipline::create($data);
 
         $person = Person::findOrFail($data['person_id']);
-        $privs_assigned = $person->privileges;
+        $disciplines = $person->disciplines;
 
-        return view('privilegehistory.index', compact('privs_assigned'));
+        return view('disciplinehistory.index', compact('disciplines'));        
     }
 
     /**

@@ -1,62 +1,104 @@
 <div class="row">
   <div class="col-lg-6">
-    Rol familiar:
-    <b>
-      {{ $family->pivot->family_role == 1 ? "Padre" : ($family->pivot->family_role == 2 ? "Madre" : ($family->pivot->family_role == 3 ? "Hijo" : "Hija")) }}
-    </b>
+    <div class="row">
+      <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
+        Rol familiar:
+      </div>
+      <div class="col-7 col-sm-8 col-md-9 col-lg-7">
+        <b>
+          {{ $family->pivot->family_role == 1 ? "Padre" : ($family->pivot->family_role == 2 ? "Madre" : ($family->pivot->family_role == 3 ? "Hijo" : "Hija")) }}
+        </b>
+      </div>
+    </div>
   </div>
 </div>
 
 <div class="row">
   <div class="col-lg-6">
-    Estado civil:
-    <b>
-      @if ($person->sex == 'M')
-        {{ $person->status == 1 ? "Casado" : ($person->status == 2 ? "Soltero" : "Unido") }}
-      @else
-        {{ $person->status == 1 ? "Casada" : ($person->status == 2 ? "Soltera" : "Unida") }}
-      @endif
-    </b>
+    <div class="row">
+      <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
+        Estado civil:
+      </div>
+      <div class="col-7 col-sm-8 col-md-9 col-lg-7">
+        <b>
+          @if ($person->sex == 'M')
+            {{ $person->status == 1 ? "Casado" : ($person->status == 2 ? "Soltero" : "Unido") }}
+          @else
+            {{ $person->status == 1 ? "Casada" : ($person->status == 2 ? "Soltera" : "Unida") }}
+          @endif
+        </b>
+      </div>
+    </div>
   </div>
   <div class="col-lg-6">
-    Sexo:
-    <b>
-      {{ $person->sex == 'M' ? "Masculino" : "Femenino" }}
-    </b>
+    <div class="row">
+      <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
+        Sexo:
+      </div>
+      <div class="col-7 col-sm-8 col-md-9 col-lg-7">
+        <b>
+          {{ $person->sex == 'M' ? "Masculino" : "Femenino" }}
+        </b>
+      </div>
+    </div>
   </div>
 </div>            
 
 <div class="row">
   <div class="col-lg-6">
-    Fecha de nacimiento:
-    <b>
-      {{ \Carbon\Carbon::parse($person->birthday)->format('d/m/Y')}}
-    </b>
+    <div class="row">
+      <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
+        Fecha de nacimiento:
+      </div>
+      <div class="col-7 col-sm-8 col-md-9 col-lg-7">
+        <b>
+          {{ \Carbon\Carbon::parse($person->birthday)->format('d/m/Y')}}
+        </b>
+      </div>
+    </div>
   </div>
   <div class="col-lg-6">
-    Edad:
-    <b>
-      @if ($person->death_date)
-        {{ floor((strtotime($person->death_date) -  strtotime($person->birthday)) / 31536000) }}
-      @else
-        {{ \Carbon\Carbon::parse($person->birthday)->age }}
-      @endif
-    </b>
+    <div class="row">
+      <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
+        Edad:
+      </div>
+      <div class="col-7 col-sm-8 col-md-9 col-lg-7">
+        <b>
+          @if ($person->death_date)
+            {{ floor((strtotime($person->death_date) -  strtotime($person->birthday)) / 31536000) }}
+          @else
+            {{ \Carbon\Carbon::parse($person->birthday)->age }}
+          @endif
+        </b>
+      </div>
+    </div>
   </div>
 </div>
 
 <div class="row">
   <div class="col-lg-6">
-    Teléfono personal:
-    <b>
-      {{ $person->cellphone }}
-    </b>
+    <div class="row">
+      <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
+        Teléfono personal:
+      </div>
+      <div class="col-7 col-sm-8 col-md-9 col-lg-7">
+        <b>
+          {{ $person->cellphone }}
+        </b>
+      </div>
+    </div>
   </div>
   <div class="col-lg-6">
-    e-mail:
-    <b>
-      {{ $person->e_mail }}
-    </b>
+    <div class="row">
+      <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
+        e-mail:
+      </div>
+      <div class="col-7 col-sm-8 col-md-9 col-lg-7">
+        <b>
+          {{ $person->e_mail }}
+        </b>
+      </div>
+    </div>
   </div>        
 </div>
 
@@ -94,61 +136,109 @@
 
 <div class="row">
   <div class="col-lg-6">
-    Aceptado:
-    <b>
-      {!! $person->membership->accepted ? "Si" : "<span class='text-danger'>No</span>" !!}
-    </b>
+    <div class="row">
+      <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
+        Aceptado:
+      </div>
+      <div class="col-7 col-sm-8 col-md-9 col-lg-7">
+        <b>
+          {{ $person->membership->accepted ? "Si" : "No" }}
+        </b>
+      </div>
+    </div>
   </div>
   <div class="col-lg-6">
-    Fecha que aceptó:
-    <b>
-      {{ $person->membership->date_accepted }}
-    </b>
+    <div class="row">
+      <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
+        Fecha que aceptó:
+      </div>
+      <div class="col-7 col-sm-8 col-md-9 col-lg-7">
+        <b>
+          @if ($person->membership->date_accepted)
+            {{ \Carbon\Carbon::parse($person->membership->date_accepted)->format('d/m/Y') }}
+          @endif
+        </b>
+      </div>
+    </div>
   </div>
 </div>
 
+
+
 <div class="row">
   <div class="col-lg-6">
-    @if ($person->sex == 'M')
-      Bautizado:
-    @else
-      Bautizada:
-    @endif
-    <b>
-      {!! $person->membership->baptized ? "Si" : "<span class='text-danger'>No</span>" !!}
-    </b>
+    <div class="row">
+      <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
+        @if ($person->sex == 'M')
+          Bautizado:
+        @else
+          Bautizada:
+        @endif
+      </div>
+      <div class="col-7 col-sm-8 col-md-9 col-lg-7">
+        <b>
+          {{ $person->membership->baptized ? "Si" : "No" }}
+        </b>
+      </div>
+    </div>
   </div>
   <div class="col-lg-6">
-    Fecha de bautizo:
-    <b>
-      {{ $person->membership->date_accepted }}
-    </b>
+    <div class="row">
+      <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
+        Fecha de bautizo:
+      </div>
+      <div class="col-7 col-sm-8 col-md-9 col-lg-7">
+        <b>
+          @if ($person->membership->date_baptized)
+            {{ \Carbon\Carbon::parse($person->membership->date_baptized)->format('d/m/Y') }}          
+          @endif
+        </b>
+      </div>
+    </div>
   </div>
 </div>
 
 <div class="row">
   <div class="col-lg-6">
     @if (!$person->death_date)
-    Asiste a la iglesia:
-      <b>
-        {!! $person->membership->attend_church ? ($person->membership->attend_church == 1 ? "Si" : "Asiste a otra iglesia") : "<span class='font-weight-bold'>No</span>" !!}
-      </b>
+    <div class="row">
+      <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
+        Asiste a la iglesia:
+      </div>
+      <div class="col-7 col-sm-8 col-md-9 col-lg-7">
+        <b>
+          {{ $person->membership->attendance }}
+        </b>
+      </div>
+    </div>
     @endif
   </div>
   <div class="col-lg-6">
-    Cede:
-    <b>
-      {{ $person->membership->campus_id ? $person->membership->campus->name : "" }}
-    </b>
+    <div class="row">
+      <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
+        Cede:
+      </div>
+      <div class="col-7 col-sm-8 col-md-9 col-lg-7">
+        <b>
+          {{ $person->membership->campus_id ? $person->membership->campus->name : "" }}
+        </b>
+      </div>
+    </div>
   </div>
 </div>
 
 <div class="row">
   <div class="col-lg-6">
-    Recibió discipulado:
-    <b>
-      {{ $person->membership->discipleship ? "Si" : "No"}}
-    </b>
+    <div class="row">
+      <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
+        Recibió discipulado:
+      </div>
+      <div class="col-7 col-sm-8 col-md-9 col-lg-7">
+        <b>
+          {{ $person->membership->discipleship ? "Si" : "No"}}
+        </b>
+      </div>
+    </div>
   </div>
   <div class="col-lg-6">
   </div>

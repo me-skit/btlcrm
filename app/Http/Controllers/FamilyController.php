@@ -195,7 +195,7 @@ class FamilyController extends Controller
             'attend_church' => ['required', 'numeric']
         ]);
 
-        // attend_church in membership could be: 0:no, 1:yes, 2:another church
+        // attend_church in membership could be: 0:no, 1:yes, 2:another church, 3:problem attending
         $attend = $membership_data['attend_church'];
         if ($attend == '0' or $attend == '2')
         {
@@ -287,9 +287,9 @@ class FamilyController extends Controller
             'attend_church' => ['required', 'numeric']
         ]);
 
-        // attend_church in membership could be: 0:no, 1:yes, 2:another church
+        // attend_church in membership could be: 0:no, 1:yes, 2:another church, 3:problem attending
         $attend = $membership_data['attend_church'];
-        if ($attend == '1')
+        if ($attend == '1' or $attend == '3')
         {
             // status in membership could be: 0:inactive, 1:active, 2:passed away
             $membership_data['status'] = '1';

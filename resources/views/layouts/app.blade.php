@@ -59,7 +59,7 @@
               </li>
             @endcan
 
-            @can('administer')              
+            @can('administer')
               <li class="nav-item dropdown">
                 <a id="dropdownAdmin" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                   <i class="fas fa-user-shield"></i> {{ __('Administrar') }}

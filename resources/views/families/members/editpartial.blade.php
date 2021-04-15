@@ -112,6 +112,7 @@
           <option value="1" {{ $person->membership->attend_church == 1 ? 'selected' : '' }}>Si</option>
           <option value="0" {{ $person->membership->attend_church ? '' : 'selected' }}>No</option>
           <option value="2" {{ $person->membership->attend_church == 2 ? 'selected' : '' }}>Si, otra iglesia</option>
+          <option value="3" {{ $person->membership->attend_church == 3 ? 'selected' : '' }}>Con problemas físicos para asistir</option>
         </select>
       </div>    
     </div>

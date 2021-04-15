@@ -65,6 +65,12 @@ class Person extends Model
                     ->orderBy('privilege_histories.created_at', 'DESC');
     }
 
+    public function disciplines()
+    {
+        return $this->hasMany(Discipline::class)
+                    ->orderBy('created_at', 'DESC');
+    }
+
     public function getFullNameAttribute() {
         $fullname = [$this->first_name, $this->second_name, $this->third_name, $this->first_surname, $this->second_surname];
         return implode(' ', array_filter($fullname));

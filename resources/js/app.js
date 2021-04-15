@@ -138,7 +138,7 @@ searchQuery = (query, page = 1, type, id) => {
   .then(response => {
     if (response.ok) return  response.text();
     
-    throw new Error('Algo salio mal, intente de nuevo');
+    throw new Error('No se pudo obtener la consulta, intente de nuevo');
   })
   .then(data => {
     pagination.innerHTML = data;
@@ -306,9 +306,136 @@ if (addp_button) {
         privileges.innerHTML = text;
         start.value = '';
         end.value = '';
-        privilege_role.value = '';
       })
       .catch(err => console.log(err));
     }
   });
 }
+
+// adding disciplines and more stuff
+const privilege_select = document.getElementById('discipline_select');
+if (privilege_select) {
+  privilege_select.addEventListener('change', () => {
+    const discipline_start = document.getElementById('discipline_start');
+    if (discipline_start.value) {
+      const discipline_end = document.getElementById('discipline_end');
+      let the_date = new Date(discipline_start.value.replace(/-/g, '\/'));
+      let new_date = new Date(discipline_start.value.replace(/-/g, '\/'));;
+  
+      switch (privilege_select.value) {
+        case '3':
+          new_date.setMonth(the_date.getMonth() + 3);
+          new_date.setTime(new_date.getTime() - 86400000);
+          discipline_end.value = new_date.getFullYear().toString() 
+                                 + '-' + (new_date.getMonth() + 1).toString().padStart(2, 0)
+                                 + '-' + new_date.getDate().toString().padStart(2, 0);
+          break;
+        case '6':
+          new_date.setMonth(the_date.getMonth() + 6);
+          new_date.setTime(new_date.getTime() - 86400000);
+          discipline_end.value = new_date.getFullYear().toString() 
+                                 + '-' + (new_date.getMonth() + 1).toString().padStart(2, 0)
+                                 + '-' + new_date.getDate().toString().padStart(2, 0);
+          break;
+        default:
+          discipline_end.value = '';
+          break;
+      }      
+    }
+  });
+}
+
+const discipline_start = document.getElementById('discipline_start');
+if (discipline_start) {
+  discipline_start.addEventListener('change', () => {
+    const privilege_select = document.getElementById('discipline_select');
+    const discipline_end = document.getElementById('discipline_end');
+    let the_date = new Date(discipline_start.value.replace(/-/g, '\/'));
+    let new_date = new Date(discipline_start.value.replace(/-/g, '\/'));;
+
+    switch (privilege_select.value) {
+      case '3':
+        new_date.setMonth(the_date.getMonth() + 3);
+        new_date.setTime(new_date.getTime() - 86400000);
+        discipline_end.value = new_date.getFullYear().toString() 
+                               + '-' + (new_date.getMonth() + 1).toString().padStart(2, 0)
+                               + '-' + new_date.getDate().toString().padStart(2, 0);
+        break;
+      case '6':
+        new_date.setMonth(the_date.getMonth() + 6);
+        new_date.setTime(new_date.getTime() - 86400000);
+        discipline_end.value = new_date.getFullYear().toString() 
+                               + '-' + (new_date.getMonth() + 1).toString().padStart(2, 0)
+                               + '-' + new_date.getDate().toString().padStart(2, 0);
+        break;
+      default:
+        discipline_end.value = '';
+        break;
+    }
+  });
+}
+
+const addd_button = document.getElementById('btn-add-discipline');
+if (addd_button) {
+  addd_button.addEventListener('click', (event) => {
+    event.preventDefault();
+    let discipline = document.getElementById('discipline_select');
+    let start = document.getElementById('discipline_start');
+    let end = document.getElementById('discipline_end');
+    let person = document.getElementById('card-header');
+    let meta = document.querySelectorAll('meta[name="csrf-token"]')[0];
+    let disciplines = document.getElementById('disciplines');
+    let act = document.getElementById('act_number');
+
+    let _data = {
+      person_id: person.dataset.id,
+      discipline_type: discipline.value,
+      act_number: act.value,
+      start_date: start.value,
+      end_date: end.value
+    }
+
+    if (meta && start.value && act.value) {
+      fetch('/disciplines', {
+        method: "POST",
+        body: JSON.stringify(_data),
+        headers: { 
+          "X-CSRF-TOKEN": meta.getAttribute('content'),
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      })
+      .then(response => response.text())
+      .then(text => { 
+        disciplines.innerHTML = text;
+        start.value = '';
+        end.value = '';
+        act.value = '';
+      })
+      .catch(err => console.log(err));
+    }
+  });
+}
+
+// // the location thing
+
+// let btn_location = document.getElementById('btn-location');
+// if (btn_location) {
+//   btn_location.addEventListener('click', event => {
+//     let location = document.getElementById('location');
+
+//     fetch(location.value)
+//     .then(response => {
+//       if (response.ok) return  response.text();
+      
+//       throw new Error('No se pudo obtener la consulta, intente de nuevo');
+//     })
+//     .then(data => {
+//       alert(data);
+//     })
+//     .catch(error => {
+//       console.log(error);
+//     });
+
+
+//   });
+// }

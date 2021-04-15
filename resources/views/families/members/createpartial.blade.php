@@ -114,6 +114,7 @@
           <option value="1">Si</option>
           <option value="0">No</option>
           <option value="2">Si, otra iglesia</option>
+          <option value="3">Con problemas físicos para asistir</option>
         </select>
       </div>    
     </div>

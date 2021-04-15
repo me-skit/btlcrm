@@ -23,4 +23,9 @@ class PrivilegeHistory extends Pivot
     {
         return $this->belongsTo(PrivilegeRole::class, 'privilege_role_id');
     }
+
+    public function getIsActiveAttribute()
+    {
+        return $this->end_date ? ($this->end_date < date("Y-m-d") ? false : true) : true;
+    }
 }

@@ -14,10 +14,11 @@ class CreateSuspensionsTable extends Migration
     public function up()
     {
         Schema::create('suspensions', function (Blueprint $table) {
-            $table->id();
             $table->foreignId('privilege_history_id')->constrained();
             $table->foreignId('discipline_id')->constrained();
             $table->timestamps();
+
+            $table->primary(['privilege_history_id', 'discipline_id']);
         });
     }
 

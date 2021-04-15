@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CampusController;
 use App\Http\Controllers\PrivilegeController;
@@ -10,8 +10,7 @@ use App\Http\Controllers\VillageController;
 use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\PersonController;
 use App\Http\Controllers\AssignmentController;
-
-use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\DisciplineController;
 
 /*
 |--------------------------------------------------------------------------
@@ -107,3 +106,5 @@ Route::prefix('/member')->group( function() {
 });
 
 Route::resource('assignments', AssignmentController::class);
+
+Route::resource('disciplines', DisciplineController::class);

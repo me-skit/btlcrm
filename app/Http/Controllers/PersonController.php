@@ -205,6 +205,7 @@ class PersonController extends Controller
 
         $family = $person->family();
         $privs_assigned = $person->privileges;
+        $disciplines = $person->disciplines;
         $privileges = Privilege::orderBy('description')
                         ->where(function ($query) use ($person) {
                             $query->whereNull('preferred_sex')
@@ -217,7 +218,7 @@ class PersonController extends Controller
                         ->get();
         $privilege_roles = PrivilegeRole::orderBy('description')->get();
 
-        return view('people.show', compact('person', 'family', 'privileges', 'privs_assigned', 'privilege_roles'));
+        return view('people.show', compact('person', 'family', 'privileges', 'privs_assigned', 'privilege_roles', 'disciplines'));
     }
 
     public function show_nomember(Person $person)
@@ -296,7 +297,7 @@ class PersonController extends Controller
 
         // attend_church in membership could be: 0:no, 1:yes, 2:another church
         $attend = $membership_data['attend_church'];
-        if ($attend == '1')
+        if ($attend == '1' or $attend == '3')
         {
             // status in membership could be: 0:inactive, 1:active, 2:passed away
             $membership_data['status'] = '1';
