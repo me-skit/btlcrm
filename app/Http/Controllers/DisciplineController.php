@@ -69,9 +69,9 @@ class DisciplineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Discipline $discipline)
     {
-        //
+        return view('disciplinehistory.edit', compact('discipline'));
     }
 
     /**
@@ -81,9 +81,22 @@ class DisciplineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Discipline $discipline)
     {
-        //
+        $data = $request->validate([
+            'discipline_type' =>'required',
+            'act_number' => 'required',
+            'start_date' => ['required', 'date'],
+            'end_date' => ['date', 'nullable']
+        ]);
+
+        $discipline->fill($data);
+        $discipline->save();
+
+        $person = $discipline->person;
+        $disciplines = $person->disciplines;
+
+        return view('disciplinehistory.index', compact('disciplines'));         
     }
 
     /**

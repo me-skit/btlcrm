@@ -60,7 +60,7 @@ class Person extends Model
     public function privileges()
     {
         return $this->belongsToMany(Privilege::class, 'privilege_histories')
-                    ->withPivot('privilege_role_id', 'start_date', 'end_date')
+                    ->withPivot('id', 'privilege_role_id', 'start_date', 'end_date')
                     ->using(PrivilegeHistory::class)
                     ->orderBy('privilege_histories.created_at', 'DESC');
     }

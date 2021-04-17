@@ -3,7 +3,6 @@ const { Alert } = require('bootstrap');
 require('./bootstrap');
 
 // attend church selector change
-
 changeCampusValue = (value, campus) => {
   if (value == 0) {
     campus.value = '';
@@ -32,7 +31,6 @@ if (attend) {
 }
 
 // hiding privileges
-
 toggleHidePrivilege = (value, allchecks, males, females, singles, married, sex_select, status_select, role) => {
   Array.prototype.forEach.call(allchecks, item => item.classList.remove('d-none'));
   let family_names = document.getElementById('family_names');
@@ -244,7 +242,6 @@ if (privilege_query) {
 }
 
 // person details
-
 showPersonDetails = (event, button) => {
   event.preventDefault();
   let modal_content = document.getElementById('modal-content');
@@ -276,23 +273,25 @@ addShowFunction();
 const addp_button = document.getElementById('btn-add-privilege');
 if (addp_button) {
   addp_button.addEventListener('click', (event) => {
-    let privilege = document.getElementById('privilege_select');
-    let start = document.getElementById('privilege_start');
-    let end = document.getElementById('privilege_end');
-    let person = document.getElementById('card-header');
     let meta = document.querySelectorAll('meta[name="csrf-token"]')[0];
-    let privileges = document.getElementById('privileges');
-    let privilege_role = document.getElementById('privilege_role_id')
+    let privilege = document.getElementById('privilege_select');
+    
+    if (meta && privilege.value) {
+      event.preventDefault();
+      let start = document.getElementById('privilege_start');
+      let end = document.getElementById('privilege_end');
+      let person = document.getElementById('card-header');
+      let privileges = document.getElementById('privileges');
+      let privilege_role = document.getElementById('privilege_role_id')
 
-    let _data = {
-      person_id: person.dataset.id,
-      privilege_id: privilege.value,
-      privilege_role_id: privilege_role.value,
-      start_date: start.value,
-      end_date: end.value
-    }
+      let _data = {
+        person_id: person.dataset.id,
+        privilege_id: privilege.value,
+        privilege_role_id: privilege_role.value,
+        start_date: start.value,
+        end_date: end.value
+      }
 
-    if (meta) {
       fetch('/assignments', {
         method: "POST",
         body: JSON.stringify(_data),
@@ -304,6 +303,8 @@ if (addp_button) {
       .then(response => response.text())
       .then(text => { 
         privileges.innerHTML = text;
+        $("#privilege_select").val('').selectpicker("refresh");
+        $("#privilege_role_id").val('').selectpicker("refresh");
         start.value = '';
         end.value = '';
       })
@@ -312,48 +313,13 @@ if (addp_button) {
   });
 }
 
-// adding disciplines and more stuff
-const privilege_select = document.getElementById('discipline_select');
-if (privilege_select) {
-  privilege_select.addEventListener('change', () => {
-    const discipline_start = document.getElementById('discipline_start');
-    if (discipline_start.value) {
-      const discipline_end = document.getElementById('discipline_end');
-      let the_date = new Date(discipline_start.value.replace(/-/g, '\/'));
-      let new_date = new Date(discipline_start.value.replace(/-/g, '\/'));;
-  
-      switch (privilege_select.value) {
-        case '3':
-          new_date.setMonth(the_date.getMonth() + 3);
-          new_date.setTime(new_date.getTime() - 86400000);
-          discipline_end.value = new_date.getFullYear().toString() 
-                                 + '-' + (new_date.getMonth() + 1).toString().padStart(2, 0)
-                                 + '-' + new_date.getDate().toString().padStart(2, 0);
-          break;
-        case '6':
-          new_date.setMonth(the_date.getMonth() + 6);
-          new_date.setTime(new_date.getTime() - 86400000);
-          discipline_end.value = new_date.getFullYear().toString() 
-                                 + '-' + (new_date.getMonth() + 1).toString().padStart(2, 0)
-                                 + '-' + new_date.getDate().toString().padStart(2, 0);
-          break;
-        default:
-          discipline_end.value = '';
-          break;
-      }      
-    }
-  });
-}
-
-const discipline_start = document.getElementById('discipline_start');
-if (discipline_start) {
-  discipline_start.addEventListener('change', () => {
-    const privilege_select = document.getElementById('discipline_select');
-    const discipline_end = document.getElementById('discipline_end');
+// calculating discipline duration according to start date when user change discipline type
+onChangeDisciplineSelect = (discipline_select, discipline_start, discipline_end) => {
+  if (discipline_start.value) {
     let the_date = new Date(discipline_start.value.replace(/-/g, '\/'));
     let new_date = new Date(discipline_start.value.replace(/-/g, '\/'));;
 
-    switch (privilege_select.value) {
+    switch (discipline_select.value) {
       case '3':
         new_date.setMonth(the_date.getMonth() + 3);
         new_date.setTime(new_date.getTime() - 86400000);
@@ -371,31 +337,73 @@ if (discipline_start) {
       default:
         discipline_end.value = '';
         break;
-    }
-  });
+    }      
+  }
 }
 
+const discipline_select = document.getElementById('discipline_select');
+if (discipline_select) {
+  const discipline_start = document.getElementById('discipline_start');
+  const discipline_end = document.getElementById('discipline_end');
+  discipline_select.addEventListener('change', () => onChangeDisciplineSelect(discipline_select, discipline_start, discipline_end));
+}
+
+// calculation discipline duration according to start date when user choose start date
+onChangeDisciplineStart = (discipline_select, discipline_start, discipline_end) => {
+  let the_date = new Date(discipline_start.value.replace(/-/g, '\/'));
+  let new_date = new Date(discipline_start.value.replace(/-/g, '\/'));;
+
+  switch (discipline_select.value) {
+    case '3':
+      new_date.setMonth(the_date.getMonth() + 3);
+      new_date.setTime(new_date.getTime() - 86400000);
+      discipline_end.value = new_date.getFullYear().toString() 
+                             + '-' + (new_date.getMonth() + 1).toString().padStart(2, 0)
+                             + '-' + new_date.getDate().toString().padStart(2, 0);
+      break;
+    case '6':
+      new_date.setMonth(the_date.getMonth() + 6);
+      new_date.setTime(new_date.getTime() - 86400000);
+      discipline_end.value = new_date.getFullYear().toString() 
+                             + '-' + (new_date.getMonth() + 1).toString().padStart(2, 0)
+                             + '-' + new_date.getDate().toString().padStart(2, 0);
+      break;
+    default:
+      discipline_end.value = '';
+      break;
+  }
+}
+
+const discipline_start = document.getElementById('discipline_start');
+if (discipline_start) {
+  const discipline_select = document.getElementById('discipline_select');
+  const discipline_end = document.getElementById('discipline_end');
+  discipline_start.addEventListener('change', () => onChangeDisciplineStart(discipline_select, discipline_start, discipline_end));
+}
+
+// adding discipline
 const addd_button = document.getElementById('btn-add-discipline');
 if (addd_button) {
   addd_button.addEventListener('click', (event) => {
-    event.preventDefault();
+    let meta = document.querySelectorAll('meta[name="csrf-token"]')[0];
     let discipline = document.getElementById('discipline_select');
     let start = document.getElementById('discipline_start');
-    let end = document.getElementById('discipline_end');
-    let person = document.getElementById('card-header');
-    let meta = document.querySelectorAll('meta[name="csrf-token"]')[0];
-    let disciplines = document.getElementById('disciplines');
     let act = document.getElementById('act_number');
 
-    let _data = {
-      person_id: person.dataset.id,
-      discipline_type: discipline.value,
-      act_number: act.value,
-      start_date: start.value,
-      end_date: end.value
-    }
+    if (meta && discipline.value && start.value && act.value) {
+      event.preventDefault();
+      let end = document.getElementById('discipline_end');
+      let person = document.getElementById('card-header');
+      let disciplines = document.getElementById('disciplines');
 
-    if (meta && start.value && act.value) {
+      let _data = {
+        person_id: person.dataset.id,
+        discipline_type: discipline.value,
+        act_number: act.value,
+        start_date: start.value,
+        end_date: end.value
+      }
+
       fetch('/disciplines', {
         method: "POST",
         body: JSON.stringify(_data),
@@ -407,6 +415,7 @@ if (addd_button) {
       .then(response => response.text())
       .then(text => { 
         disciplines.innerHTML = text;
+        $("#discipline_select").val('').selectpicker("refresh");
         start.value = '';
         end.value = '';
         act.value = '';
@@ -416,26 +425,138 @@ if (addd_button) {
   });
 }
 
-// // the location thing
+// editing privileges
+setPrivilegeEditionAction = () => {
+  let edit_priv_btns = document.getElementsByName('btn-edit-privilege');
+  if (edit_priv_btns) {
+    let edit_priv_body = document.getElementById('editPrivilegeBody');
+    Array.prototype.forEach.call(edit_priv_btns, item => item.addEventListener('click', (event) => {
+      fetch('/assignments/' + event.target.dataset.id + '/edit')
+      .then(response => response.text())
+      .then(text => { 
+        edit_priv_body.innerHTML = text;
+        $("#privilege_select_edit").selectpicker("refresh");
+        $("#privilege_role_id_edit").selectpicker("refresh");
+      })
+      .catch(err => console.log(err));
+    }));
+  }
+}
 
-// let btn_location = document.getElementById('btn-location');
-// if (btn_location) {
-//   btn_location.addEventListener('click', event => {
-//     let location = document.getElementById('location');
+setPrivilegeEditionAction();
 
-//     fetch(location.value)
-//     .then(response => {
-//       if (response.ok) return  response.text();
-      
-//       throw new Error('No se pudo obtener la consulta, intente de nuevo');
-//     })
-//     .then(data => {
-//       alert(data);
-//     })
-//     .catch(error => {
-//       console.log(error);
-//     });
+// update privilege
+let btn_modify_privilege = document.getElementById('btn-modify-privilege');
+if (btn_modify_privilege) {
+  btn_modify_privilege.addEventListener('click', (event) => {
+    let privilege = document.getElementById('privilege_select_edit');
+    let start = document.getElementById('privilege_start_edit');
+    let end = document.getElementById('privilege_end_edit');
+    let privilege_role = document.getElementById('privilege_role_id_edit')
 
+    let meta = document.querySelectorAll('meta[name="csrf-token"]')[0];
+    let privileges = document.getElementById('privileges');
+    let the_privilege = document.getElementById('edit-privilege');
 
+    let _data = {
+      privilege_id: privilege.value,
+      privilege_role_id: privilege_role.value,
+      start_date: start.value,
+      end_date: end.value
+    }
+
+    if (meta) {
+      fetch('/assignments/' + the_privilege.dataset.id, {
+        method: "PUT",
+        body: JSON.stringify(_data),
+        headers: { 
+          "X-CSRF-TOKEN": meta.getAttribute('content'),
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      })
+      .then(response => response.text())
+      .then(text => {
+        $('#editPrivilegeModal').modal('toggle');
+        privileges.innerHTML = text;
+        setPrivilegeEditionAction();
+      })
+      .catch(err => console.log(err));
+    }
+  });
+}
+
+// editing disciplines
+setDisciplineEditionAction = () => {
+  let edit_discip_btns = document.getElementsByName('btn-edit-discipline');
+  if (edit_discip_btns) {
+    let edit_discip_body = document.getElementById('editDisciplineBody');
+    Array.prototype.forEach.call(edit_discip_btns, item => item.addEventListener('click', (event) => {
+      fetch('/disciplines/' + event.target.dataset.id + '/edit')
+      .then(response => response.text())
+      .then(text => { 
+        edit_discip_body.innerHTML = text;
+        $("#discipline_select_edit").selectpicker("refresh");
+        const discipline_select = document.getElementById('discipline_select_edit');
+        const discipline_start = document.getElementById('discipline_start_edit');
+        const discipline_end = document.getElementById('discipline_end_edit');
+
+        discipline_select.addEventListener('change', () => onChangeDisciplineSelect(discipline_select, discipline_start, discipline_end));
+        discipline_start.addEventListener('change', () => onChangeDisciplineStart(discipline_select, discipline_start, discipline_end));
+      })
+      .catch(err => console.log(err));
+    }));
+  }
+}
+
+setDisciplineEditionAction();
+
+// update discipline
+let btn_modify_discipline = document.getElementById('btn-modify-discipline');
+if (btn_modify_discipline) {
+  btn_modify_discipline.addEventListener('click', (event) => {
+    let meta = document.querySelectorAll('meta[name="csrf-token"]')[0];
+    let start = document.getElementById('discipline_start_edit');
+    let act = document.getElementById('act_number_edit');
+
+    if (meta && start.value && act.value) {
+      event.preventDefault();
+      let discipline = document.getElementById('discipline_select_edit');
+      let end = document.getElementById('discipline_end_edit');
+
+      let disciplines = document.getElementById('disciplines');
+      let the_discipline = document.getElementById('edit-discipline');
+
+      let _data = {
+        discipline_type: discipline.value,
+        act_number: act.value,
+        start_date: start.value,
+        end_date: end.value
+      }
+
+      fetch('/disciplines/' + the_discipline.dataset.id, {
+        method: "PUT",
+        body: JSON.stringify(_data),
+        headers: { 
+          "X-CSRF-TOKEN": meta.getAttribute('content'),
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      })
+      .then(response => response.text())
+      .then(text => {
+        $('#editDisciplineModal').modal('toggle');
+        disciplines.innerHTML = text;
+        setDisciplineEditionAction();
+      })
+      .catch(err => console.log(err));
+    }
+  });
+}
+
+// $(document).ready(function(){
+//   $("p").click(function(){
+//     alert("The paragraph was clicked.");
+//     $("#privilege_role_id").val('');
+//     $("#privilege_role_id").selectpicker("refresh");
 //   });
-// }
+// });
+

@@ -17,6 +17,11 @@ class Discipline extends Model
         'end_date'
     ];
 
+    public function person()
+    {
+        return $this->belongsTo(Person::class);
+    }
+
     public function getDescriptionAttribute()
     {
         switch ($this->discipline_type) {
