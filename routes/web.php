@@ -105,6 +105,10 @@ Route::prefix('/member')->group( function() {
     Route::get('/{person}/edit',  [PersonController::class, 'edit'])->name('person.edit');
 });
 
-Route::resource('assignments', AssignmentController::class);
+Route::resource('assignments', AssignmentController::class)->except([
+    'index', 'create', 'show'
+]);
 
-Route::resource('disciplines', DisciplineController::class);
+Route::resource('disciplines', DisciplineController::class)->except([
+    'index', 'create', 'show'
+]);

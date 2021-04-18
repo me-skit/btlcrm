@@ -5,29 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Person;
 use App\Models\Discipline;
+use Illuminate\Support\Facades\Gate;
 
 class DisciplineController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -36,6 +17,8 @@ class DisciplineController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('administer');
+
         $data = $request->validate([
             'person_id' => 'required',
             'discipline_type' =>'required',
@@ -53,17 +36,6 @@ class DisciplineController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -71,6 +43,8 @@ class DisciplineController extends Controller
      */
     public function edit(Discipline $discipline)
     {
+        Gate::authorize('administer');
+
         return view('disciplinehistory.edit', compact('discipline'));
     }
 
@@ -83,6 +57,8 @@ class DisciplineController extends Controller
      */
     public function update(Request $request, Discipline $discipline)
     {
+        Gate::authorize('administer');
+
         $data = $request->validate([
             'discipline_type' =>'required',
             'act_number' => 'required',
@@ -105,8 +81,15 @@ class DisciplineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Discipline $discipline)
     {
-        //
+        Gate::authorize('administer');
+        
+        $discipline->delete();
+
+        $person = $discipline->person;
+        $disciplines = $person->disciplines;
+
+        return view('disciplinehistory.index', compact('disciplines'));        
     }
 }

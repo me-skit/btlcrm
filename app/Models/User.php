@@ -60,7 +60,7 @@ class User extends Authenticatable
             case 0:
                 return $this->sex ? 'Admra' : 'Admin';
             case 1:
-                return $this->sex ? 'Secretaria' : 'Secretario';
+                return 'Consultas';
             default:
                 return $this->sex ? 'Censadora' : 'Censador';                
         }

@@ -479,6 +479,7 @@ if (btn_modify_privilege) {
         $('#editPrivilegeModal').modal('toggle');
         privileges.innerHTML = text;
         setPrivilegeEditionAction();
+        setPrivilegeDeleteAction();
       })
       .catch(err => console.log(err));
     }
@@ -546,9 +547,84 @@ if (btn_modify_discipline) {
         $('#editDisciplineModal').modal('toggle');
         disciplines.innerHTML = text;
         setDisciplineEditionAction();
+        setDisciplineDeleteAction();
       })
       .catch(err => console.log(err));
     }
+  });
+}
+
+// delete privilege
+setPrivilegeDeleteAction = () => {
+  let del_priv_buttons = document.getElementsByName('btn-del-privilege');
+  if (del_priv_buttons) {
+    let button = document.getElementById('btn-del-privilege');
+    Array.prototype.forEach.call(del_priv_buttons, item => item.addEventListener('click', (event) => {
+      button.dataset.id = event.target.dataset.id;
+    }));
+  }  
+}
+
+setPrivilegeDeleteAction();
+
+let btn_del_privilege = document.getElementById('btn-del-privilege');
+if (btn_del_privilege) {
+  btn_del_privilege.addEventListener('click', (event) => {
+    let meta = document.querySelectorAll('meta[name="csrf-token"]')[0];
+    let privileges = document.getElementById('privileges');
+
+    fetch('/assignments/' + event.target.dataset.id, {
+      method: "DELETE",
+      headers: { 
+        "X-CSRF-TOKEN": meta.getAttribute('content'),
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    })
+    .then(response => response.text())
+    .then(text => { 
+      $('#delPrivilegeModal').modal('toggle');
+      privileges.innerHTML = text;
+      setPrivilegeEditionAction();
+      setPrivilegeDeleteAction();
+    })
+    .catch(err => console.log(err));
+  });
+}
+
+// delete discipline
+setDisciplineDeleteAction = () => {
+  let del_disp_buttons = document.getElementsByName('btn-del-discipline');
+  if (del_disp_buttons) {
+    let button = document.getElementById('btn-del-discipline');
+    Array.prototype.forEach.call(del_disp_buttons, item => item.addEventListener('click', (event) => {
+      button.dataset.id = event.target.dataset.id;
+    }));
+  }  
+}
+
+setDisciplineDeleteAction();
+
+let btn_del_discipline = document.getElementById('btn-del-discipline');
+if (btn_del_discipline) {
+  btn_del_discipline.addEventListener('click', (event) => {
+    let meta = document.querySelectorAll('meta[name="csrf-token"]')[0];
+    let disciplines = document.getElementById('disciplines');
+
+    fetch('/disciplines/' + event.target.dataset.id, {
+      method: "DELETE",
+      headers: { 
+        "X-CSRF-TOKEN": meta.getAttribute('content'),
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    })
+    .then(response => response.text())
+    .then(text => { 
+      $('#delDisciplineModal').modal('toggle');
+      disciplines.innerHTML = text;
+      setDisciplineEditionAction();
+      setDisciplineDeleteAction();
+    })
+    .catch(err => console.log(err));
   });
 }
 

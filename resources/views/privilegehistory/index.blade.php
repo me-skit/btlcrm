@@ -44,7 +44,14 @@
             data-target="#editPrivilegeModal">
             Modificar
           </button>
-          <button class="btn btn-danger btn-sm py-0">Eliminar</button>
+          <button
+            class="btn btn-danger btn-sm py-0"
+            name="btn-del-privilege"
+            data-id="{{ $privilege->pivot->id }}"
+            data-toggle="modal"
+            data-target="#delPrivilegeModal">
+            Eliminar
+          </button>
         </div>
         @endcan
       </div>

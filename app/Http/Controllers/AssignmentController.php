@@ -7,29 +7,10 @@ use App\Models\Person;
 use App\Models\Privilege;
 use App\Models\PrivilegeRole;
 use App\Models\PrivilegeHistory;
+use Illuminate\Support\Facades\Gate;
 
 class AssignmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -38,6 +19,8 @@ class AssignmentController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('administer');
+        
         $data = $request->validate([
             'person_id' => 'required',
             'privilege_id' => 'required',
@@ -55,17 +38,6 @@ class AssignmentController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -73,18 +45,27 @@ class AssignmentController extends Controller
      */
     public function edit($id)
     {
+        Gate::authorize('administer');
+        
         $the_privilege = PrivilegeHistory::findOrFail($id);
         $person = $the_privilege->person;
-        $privileges = Privilege::orderBy('description')
-                        ->where(function ($query) use ($person) {
-                            $query->whereNull('preferred_sex')
-                                  ->orWhere('preferred_sex', $person->sex);
-                        })
-                        ->where(function ($query) use ($person) {
-                            $query->whereNull('preferred_status')
-                                  ->orWhere('preferred_status', $person->status);
-                        })
-                        ->get();
+        $privilege = Privilege::findOrFail($the_privilege->privilege_id);
+        $privileges_tmp = Privilege::where(function ($query) use ($person) {
+                                        $query->whereNull('preferred_sex')
+                                        ->orWhere('preferred_sex', $person->sex);
+                                     })
+                                   ->where(function ($query) use ($person) {
+                                        $query->whereNull('preferred_status')
+                                        ->orWhere('preferred_status', $person->status);
+                                     })
+                                   ->get();
+
+        if (! $privileges_tmp->search($privilege)) {
+            $privileges_tmp = $privileges_tmp->concat([$privilege]);
+        }
+
+        $privileges = $privileges_tmp->sortBy('description');
+
         $privilege_roles = PrivilegeRole::orderBy('description')->get();        
 
         return view('privilegehistory.edit', compact('the_privilege', 'privileges', 'privilege_roles'));
@@ -99,6 +80,8 @@ class AssignmentController extends Controller
      */
     public function update(Request $request, $id)
     {
+        Gate::authorize('administer');
+
         $data = $request->validate([
             'privilege_id' => 'required',
             'privilege_role_id' => 'nullable',
@@ -113,7 +96,7 @@ class AssignmentController extends Controller
         $person = $privilege->person;
         $privs_assigned = $person->privileges;
 
-        return view('privilegehistory.index', compact('privs_assigned'));    
+        return view('privilegehistory.index', compact('privs_assigned'));
     }
 
     /**
@@ -124,6 +107,14 @@ class AssignmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Gate::authorize('administer');
+        
+        $privilege = PrivilegeHistory::findOrFail($id);
+        $privilege->delete();
+
+        $person = $privilege->person;
+        $privs_assigned = $person->privileges;
+
+        return view('privilegehistory.index', compact('privs_assigned'));
     }
 }

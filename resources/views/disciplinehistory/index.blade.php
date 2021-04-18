@@ -40,7 +40,14 @@
             data-target="#editDisciplineModal">
             Modificar
           </button>
-          <button class="btn btn-danger btn-sm py-0">Eliminar</button>
+          <button
+            class="btn btn-danger btn-sm py-0"
+            name="btn-del-discipline"
+            data-id="{{ $discipline->id }}"
+            data-toggle="modal"
+            data-target="#delDisciplineModal">
+            Eliminar
+          </button>          
         </div>
       </div>
     </li>
