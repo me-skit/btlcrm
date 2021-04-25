@@ -206,6 +206,7 @@ class PersonController extends Controller
         $family = $person->family();
         $privs_assigned = $person->privileges;
         $disciplines = $person->disciplines;
+        $has_discipline = $person->discipline();
         $privileges = Privilege::orderBy('description')
                         ->where(function ($query) use ($person) {
                             $query->whereNull('preferred_sex')
@@ -218,7 +219,7 @@ class PersonController extends Controller
                         ->get();
         $privilege_roles = PrivilegeRole::orderBy('description')->get();
 
-        return view('people.show', compact('person', 'family', 'privileges', 'privs_assigned', 'privilege_roles', 'disciplines'));
+        return view('people.show', compact('person', 'family', 'privileges', 'privs_assigned', 'privilege_roles', 'disciplines', 'has_discipline'));
     }
 
     public function show_nomember(Person $person)

@@ -7,10 +7,76 @@ use App\Models\Person;
 use App\Models\Privilege;
 use App\Models\PrivilegeRole;
 use App\Models\PrivilegeHistory;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class AssignmentController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function directory(Request $request)
+    {
+        Gate::authorize('consult');
+
+        $privileges = Privilege::orderBy('description')->get();
+        $selected = $privileges->first();
+
+        if ($request->get('priv_id')) {
+            $selected = Privilege::findOrFail($request->get('priv_id'));
+        }
+
+        $people = DB::table('privilege_histories')
+                    ->join('people', function ($join) {
+                        $join->on('privilege_histories.person_id', '=', 'people.id')
+                             ->where(function ($query) {
+                                $query->where('privilege_histories.end_date', null)
+                                ->orWhereDate('privilege_histories.end_date', '>=', date('Y-m-d'));
+                            });
+                    })
+                    ->join('privileges', 'privilege_histories.privilege_id', '=', 'privileges.id')
+                    ->where('privileges.id', $selected->id)
+                    ->leftJoin('privilege_roles', 'privilege_histories.privilege_role_id', '=', 'privilege_roles.id')
+                    ->leftJoin('disciplines', function ($join) {
+                        $join->on('people.id', '=', 'disciplines.person_id')
+                             ->where(function ($query) {
+                                $query->where('disciplines.end_date', null)
+                                ->orWhereDate('disciplines.end_date', '>=', date('Y-m-d'));
+                             });
+                    })
+                    ->select('people.id', 'first_name', 'second_name', 'third_name', 'first_surname', 'second_surname', 'cellphone', 'privilege_roles.description as role', 'privilege_histories.start_date', 'privilege_histories.end_date', 'disciplines.id as disciplined', 'act_number')
+                    ->orderBy('first_name')
+                    ->orderBy('second_name')
+                    ->orderBy('third_name')
+                    ->orderBy('first_surname')
+                    ->orderBy('second_surname')
+                    ->get();
+
+        if ($request->get('priv_id')) {
+            return view('privilegehistory.tablebody', compact('people'));
+        }
+
+        return view('privilegehistory.current', compact('privileges', 'people', 'selected'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
+    {
+        Gate::authorize('administer');
+        
+        $person = Person::findOrFail($request->get('userid'));
+        $has_discipline = $person->discipline();
+        $privs_assigned = $person->privileges;
+
+        return view('privilegehistory.index', compact('privs_assigned', 'has_discipline'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -32,9 +98,10 @@ class AssignmentController extends Controller
         PrivilegeHistory::create($data);
 
         $person = Person::findOrFail($data['person_id']);
+        $has_discipline = $person->discipline();
         $privs_assigned = $person->privileges;
 
-        return view('privilegehistory.index', compact('privs_assigned'));
+        return view('privilegehistory.index', compact('privs_assigned', 'has_discipline'));
     }
 
     /**
@@ -94,9 +161,10 @@ class AssignmentController extends Controller
         $privilege->save();
 
         $person = $privilege->person;
+        $has_discipline = $person->discipline();
         $privs_assigned = $person->privileges;
 
-        return view('privilegehistory.index', compact('privs_assigned'));
+        return view('privilegehistory.index', compact('privs_assigned', 'has_discipline'));
     }
 
     /**
@@ -113,8 +181,9 @@ class AssignmentController extends Controller
         $privilege->delete();
 
         $person = $privilege->person;
+        $has_discipline = $person->discipline();
         $privs_assigned = $person->privileges;
 
-        return view('privilegehistory.index', compact('privs_assigned'));
+        return view('privilegehistory.index', compact('privs_assigned', 'has_discipline'));
     }
 }

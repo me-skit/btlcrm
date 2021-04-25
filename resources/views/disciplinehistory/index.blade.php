@@ -1,3 +1,4 @@
+@if ($disciplines->count())
 <p class="my-0"><b><i class="fas fa-user-unlock"></i> Disciplinas:</b></p>
 
 <ul class="list-group mt-1">
@@ -53,3 +54,4 @@
     </li>
   @endforeach
 </ul>
+@endif

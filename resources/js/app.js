@@ -307,6 +307,8 @@ if (addp_button) {
         $("#privilege_role_id").val('').selectpicker("refresh");
         start.value = '';
         end.value = '';
+        setPrivilegeEditionAction();
+        setPrivilegeDeleteAction();
       })
       .catch(err => console.log(err));
     }
@@ -419,6 +421,9 @@ if (addd_button) {
         start.value = '';
         end.value = '';
         act.value = '';
+        setDisciplineEditionAction();
+        setDisciplineDeleteAction();
+        updatePrivilegesView();
       })
       .catch(err => console.log(err));
     }
@@ -548,6 +553,7 @@ if (btn_modify_discipline) {
         disciplines.innerHTML = text;
         setDisciplineEditionAction();
         setDisciplineDeleteAction();
+        updatePrivilegesView();
       })
       .catch(err => console.log(err));
     }
@@ -623,8 +629,49 @@ if (btn_del_discipline) {
       disciplines.innerHTML = text;
       setDisciplineEditionAction();
       setDisciplineDeleteAction();
+      updatePrivilegesView();
     })
     .catch(err => console.log(err));
+  });
+}
+
+// make a get request for privileges associated with a person
+updatePrivilegesView = () => {
+  let card_header = document.getElementById('card-header');
+  fetch('/assignments?userid=' + card_header.dataset.id)
+  .then(response => {
+    if (response.ok) return  response.text();
+    
+    throw new Error('No se pudo actualizar los datos de privilegios');
+  })
+  .then(text => {
+    privileges.innerHTML = text;
+    setPrivilegeEditionAction();
+    setPrivilegeDeleteAction();
+  })
+  .catch(error => {
+    privileges.innerHTML = error;
+  });  
+}
+
+// change select when shows privilege directory
+let privilege_list = document.getElementById('privilege_list');
+if (privilege_list) {
+  privilege_list.addEventListener('change', (event) => {
+    let t_body = document.getElementById('priv-t-body');
+
+    fetch('/directory?priv_id=' + event.target.value)
+    .then(response => {
+      if (response.ok) return  response.text();
+      
+      throw new Error('No se pudo obtener la consulta');
+    })
+    .then(data => {
+      t_body.innerHTML = data;
+    })
+    .catch(error => {
+      t_body.innerHTML = error;
+    });
   });
 }
 

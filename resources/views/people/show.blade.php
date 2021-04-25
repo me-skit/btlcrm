@@ -11,16 +11,12 @@
       @include('people.details')
 
       <div id="privileges" class="mt-1 mb-2">
-        @if ($privs_assigned->count())
-          @include('privilegehistory.index')
-        @endif
+        @include('privilegehistory.index')
       </div>
 
       @can('administer')
         <div id="disciplines" class="mt-1 mb-2 ">
-          @if ($disciplines->count())
-            @include('disciplinehistory.index')
-          @endif
+          @include('disciplinehistory.index')
         </div>
 
         @if ($person->membership->baptized)
@@ -232,7 +228,7 @@
         Confirme que desea eliminar el registrado de privilegio definitivamente.
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-danger" id="btn-del-privilege">Eliminar</button>
       </div>
     </div>
@@ -253,7 +249,7 @@
         Confirme que desea eliminar el registrado de disciplina definitivamente.
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-danger" id="btn-del-discipline">Eliminar</button>
       </div>
     </div>

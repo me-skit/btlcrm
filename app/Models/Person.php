@@ -71,6 +71,15 @@ class Person extends Model
                     ->orderBy('created_at', 'DESC');
     }
 
+    public function discipline()
+    {
+        return $this->hasMany(Discipline::class)
+                    ->where(function ($query) {
+                        $query->where('end_date', null)
+                        ->orWhereDate('disciplines.end_date', '>=', date('Y-m-d'));
+                    })->first();
+    }
+
     public function getFullNameAttribute() {
         $fullname = [$this->first_name, $this->second_name, $this->third_name, $this->first_surname, $this->second_surname];
         return implode(' ', array_filter($fullname));

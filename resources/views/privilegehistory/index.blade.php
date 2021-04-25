@@ -1,3 +1,4 @@
+@if ($privs_assigned->count())
 <p class="my-0"><b><i class="fas fa-user-tie"></i> Privilegios:</b></p>
 
 <ul class="list-group mt-1">
@@ -30,6 +31,7 @@
               @else
                 {!! $privilege->pivot->privilege_role_id ? "<span class='badge badge-secondary'>" . $privilege->pivot->role->description . "</span>"  : "" !!}
               @endif
+              {!! ($has_discipline and $privilege->pivot->is_active) ? "<span class='badge badge-danger'>Susp. Act. No. " . $has_discipline->act_number . "</span>"  : "" !!}
               {!! $privilege->pivot->is_active ? '' : '</s>' !!}
             </div>
           </div>
@@ -58,3 +60,4 @@
     </li>
   @endforeach
 </ul>
+@endif
