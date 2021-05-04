@@ -5,10 +5,83 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Person;
 use App\Models\Discipline;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class DisciplineController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        Gate::authorize('administer');
+
+        $all = DB::table('disciplines')
+               ->where('ended', '0')
+               ->join('people', 'disciplines.person_id', '=', 'people.id')
+               ->select('people.id as person_id', 'first_name', 'second_name', 'third_name', 'first_surname', 'second_surname', 'cellphone', 'start_date', 'end_date', 'act_number', 'discipline_type', 'disciplines.id as discipline_id')
+               ->orderBy('first_name')
+               ->orderBy('second_name')
+               ->orderBy('third_name')
+               ->orderBy('first_surname')
+               ->orderBy('second_surname')
+               ->get();
+
+        $active = $all->filter(function ($item) {
+            return $item->end_date === null or $item->end_date >= date('Y-m-d');
+        });
+
+        $expired = $all->filter(function ($item) {
+            return $item->end_date !== null and $item->end_date < date('Y-m-d');
+        });
+
+        return view('disciplinehistory.current', compact('active', 'expired'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function end(Request $request, $id)
+    {
+        Gate::authorize('administer');
+
+        $data = $request->validate([
+            'end_date' => ['required', 'date']
+        ]);        
+
+        $discipline = Discipline::findOrFail($id);
+        $discipline->ended = 1;
+        $discipline->end_date = $data['end_date'];
+        $discipline->save();
+
+        $all = DB::table('disciplines')
+               ->where('ended', '0')
+               ->join('people', 'disciplines.person_id', '=', 'people.id')
+               ->select('people.id as person_id', 'first_name', 'second_name', 'third_name', 'first_surname', 'second_surname', 'cellphone', 'start_date', 'end_date', 'act_number', 'discipline_type', 'disciplines.id as discipline_id')
+               ->orderBy('first_name')
+               ->orderBy('second_name')
+               ->orderBy('third_name')
+               ->orderBy('first_surname')
+               ->orderBy('second_surname')
+               ->get();
+
+        $active = $all->filter(function ($item) {
+            return $item->end_date === null or $item->end_date >= date('Y-m-d');
+        });
+
+        $expired = $all->filter(function ($item) {
+            return $item->end_date !== null and $item->end_date < date('Y-m-d');
+        });
+
+        return view('disciplinehistory.list', compact('active', 'expired'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *

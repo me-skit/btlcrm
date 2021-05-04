@@ -165,9 +165,6 @@
       @endcan
     </div>
   </div>
-  <div class="mt-2 text-right">
-    <a href="{{ route('people.index') }}" class="btn btn-dark"><i class="fas fa-angle-double-left"></i> Regresar</a>
-  </div>
 </div>
 
 <!-- edit privilege modal -->

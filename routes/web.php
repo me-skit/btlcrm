@@ -110,6 +110,7 @@ Route::resource('assignments', AssignmentController::class)->except([
     'create', 'show'
 ]);
 
+Route::patch('end/{id}', [DisciplineController::class, 'end']);
 Route::resource('disciplines', DisciplineController::class)->except([
-    'index', 'create', 'show'
+    'create', 'show'
 ]);

@@ -36,17 +36,21 @@ class AssignmentController extends Controller
                                 ->orWhereDate('privilege_histories.end_date', '>=', date('Y-m-d'));
                             });
                     })
-                    ->join('privileges', 'privilege_histories.privilege_id', '=', 'privileges.id')
-                    ->where('privileges.id', $selected->id)
+                    ->join('privileges', function ($join) use ($selected) {
+                        $join->on('privilege_histories.privilege_id', '=', 'privileges.id')
+                             ->where('privileges.id', $selected->id);
+                    })
                     ->leftJoin('privilege_roles', 'privilege_histories.privilege_role_id', '=', 'privilege_roles.id')
                     ->leftJoin('disciplines', function ($join) {
                         $join->on('people.id', '=', 'disciplines.person_id')
-                             ->where(function ($query) {
-                                $query->where('disciplines.end_date', null)
-                                ->orWhereDate('disciplines.end_date', '>=', date('Y-m-d'));
-                             });
+                             ->where('disciplines.ended', '0');
                     })
-                    ->select('people.id', 'first_name', 'second_name', 'third_name', 'first_surname', 'second_surname', 'cellphone', 'privilege_roles.description as role', 'privilege_histories.start_date', 'privilege_histories.end_date', 'disciplines.id as disciplined', 'act_number')
+                    ->leftJoin('family_members', function ($join) {
+                        $join->on('people.id', '=', 'family_members.person_id')
+                             ->where('active', 1);
+                    })
+                    ->leftJoin('families', 'family_members.family_id', '=', 'families.id')
+                    ->select('people.id', 'first_name', 'second_name', 'third_name', 'first_surname', 'second_surname', 'cellphone', 'privilege_roles.description as role', 'privilege_histories.start_date', 'privilege_histories.end_date', 'disciplines.id as disciplined', 'act_number', 'address', 'phone_number')
                     ->orderBy('first_name')
                     ->orderBy('second_name')
                     ->orderBy('third_name')
@@ -55,7 +59,7 @@ class AssignmentController extends Controller
                     ->get();
 
         if ($request->get('priv_id')) {
-            return view('privilegehistory.tablebody', compact('people'));
+            return view('privilegehistory.cards', compact('people'));
         }
 
         return view('privilegehistory.current', compact('privileges', 'people', 'selected'));

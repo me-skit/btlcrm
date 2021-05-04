@@ -21,6 +21,7 @@ class CreateDisciplinesTable extends Migration
             $table->text('annotation')->nullable();
             $table->date('start_date');
             $table->date('end_date')->nullable();
+            $table->boolean('ended')->default(0);
             $table->timestamps();
         });
     }

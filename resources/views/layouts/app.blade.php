@@ -52,7 +52,7 @@
                   <div class="dropdown-menu" aria-labelledby="dropdownCatal">
                     <a class="dropdown-item" href="{{ route('directory') }}"><i class="fas fa-user-tie fa-fw"></i> {{ __('Nomina de Privilegios') }}</a>
                     @can('administer')
-                      <a class="dropdown-item disabled" href="#"><i class="fas fa-user-lock fa-fw"></i> {{ __('Disciplinas') }}</a>                      
+                      <a class="dropdown-item" href="{{ route('disciplines.index') }}"><i class="fas fa-user-lock fa-fw"></i> {{ __('Disciplinas') }}</a>                      
                     @endcan
                   </div>
               </li>

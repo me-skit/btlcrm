@@ -658,20 +658,73 @@ updatePrivilegesView = () => {
 let privilege_list = document.getElementById('privilege_list');
 if (privilege_list) {
   privilege_list.addEventListener('change', (event) => {
-    let t_body = document.getElementById('priv-t-body');
+    let accordion = document.getElementById('accordion');
 
     fetch('/directory?priv_id=' + event.target.value)
     .then(response => {
       if (response.ok) return  response.text();
       
-      throw new Error('No se pudo obtener la consulta');
+      throw new Error('No se pudo obtener la lista de personas en ese privilegio');
     })
     .then(data => {
-      t_body.innerHTML = data;
+      accordion.innerHTML = data;
     })
     .catch(error => {
-      t_body.innerHTML = error;
+      accordion.innerHTML = error;
     });
+  });
+}
+
+// end/achive discipline action for modal
+endDisciplineFunction = () => {
+  let end_btns = document.getElementsByName('end-discipline');
+  Array.prototype.forEach.call(end_btns, item => item.addEventListener('click', event => {
+    let the_end_btn = document.getElementById('end-discipline');
+    let end_date = document.getElementById('new-end-date');
+    the_end_btn.dataset.id = event.target.dataset.id;
+    end_date.value = '';
+  }));
+}
+
+endDisciplineFunction();
+
+// end/achive discipline
+let end_discipline = document.getElementById('end-discipline');
+if (end_discipline) {
+  end_discipline.addEventListener('click', event => {
+    let meta = document.querySelectorAll('meta[name="csrf-token"]')[0];
+    let end = document.getElementById('new-end-date');
+
+    if (meta && end.value) {
+      event.preventDefault();
+      let container = document.getElementById('disciplines-list');
+
+      let _data = {
+        end_date: end.value
+      }
+
+      fetch('/end/' + event.target.dataset.id, {
+        method: "PATCH",
+        body: JSON.stringify(_data),
+        headers: {
+          "X-CSRF-TOKEN": meta.getAttribute('content'),
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      })
+      .then(response => {
+        if (response.ok) return  response.text();
+        
+        throw new Error('No se pudo obtener la lista de disciplinas');
+      })
+      .then(data => {
+        $('#confirmModal').modal('toggle');
+        container.innerHTML = data;
+        endDisciplineFunction();
+      })
+      .catch(error => {
+        container.innerHTML = error;
+      });
+    }
   });
 }
 

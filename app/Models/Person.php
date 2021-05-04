@@ -74,10 +74,7 @@ class Person extends Model
     public function discipline()
     {
         return $this->hasMany(Discipline::class)
-                    ->where(function ($query) {
-                        $query->where('end_date', null)
-                        ->orWhereDate('disciplines.end_date', '>=', date('Y-m-d'));
-                    })->first();
+                    ->where('ended', '0')->first();
     }
 
     public function getFullNameAttribute() {

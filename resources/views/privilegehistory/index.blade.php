@@ -31,7 +31,16 @@
               @else
                 {!! $privilege->pivot->privilege_role_id ? "<span class='badge badge-secondary'>" . $privilege->pivot->role->description . "</span>"  : "" !!}
               @endif
-              {!! ($has_discipline and $privilege->pivot->is_active) ? "<span class='badge badge-danger'>Susp. Act. No. " . $has_discipline->act_number . "</span>"  : "" !!}
+
+              @can('administer')
+                {!! ($has_discipline and $privilege->pivot->is_active) ? "<span class='badge badge-danger'>Susp. Act. No. " . $has_discipline->act_number . "</span>"  : "" !!}
+              @else
+                @if ($person->sex == 'M')
+                  {!! ($has_discipline and $privilege->pivot->is_active) ? "<span class='badge badge-danger'>Susppendido</span>"  : "" !!}
+                @else
+                  {!! ($has_discipline and $privilege->pivot->is_active) ? "<span class='badge badge-danger'>Susppendida</span>"  : "" !!}
+                @endif
+              @endcan
               {!! $privilege->pivot->is_active ? '' : '</s>' !!}
             </div>
           </div>
