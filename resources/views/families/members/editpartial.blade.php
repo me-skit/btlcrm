@@ -3,9 +3,9 @@
     <div class="row form-group">
       <label for="family_role" class="col-md-5 col-form-label text-md-right">{{ __('Rol familiar') }}<span class="text-danger">*</span></label>
       <div class="col-md-7">
-        <select name="family_role" id="family_role" class="form-control">
-          <option value="1" {{ $family->pivot->family_role == 1 ? 'selected' : '' }}>Padre</option>
-          <option value="2" {{ $family->pivot->family_role == 2 ? 'selected' : '' }}>Madre</option>
+        <select name="family_role" id="edit_family_role" class="form-control">
+          <option value="1" {{ $family->pivot->family_role == 1 ? 'selected' : '' }}>Padre o Esposo</option>
+          <option value="2" {{ $family->pivot->family_role == 2 ? 'selected' : '' }}>Madre o Esposa</option>
           <option value="3" {{ $family->pivot->family_role == 3 ? 'selected' : '' }}>Hijo</option>
           <option value="4" {{ $family->pivot->family_role == 4 ? 'selected' : '' }}>Hija</option>
         </select>
@@ -111,17 +111,42 @@
         <select name="attend_church" id="attend_church" class="form-control attend">
           <option value="1" {{ $person->membership->attend_church == 1 ? 'selected' : '' }}>Si</option>
           <option value="0" {{ $person->membership->attend_church ? '' : 'selected' }}>No</option>
-          <option value="2" {{ $person->membership->attend_church == 2 ? 'selected' : '' }}>Si, otra iglesia</option>
+          <option value="2" {{ $person->membership->attend_church == 2 ? 'selected' : '' }}>Ocasionalmente</option>
           <option value="3" {{ $person->membership->attend_church == 3 ? 'selected' : '' }}>Con problemas físicos para asistir</option>
+          <option value="-1" {{ $person->membership->attend_church == 4 ? 'selected' : '' }}>Si, otra iglesia</option>
         </select>
-      </div>    
+      </div>
     </div>
   </div>
   
   <div class="col-lg-6">
     <div class="row form-group">
-      <label for="campus_id" class="col-md-2 col-form-label text-md-right">{{ __('Cede') }}</label>
-      <div class="col-md-10">
+      <label for="reason" class="col-md-4 col-lg-2 col-form-label text-md-right">{{ __('Motivo') }}</label>
+      <div class="col-md-8 col-lg-10">
+        <input type="text"
+          name="reason"
+          id="reason"
+          class="form-control @error('reason') is-invalid @enderror"
+          value="{{ old('reason') ?? $person->membership->reason }}"
+          placeholder="Motivo"
+          disabled
+        >
+
+        @error('reason')
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+          </span>
+        @enderror
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="row form-group">
+      <label for="campus_id" class="col-md-4 col-lg-2 col-form-label text-md-right">{{ __('Cede') }}</label>
+      <div class="col-md-8 col-lg-4">
         <select name="campus_id" id="campus_id" class="form-control campus" {{ $person->membership->attend_church == 1 ? 'required' : '' }}>
           <option selected value> -- </option>
           @foreach ($campuses as $campus)
@@ -133,7 +158,6 @@
   </div>
 </div>
 
-<hr>
 <!-- * * * * * * * preferences  * * * * * * *-->
 
 @include('families.members.editprivileges')

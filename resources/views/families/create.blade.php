@@ -35,13 +35,14 @@
               </div>
 
               <div class="row form-group">
-                <label for="family_name" class="col-md-3 col-form-label text-md-right">{{ __('Apellidos de Familia') }}<span class="text-danger">*</span></label>
+                <label for="family_name" class="col-md-3 col-form-label text-md-right">{{ __('Apellidos') }}<span class="text-danger">*</span></label>
                 <div class="col-md-7">
                   <input type="text"
                     name="family_name"
                     id="family_name"
                     class="form-control @error('family_name') is-invalid @enderror"
                     value="{{ old('family_name') }}"
+                    placeholder = "Apellidos"
                     required
                   >
 
@@ -61,6 +62,7 @@
                     id="address"
                     class="form-control @error('address') is-invalid @enderror"
                     value="{{ old('address') }}"
+                    placeholder = "Dirección"
                     required
                   >
 
@@ -80,6 +82,7 @@
                     id="phone_number"
                     class="form-control @error('phone_number') is-invalid @enderror"
                     value="{{ old('phone_number') }}"
+                    placeholder="Teléfono recidencial"
                   >
 
                   @error('phone_number')
@@ -88,37 +91,20 @@
                     </span>
                   @enderror
                 </div>
-              </div>              
-
-              <div class="row form-group">
-                <label for="longitude" class="col-md-3 col-form-label text-md-right">{{ __('Longitud') }}</label>
-                <div class="col-md-7">
-                  <input type="text"
-                    name="longitude"
-                    id="longitude"
-                    class="form-control @error('longitude') is-invalid @enderror"
-                    value="{{ old('longitude') }}"
-                  >
-
-                  @error('longitude')
-                    <span class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
-                    </span>
-                  @enderror
-                </div>
               </div>
 
               <div class="row form-group">
-                <label for="latitude" class="col-md-3 col-form-label text-md-right">{{ __('Latitud') }}</label>
+                <label for="location" class="col-md-3 col-form-label text-md-right">{{ __('Long, Lat') }}</label>
                 <div class="col-md-7">
                   <input type="text"
-                    name="latitude"
-                    id="latitude"
-                    class="form-control @error('latitude') is-invalid @enderror"
-                    value="{{ old('latitude') }}"
+                    name="location"
+                    id="location"
+                    class="form-control @error('location') is-invalid @enderror"
+                    value="{{ old('location') }}"
+                    placeholder="Latitud, longitud"
                   >
 
-                  @error('latitude')
+                  @error('location')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
                     </span>

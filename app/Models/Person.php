@@ -80,5 +80,42 @@ class Person extends Model
     public function getFullNameAttribute() {
         $fullname = [$this->first_name, $this->second_name, $this->third_name, $this->first_surname, $this->second_surname];
         return implode(' ', array_filter($fullname));
-    }    
+    }
+
+    public function getCivilStatusAttribute()
+    {
+        if ($this->sex === 'M')
+        {
+            switch ($this->status)
+            {
+                case 1:
+                    return 'Casado';
+                case 2:
+                    return 'Soltero';
+                case 3:
+                    return 'Unido';
+                case 4: 
+                    return 'Divorciado';
+                case 6:
+                    return 'Viudo';
+            }
+        }
+        else
+        {
+            switch ($this->status)
+            {
+                case 1:
+                    return 'Casada';
+                case 2:
+                    return 'Soltera';
+                case 3:
+                    return 'Unida';
+                case 4: 
+                    return 'Divorciada';
+                case 6:
+                    return 'Viuda';
+            }
+        }
+
+    }
 }

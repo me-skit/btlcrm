@@ -5,17 +5,19 @@
       {{ $member->pivot->family_role == 1 ? "Padre" : ($member->pivot->family_role == 2 ? "Madre" : ($member->pivot->family_role == 3 ? "Hijo" : "Hija")) }}
     </b>
   </div>
+  <div class="col-lg-6">
+    No. DPI:
+    <b>
+      {{ $member->dpi }}
+    </b>
+  </div>  
 </div>
 
 <div class="row">
   <div class="col-lg-6">
     Estado civil:
     <b>
-      @if ($member->sex == 'M')
-        {{ $member->status == 1 ? "Casado" : ($member->status == 2 ? "Soltero" : "Unido") }}
-      @else
-        {{ $member->status == 1 ? "Casada" : ($member->status == 2 ? "Soltera" : "Unida") }}
-      @endif
+      {{ $member->civil_status }}
     </b>
   </div>
   <div class="col-lg-6">
@@ -140,21 +142,27 @@
     @endif
   </div>
   <div class="col-lg-6">
-    Cede:
-    <b>
-      {{ $member->membership->campus_id ? $member->membership->campus->name : "" }}
-    </b>
+    @if ($member->membership->reason)
+    Motivo:
+      <b>
+        {{ $member->membership->reason }}
+      </b>
+    @endif
   </div>
 </div>
 
 <div class="row">
   <div class="col-lg-6">
+    Cede:
+    <b>
+      {{ $member->membership->campus_id ? $member->membership->campus->name : "" }}
+    </b>
+  </div>
+  <div class="col-lg-6">
     Recibió discipulado:
     <b>
       {{ $member->membership->discipleship ? "Si" : "No"}}
     </b>
-  </div>
-  <div class="col-lg-6">
   </div>
 </div>
 

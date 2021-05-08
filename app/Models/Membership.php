@@ -26,11 +26,13 @@ class Membership extends Model
             case 1:
                 return 'Si';
             case 2:
-                return 'Asiste a otra iglesia';
+                return 'Ocasionalmente';
             case 3: 
                 return 'Problemas físicos para asistir';
-            default:
+            case 0:
                 return 'No';
+            default:
+                return 'Asiste a otra iglesia';
         } 
     }
 }

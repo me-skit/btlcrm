@@ -2,109 +2,153 @@ const { Alert } = require('bootstrap');
 
 require('./bootstrap');
 
-// attend church selector change
-changeCampusValue = (value, campus) => {
-  if (value == 0) {
-    campus.value = '';
-    campus.required = false;
-    campus.disabled = true;
-  }
-
-  if (value == 1) {
-    campus.required = true;
-    campus.disabled = false;
-  }
-
-  if (value == 2) {
-    campus.required = false;
-    campus.disabled = false;
-  }
-}
-
-const attend = document.getElementById('attend_church');
-
-if (attend) {
-  const campus = document.getElementById('campus_id');
-
-  changeCampusValue(attend.value, campus);
-  attend.addEventListener('change', () => changeCampusValue(attend.value, campus));
-}
-
 // hiding privileges
-toggleHidePrivilege = (value, allchecks, males, females, singles, married, sex_select, status_select, role) => {
-  Array.prototype.forEach.call(allchecks, item => item.classList.remove('d-none'));
+hidePrivilegesByGender = (sex, allchecks) => {
+  Array.prototype.forEach.call(allchecks, item => {
+    if (item.dataset.sex == sex) {
+      item.classList.add('d-none');
+      document.getElementById(item.dataset.id).checked = false;
+    }
+  });
+}
+
+hidePrivilegesByStatus = (status, allchecks) => {
+  Array.prototype.forEach.call(allchecks, item => {
+    if (item.dataset.status == status) {
+      item.classList.add('d-none');
+      document.getElementById(item.dataset.id).checked = false;
+    }
+  });
+}
+
+cleanPrivilegeChecked = (allchecks) => {
+  Array.prototype.forEach.call(allchecks, item => {
+    item.classList.remove('d-none');
+    document.getElementById(item.dataset.id).checked = false;
+  });
+}
+
+checkPrivilegesByGender = (gender, allchecks) => {
+  if (gender == 1 || gender == 3) {
+    hidePrivilegesByGender(2, allchecks);
+  }
+  else {
+    hidePrivilegesByGender(1, allchecks);
+  }  
+}
+
+checkPrivilegesByStatus = (status, allchecks, role) => {
+  if (status) {
+    switch (status) {
+      case '1'://married
+        hidePrivilegesByStatus(2, allchecks);
+        break;
+      case '2'://single
+        if (role == 1 || role == 2) {
+          hidePrivilegesByStatus(2, allchecks);
+        }
+
+        hidePrivilegesByStatus(1, allchecks);
+        break;
+      default:
+        hidePrivilegesByStatus(1, allchecks);
+        hidePrivilegesByStatus(2, allchecks);
+        break;
+    }
+  }  
+}
+
+settingSurnames = (role) => {
   let family_names = document.getElementById('family_names');
   let first_surname = document.getElementById('first_surname');
   let second_surname = document.getElementById('second_surname');
-
   
-  if (value == 1) {
-    Array.prototype.forEach.call(females, item => item.classList.add('d-none'))
-    Array.prototype.forEach.call(singles, item => item.classList.add('d-none'));
-    sex_select.value = 'M';
-    status_select.value = 1;
-    if (family_names && role)
-    {
-      first_surname.value = family_names ? family_names.dataset.first : '';
+  if (family_names) {
+    if (role == 1) {
+      first_surname.value = family_names.dataset.first;
       second_surname.value = '';
     }
-  }
-  else if (value == 2){
-    Array.prototype.forEach.call(males, item => item.classList.add('d-none'))
-    Array.prototype.forEach.call(singles, item => item.classList.add('d-none'));
-    sex_select.value = 'F';
-    status_select.value = 1;
-    if (family_names && role)
-    {
-      first_surname.value = family_names ? family_names.dataset.second : '';
+    else if (role == 2){
+      first_surname.value = family_names.dataset.second;
       second_surname.value = '';
     }
-  }
-  else if (value == 3) {
-    Array.prototype.forEach.call(females, item => item.classList.add('d-none'))
-    Array.prototype.forEach.call(married, item => item.classList.add('d-none'));
-    sex_select.value = 'M';
-    status_select.value = 2;
-    if (family_names && role)
-    {
-      first_surname.value = family_names ? family_names.dataset.first : '';
-      second_surname.value = family_names ? family_names.dataset.second : '';
+    else {
+      first_surname.value = family_names.dataset.first;
+      second_surname.value = family_names.dataset.second;
     }
+  }
+}
+
+settingSex = (role) => {
+  const sex_select = document.getElementById('sex');
+
+  if (role == 1 || role == 3) {
+    sex_select.value = 'M';
   }
   else {
-    Array.prototype.forEach.call(males, item => item.classList.add('d-none'))    
-    Array.prototype.forEach.call(married, item => item.classList.add('d-none'));
     sex_select.value = 'F';
-    status_select.value = 2;
-    if (family_names && role)
-    {
-      first_surname.value = family_names ? family_names.dataset.first : '';
-      second_surname.value = family_names ? family_names.dataset.second : '';
-    }
   }
 }
 
-const frole = document.querySelector('#family_role');
-const allchecks = document.getElementsByClassName('divcheckbox');
-const males = document.getElementsByClassName('male');
-const females = document.getElementsByClassName('female');
-const singles = document.getElementsByClassName('single');
-const married = document.getElementsByClassName('married');
-const sex_select = document.getElementById('sex');
-const status_select = document.getElementById('status');
+// hiding privileges on change family role selector
+let family_role = document.getElementById('family_role');
+if (family_role) {
+  const allchecks = document.getElementsByClassName('divcheckbox');
+  settingSurnames(family_role.value);
+  settingSex(family_role.value);
+  hidePrivilegesByGender(2, allchecks);
 
-if (frole) {
-  toggleHidePrivilege(frole.value, allchecks, males, females, singles, married, sex_select, status_select, 1);
+  family_role.addEventListener('change', event => {
+    const status = document.getElementById('status');
 
-  frole.addEventListener('change', () => toggleHidePrivilege(frole.value, allchecks, males, females, singles, married, sex_select, status_select, 1));
+    settingSurnames(event.target.value);
+    settingSex(event.target.value);
+    cleanPrivilegeChecked(allchecks);
+    checkPrivilegesByGender(event.target.value, allchecks);
+    checkPrivilegesByStatus(status.value, allchecks, event.target.value);
+  })
 }
 
-hideByAge = (value, allchecks) => {
+let edit_family_role = document.getElementById('edit_family_role');
+if (edit_family_role) {
+  const allchecks = document.getElementsByClassName('divcheckbox');
+
+  edit_family_role.addEventListener('change', event => {
+    const status = document.getElementById('status');
+
+    cleanPrivilegeChecked(allchecks);
+    checkPrivilegesByGender(event.target.value, allchecks);
+    checkPrivilegesByStatus(status.value, allchecks, event.target.value);
+  })  
+}
+
+// hiding privileges on change status selector
+let status = document.getElementById('status');
+if (status) {
+  status.addEventListener('change', event => {
+    let allchecks = document.getElementsByClassName('divcheckbox');
+    let family_role = document.getElementById('family_role');
+    if (!family_role) family_role = document.getElementById('edit_family_role');
+
+    cleanPrivilegeChecked(allchecks);
+    checkPrivilegesByGender(family_role.value, allchecks);
+    checkPrivilegesByStatus(event.target.value, allchecks, family_role.value);
+  });
+}
+
+hideByAge = (value, allchecks, clean) => {
   let birthday = new Date(value.replace(/-/g, '\/'));
   let miliseconds_age = Date.now() - birthday.getTime();
   let age = Math.floor(miliseconds_age / 31536000000);
 
-  toggleHidePrivilege(frole.value, allchecks, males, females, singles, married, sex_select, status_select);
+  let family_role = document.getElementById('family_role');
+  if (!family_role) family_role = document.getElementById('edit_family_role');
+  let status = document.getElementById('status');
+
+  if (clean) cleanPrivilegeChecked(allchecks);
+
+  checkPrivilegesByGender(family_role.value, allchecks);
+  checkPrivilegesByStatus(status.value, allchecks, family_role.value);
 
   Array.prototype.forEach.call(allchecks, item => {
     if (item.dataset.min > 0 && item.dataset.max > 0) {
@@ -116,15 +160,86 @@ hideByAge = (value, allchecks) => {
   });
 }
 
-const birthday = document.querySelector('#birthday');
-
+const birthday = document.getElementById('birthday');
 if (birthday) {
-
+  let allchecks = document.getElementsByClassName('divcheckbox');
   if (birthday.value) {
     hideByAge(birthday.value, allchecks);
   }
 
-  birthday.addEventListener('change', () => hideByAge(birthday.value, allchecks));
+  birthday.addEventListener('change', () => hideByAge(birthday.value, allchecks, 1));
+}
+
+// attend church selector change
+hidePrivilegeSection = (allchecks) => {
+  let p_section = document.getElementById('privilege-section');
+
+  cleanPrivilegeChecked(allchecks);
+  p_section.classList.add('d-none');
+}
+
+showPrivilegeSection = (allchecks) => {
+  let family_role = document.getElementById('family_role');
+  if (!family_role) family_role = document.getElementById('edit_family_role');
+  let status = document.getElementById('status');
+  let p_section = document.getElementById('privilege-section');
+
+  p_section.classList.remove('d-none');
+  checkPrivilegesByGender(family_role.value, allchecks);
+  checkPrivilegesByStatus(status.value, allchecks, family_role.value);
+}
+
+toggleReasonField = (attend) => {
+  const reason = document.getElementById('reason');
+
+  if (attend == 0 || attend == 2) {
+    reason.disabled = false;
+  }
+  else {
+    reason.value = '';
+    reason.disabled = true;
+  }
+}
+
+toggleCampusField = (attend) => {
+  const campus = document.getElementById('campus_id');
+
+  if (attend == -1 || attend == 0) {
+    campus.value = '';
+    campus.required = false;
+    campus.disabled = true;
+  }
+  else if (attend == 1) {
+    campus.required = true;
+    campus.disabled = false;
+  }
+  else {
+    campus.required = false;
+    campus.disabled = false;
+  }
+}
+
+togglePrivilegesSection = (attend) => {
+  let allchecks = document.getElementsByClassName('divcheckbox');
+  if (attend == 1 || attend == 2) {
+    showPrivilegeSection(allchecks);
+  }
+  else {
+    hidePrivilegeSection(allchecks);
+  }
+}
+
+const attend = document.getElementById('attend_church');
+if (attend) {
+  toggleReasonField(attend.value);
+  toggleCampusField(attend.value);
+  togglePrivilegesSection(attend.value);
+
+  attend.addEventListener('change', event => {
+    toggleReasonField(event.target.value);
+    toggleCampusField(event.target.value);
+    togglePrivilegesSection(event.target.value);
+  });
 }
 
 // the search thing

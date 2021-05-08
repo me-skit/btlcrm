@@ -1,6 +1,31 @@
 <div class="row">
   <div class="col-lg-6">
     <div class="row form-group">
+      <label for="dpi" class="col-md-5 col-form-label text-md-right">{{ __('No. DPI') }}</label>
+      <div class="col-md-7">
+        <input type="text"
+          name="dpi"
+          id="dpi"
+          class="form-control @error('dpi') is-invalid @enderror"
+          value="{{ old('dpi') ?? $person->dpi }}"
+          pattern="[0-9]{13}"
+          title="Trece números sin espacios"
+          placeholder="Número de DPI"
+          >
+
+        @error('dpi')
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+          </span>
+        @enderror
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-6">
+    <div class="row form-group">
       <label for="first_name" class="col-md-5 col-form-label text-md-right">{{ __('Primer nombre') }}<span class="text-danger">*</span></label>
       <div class="col-md-7">
         <input type="text"
@@ -9,6 +34,7 @@
           class="form-control @error('first_name') is-invalid @enderror"
           value="{{ old('first_name') ?? $person->first_name }}"
           required
+          placeholder="Primer nombre"
           >
 
         @error('first_name')
@@ -29,6 +55,7 @@
           id="second_name"
           class="form-control @error('second_name') is-invalid @enderror"
           value="{{ old('second_name') ?? $person->second_name }}"
+          placeholder="Segundo nombre"
         >
 
         @error('second_name')
@@ -51,6 +78,7 @@
           id="third_name"
           class="form-control @error('third_name') is-invalid @enderror"
           value="{{ old('third_name') ?? $person->third_name }}"
+          placeholder="Tercer nombre"
         >
 
         @error('third_name')
@@ -74,6 +102,7 @@
           class="form-control @error('first_surname') is-invalid @enderror"
           value="{{ old('first_surname') ?? $person->first_surname }}"
           required
+          placeholder="Primer apellido"
         >
 
         @error('first_surname')
@@ -94,6 +123,7 @@
           id="second_surname"
           class="form-control @error('second_surname') is-invalid @enderror"
           value="{{ old('second_surname') ?? $person->second_surname }}"
+          placeholder="Segundo apellido"
         >
 
         @error('second_surname')
@@ -105,7 +135,6 @@
     </div>
   </div>
 </div>
-
 
 <div class="row">
   <div class="col-lg-6">
@@ -128,6 +157,8 @@
           <option value="1" {{ $person->status == 1 ? 'selected' : '' }}>Casado(a)</option>
           <option value="2" {{ $person->status == 2 ? 'selected' : '' }}>Soltero(a)</option>
           <option value="3" {{ $person->status == 3 ? 'selected' : '' }}>Unido(a)</option>
+          <option value="4" {{ $person->status == 4 ? 'selected' : '' }}>Divorciado(a)</option>
+          <option value="6" {{ $person->status == 6 ? 'selected' : '' }}>Viudo(a)</option>
         </select>
       </div>
     </div>
@@ -187,7 +218,9 @@
           id="cellphone"
           class="form-control @error('cellphone') is-invalid @enderror"
           value="{{ old('cellphone') ?? $person->cellphone }}"
-          pattern="[0-9]{8}"
+          pattern="[0-9]{8}(,\s*[0-9]{8})*"
+          title="Números de teléfono de 8 digitos, separados por comas"
+          placeholder="Número(s) personal(es)"
         >
 
         @error('cellphone')
@@ -208,6 +241,9 @@
           id="e_mail"
           class="form-control @error('e_mail') is-invalid @enderror"
           value="{{ old('e_mail') ?? $person->e_mail }}"
+          pattern="[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+          title="nombre de usuario, seguido de @ y un dominio valido"
+          placeholder="Correo electrónico"
         >
 
         @error('e_mail')
@@ -231,6 +267,7 @@
           class="form-control @error('diseases') is-invalid @enderror"
           value="{{ old('diseases') ?? ($person->diseases ? implode(',', $person->diseases) : '') }}"
           data-role="tagsinput"
+          placeholder="Separadas por comas"
         >
 
         @error('diseases')
@@ -252,6 +289,7 @@
           class="form-control @error('handicaps') is-invalid @enderror"
           value="{{ old('handicaps') ?? ($person->handicaps ? implode(',', $person->handicaps) : '') }}"
           data-role="tagsinput"
+          placeholder="Separadas por comas"
         >
 
         @error('handicaps')

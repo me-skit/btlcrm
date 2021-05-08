@@ -41,6 +41,7 @@
                 id="family_name"
                 class="form-control @error('family_name') is-invalid @enderror"
                 value="{{ old('family_name') ?? $family->family_name }}"
+                placeholder="Apellidos"
               >
 
               @error('family_name')
@@ -59,6 +60,7 @@
                 id="address"
                 class="form-control @error('address') is-invalid @enderror"
                 value="{{ old('address') ?? $family->address }}"
+                placeholder="Dirección"
               >
 
               @error('address')
@@ -77,6 +79,7 @@
                 id="phone_number"
                 class="form-control @error('phone_number') is-invalid @enderror"
                 value="{{ old('phone_number') ?? $family->phone_number }}"
+                placeholder="Teléfono recidencial"
               >
 
               @error('phone_nomber')
@@ -88,34 +91,17 @@
           </div>
 
           <div class="row form-group">
-            <label for="longitude" class="col-md-4 col-form-label text-md-right">{{ __('Longitud') }}</label>
+            <label for="location" class="col-md-4 col-form-label text-md-right">{{ __('Long, Lat') }}</label>
             <div class="col-md-6">
-              <input type="number" step="any"
-                name="longitude"
-                id="longitude"
-                class="form-control @error('longitude') is-invalid @enderror"
-                value="{{ old('longitude') ?? $family->longitude }}"
+              <input type="text"
+                name="location"
+                id="location"
+                class="form-control @error('location') is-invalid @enderror"
+                value="{{ old('location') }}"
+                placeholder="Longitud, latitud"
               >
 
-              @error('longitude')
-                <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-                </span>
-              @enderror
-            </div>
-          </div>
-
-          <div class="row form-group">
-            <label for="latitude" class="col-md-4 col-form-label text-md-right">{{ __('Latitud') }}</label>
-            <div class="col-md-6">
-              <input type="number" step="any"
-                name="latitude"
-                id="latitude"
-                class="form-control @error('latitude') is-invalid @enderror"
-                value="{{ old('latitude') ?? $family->latitude }}"
-              >
-
-              @error('latitude')
+              @error('location')
                 <span class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>
                 </span>

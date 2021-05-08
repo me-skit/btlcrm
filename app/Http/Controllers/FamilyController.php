@@ -76,11 +76,16 @@ class FamilyController extends Controller
             'union_type' => 'required',
             'family_name' => 'required',
             'address' => 'required',
-            'phone_number' => 'nullable',
-            'longitude' => ['numeric', 'nullable'],
-            'latitude' => ['numeric', 'nullable']
+            'phone_number' => 'nullable'
         ]);
-        
+
+        if ($request->input('location'))
+        {
+            $location = explode(",", $request->input('location'));
+            $data['longitude'] = $location[0];
+            $data['latitude'] = $location[1];
+        }
+
         $family = Family::create($data);
 
         $back = $request->get('back') ? $request->get('back') : '';
@@ -121,10 +126,15 @@ class FamilyController extends Controller
             'union_type' => 'required',
             'family_name' => 'required',
             'address' => 'required',
-            'phone_number' => 'nullable',
-            'longitude' => ['numeric', 'nullable'],
-            'latitude' => ['numeric', 'nullable']
-        ]);        
+            'phone_number' => 'nullable'
+        ]);
+
+        if ($request->input('location'))
+        {
+            $location = explode(",", $request->input('location'));
+            $data['longitude'] = $location[0];
+            $data['latitude'] = $location[1];
+        }        
 
         $family->fill($data);
         $family->save();
@@ -145,12 +155,9 @@ class FamilyController extends Controller
         $campuses = Campus::all();
         $privileges = Privilege::all();
 
-        $sexes = array('M' => 'male', 'F' => 'female');
-        $statuses = array(1 => 'married', 2 => 'single');
-
         $back = $request->get('back') ? $request->get('back') : '';
-        return view('families.members.create', compact('family', 'campuses', 'privileges', 'sexes', 'statuses', 'back'));
-    }    
+        return view('families.members.create', compact('family', 'campuses', 'privileges', 'back'));
+    }
 
     /**
      * Store a newly created person resource in storage.
@@ -162,6 +169,7 @@ class FamilyController extends Controller
     public function addmember(Request $request, $family_id)
     {
         $person_data = $request->validate([
+            'dpi' => ['numeric', 'nullable'],
             'first_name' => 'required',
             'second_name' => 'nullable',
             'third_name' => 'nullable',
@@ -171,17 +179,19 @@ class FamilyController extends Controller
             'status' => ['required', 'numeric'],
             'birthday' => ['required', 'date', 'before:today'],
             'e_mail' => ['email', 'nullable'],
-            'cellphone' => ['numeric', 'nullable'],
+            'cellphone' => 'nullable',
             'diseases' => 'nullable',
             'handicaps' => 'nullable',
             'preferences' => 'nullable'
         ]);
 
-        if ($request->diseases) {
+        if ($request->diseases)
+        {
             $person_data['diseases'] = explode(',', $request->diseases);
         }
 
-        if ($request->handicaps) {
+        if ($request->handicaps)
+        {
             $person_data['handicaps'] = explode(',', $request->handicaps);
         }
 
@@ -192,12 +202,13 @@ class FamilyController extends Controller
             'baptized' => ['required', 'numeric'],
             'date_baptized' =>['date', 'before:tomorrow', 'nullable'],
             'discipleship' => ['required', 'numeric'],
-            'attend_church' => ['required', 'numeric']
+            'attend_church' => ['required', 'numeric'],
+            'reason' => 'nullable'
         ]);
 
-        // attend_church in membership could be: 0:no, 1:yes, 2:another church, 3:problem attending
+        // attend_church in membership could be: 0:no, 1:yes, 2:occasionally, 3:problem attending, -1:another church
         $attend = $membership_data['attend_church'];
-        if ($attend == '0' or $attend == '2')
+        if ($attend == '0' or $attend == '-1')
         {
             // status in membership could be: 0:inactive, 1:active, 2:passed away
             // if person don't attend church or attend another church, membership is inactive
@@ -235,11 +246,8 @@ class FamilyController extends Controller
         $campuses = Campus::all();
         $privileges = Privilege::all();
 
-        $sexes = array('M' => 'male', 'F' => 'female');
-        $statuses = array(1 => 'married', 2 => 'single');
-
         $back = $request->get('back') ? $request->get('back') : '';
-        return view('families.members.edit', compact('person', 'family', 'campuses', 'privileges', 'sexes', 'statuses', 'back'));
+        return view('families.members.edit', compact('person', 'family', 'campuses', 'privileges', 'back'));
     }
 
     /**
@@ -253,6 +261,7 @@ class FamilyController extends Controller
     public function updatemember(Request $request, $family_id, Person $person)
     {
         $person_data = $request->validate([
+            'dpi' => ['numeric', 'nullable'],
             'first_name' => 'required',
             'second_name' => 'nullable',
             'third_name' => 'nullable',
@@ -263,17 +272,19 @@ class FamilyController extends Controller
             'birthday' => ['required', 'date', 'before:today'],
             'death_date' => ['date', 'before:tomorrow', 'nullable'],
             'e_mail' => ['email', 'nullable'],
-            'cellphone' => ['numeric', 'nullable'],
+            'cellphone' => 'nullable',
             'diseases' => 'nullable',
             'handicaps' => 'nullable',
             'preferences' => 'nullable'
         ]);
 
-        if ($request->diseases) {
+        if ($request->diseases)
+        {
             $person_data['diseases'] = explode(',', $request->diseases);
         }
 
-        if ($request->handicaps) {
+        if ($request->handicaps)
+        {
             $person_data['handicaps'] = explode(',', $request->handicaps);
         }        
 
@@ -284,19 +295,20 @@ class FamilyController extends Controller
             'baptized' => ['required', 'numeric'],
             'date_baptized' =>['date', 'before:tomorrow', 'nullable'],
             'discipleship' => ['required', 'numeric'],
-            'attend_church' => ['required', 'numeric']
+            'attend_church' => ['required', 'numeric'],
+            'reason' => 'nullable'
         ]);
 
-        // attend_church in membership could be: 0:no, 1:yes, 2:another church, 3:problem attending
+        // attend_church in membership could be: 0:no, 1:yes, 2:occasionally, 3:problem attending, -1:another church
         $attend = $membership_data['attend_church'];
-        if ($attend == '1' or $attend == '3')
+        if ($attend == '0' or $attend == '-1')
         {
             // status in membership could be: 0:inactive, 1:active, 2:passed away
-            $membership_data['status'] = '1';
+            $membership_data['status'] = '0';
         }
         else
         {
-            $membership_data['status'] = '0';
+            $membership_data['status'] = '1';
         }
 
         $relation_data = $request->validate([

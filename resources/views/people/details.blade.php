@@ -11,6 +11,18 @@
       </div>
     </div>
   </div>
+  <div class="col-lg-6">
+    <div class="row">
+      <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
+        No. DPI:
+      </div>
+      <div class="col-7 col-sm-8 col-md-9 col-lg-7">
+        <b>
+          {{ $person->dpi }}
+        </b>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="row">
@@ -21,11 +33,7 @@
       </div>
       <div class="col-7 col-sm-8 col-md-9 col-lg-7">
         <b>
-          @if ($person->sex == 'M')
-            {{ $person->status == 1 ? "Casado" : ($person->status == 2 ? "Soltero" : "Unido") }}
-          @else
-            {{ $person->status == 1 ? "Casada" : ($person->status == 2 ? "Soltera" : "Unida") }}
-          @endif
+          {{ $person->civil_status }}
         </b>
       </div>
     </div>
@@ -212,6 +220,23 @@
     @endif
   </div>
   <div class="col-lg-6">
+    @if ($person->membership->reason)
+    <div class="row">
+      <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
+        Motivo:
+      </div>
+      <div class="col-7 col-sm-8 col-md-9 col-lg-7">
+        <b>
+          {{ $person->membership->reason }}
+        </b>
+      </div>
+    </div>
+    @endif
+  </div>  
+</div>
+
+<div class="row">
+  <div class="col-lg-6">
     <div class="row">
       <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
         Cede:
@@ -223,9 +248,6 @@
       </div>
     </div>
   </div>
-</div>
-
-<div class="row">
   <div class="col-lg-6">
     <div class="row">
       <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
@@ -237,8 +259,6 @@
         </b>
       </div>
     </div>
-  </div>
-  <div class="col-lg-6">
   </div>
 </div>
 

@@ -228,7 +228,7 @@ class PersonController extends Controller
 
         $family = $person->family();
         return view('people.nomembers.show', compact('person', 'family'));
-    }    
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -244,10 +244,7 @@ class PersonController extends Controller
         $campuses = Campus::all();
         $privileges = Privilege::all();
 
-        $sexes = array('M' => 'male', 'F' => 'female');
-        $statuses = array(1 => 'married', 2 => 'single');
-
-        return view('people.edit', compact('person', 'family', 'campuses', 'privileges', 'sexes', 'statuses'));
+        return view('people.edit', compact('person', 'family', 'campuses', 'privileges'));
     }
 
     /**
@@ -262,6 +259,7 @@ class PersonController extends Controller
         Gate::authorize('consult');
 
         $person_data = $request->validate([
+            'dpi' => ['numeric', 'nullable'],
             'first_name' => 'required',
             'second_name' => 'nullable',
             'third_name' => 'nullable',
@@ -293,19 +291,20 @@ class PersonController extends Controller
             'baptized' => ['required', 'numeric'],
             'date_baptized' =>['date', 'before:tomorrow', 'nullable'],
             'discipleship' => ['required', 'numeric'],
-            'attend_church' => ['required', 'numeric']
+            'attend_church' => ['required', 'numeric'],
+            'reason' => 'nullable'
         ]);
 
-        // attend_church in membership could be: 0:no, 1:yes, 2:another church
+        // attend_church in membership could be: 0:no, 1:yes, 2:occasionally, 3:problem attending, -1:another church
         $attend = $membership_data['attend_church'];
-        if ($attend == '1' or $attend == '3')
+        if ($attend == '0' or $attend == '-1')
         {
             // status in membership could be: 0:inactive, 1:active, 2:passed away
-            $membership_data['status'] = '1';
+            $membership_data['status'] = '0';
         }
         else
         {
-            $membership_data['status'] = '0';
+            $membership_data['status'] = '1';
         }
 
         $relation_data = $request->validate([
