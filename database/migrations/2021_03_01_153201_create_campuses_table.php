@@ -18,8 +18,11 @@ class CreateCampusesTable extends Migration
             $table->foreignId('village_id')->constrained();
             $table->string('name', 128);
             $table->string('address', 128)->nullable();
+            $table->string('phone_number', 32)->nullable();
             $table->decimal('longitude', 19, 14)->nullable();
             $table->decimal('latitude', 19, 14)->nullable();
+            $table->bigInteger('created_by')->unsigned()->nullable();
+            $table->bigInteger('updated_by')->unsigned()->nullable();
             $table->timestamps();
         });
     }

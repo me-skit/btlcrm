@@ -3,7 +3,7 @@
   @method('PATCH')
 
   <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="editModalLabel"><span class="font-weight-bold"><i class="fas fa-home"></i> Editar Datos de Familia</span></h5>
@@ -29,6 +29,9 @@
               <select name="union_type" class="form-control">
                 <option value="1" {{ $family->union_type == 1 ? 'selected' : '' }}>Casados</option>
                 <option value="2" {{ $family->union_type == 2 ? 'selected' : '' }}>Unidos</option>
+                <option value="3" {{ $family->union_type == 3 ? 'selected' : '' }}>Divorciados</option>
+                <option value="4" {{ $family->union_type == 4 ? 'selected' : '' }}>Separados</option>
+
               </select>
             </div>
           </div>
@@ -97,7 +100,7 @@
                 name="location"
                 id="location"
                 class="form-control @error('location') is-invalid @enderror"
-                value="{{ old('location') }}"
+                value="{{ old('location') ?? $family->location }}"
                 placeholder="Longitud, latitud"
               >
 

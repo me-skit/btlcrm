@@ -20,6 +20,8 @@
                       name="description"
                       id="description"
                       class="form-control @error('description') is-invalid @enderror"
+                      value="{{ old('description') }}"
+                      placeholder="Nombre del privilegio"
                       required
                       autofocus>
 
@@ -41,9 +43,9 @@
 
 
               <div class="row form-group">
-                <label for="preferred_sex" class="col-md-4 col-form-label text-md-right">{{ __('Sexo') }}</label>
+                <label for="preferred_sex" class="col-md-4 col-form-label text-md-right">{{ __('Sexo') }}<span class="text-danger">*</span></label>
                 <div class="col-md-6">
-                  <select name="preferred_sex" class="form-control">
+                  <select name="preferred_sex" class="form-control" required>
                     <option value selected>Ambos sexos</option>
                     <option value="M">Masculino</option>
                     <option value="F">Femenino</option>
@@ -52,9 +54,9 @@
               </div>
 
               <div class="row form-group">
-                <label for="preferred_status" class="col-md-4 col-form-label text-md-right">{{ __('Estado civil') }}</label>
+                <label for="preferred_status" class="col-md-4 col-form-label text-md-right">{{ __('Estado civil') }}<span class="text-danger">*</span></label>
                 <div class="col-md-6">
-                  <select name="preferred_status" class="form-control">
+                  <select name="preferred_status" class="form-control" required>
                     <option value selected>Cualquier estado civil</option>
                     <option value="1">Casado(a)</option>
                     <option value="2">Soltero(a)</option>
@@ -70,6 +72,7 @@
                       id="min_age"
                       class="form-control @error('min_age') is-invalid @enderror"
                       value="{{ old('min_age') }}"
+                      placeholder="Edad mínima"
                       >
 
                     @error('min_age')
@@ -88,6 +91,7 @@
                       id="max_age"
                       class="form-control @error('max_age') is-invalid @enderror"
                       value="{{ old('max_age') }}"
+                      placeholder="Edad máxima"
                       >
 
                     @error('max_age')

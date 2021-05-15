@@ -22,6 +22,8 @@ class CreateDisciplinesTable extends Migration
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->boolean('ended')->default(0);
+            $table->bigInteger('created_by')->unsigned()->nullable();
+            $table->bigInteger('updated_by')->unsigned()->nullable();
             $table->timestamps();
         });
     }

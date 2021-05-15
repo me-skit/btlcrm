@@ -16,6 +16,8 @@ class CreatePrivilegeRolesTable extends Migration
         Schema::create('privilege_roles', function (Blueprint $table) {
             $table->id();
             $table->string('description', 128);
+            $table->bigInteger('created_by')->unsigned()->nullable();
+            $table->bigInteger('updated_by')->unsigned()->nullable();
             $table->timestamps();
         });
     }

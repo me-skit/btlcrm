@@ -6,6 +6,7 @@ use App\Mail\WelcomeMail;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Gate;
@@ -80,6 +81,7 @@ class UserController extends Controller
         $pass = Str::random(8);
         $data['password'] = Hash::make($pass);
         $data['active'] = 1;
+        $data['created_by'] = Auth::id();
         $user = User::create($data);
 
         Mail::to($user->email)->send(new WelcomeMail($pass));
@@ -120,6 +122,7 @@ class UserController extends Controller
         $user->role = $data['role'];
         $user->sex = $data['sex'];
         $user->active = $data['active'];
+        $data['updated_by'] = Auth::id();
         $user->save();
 
         return redirect('/users');

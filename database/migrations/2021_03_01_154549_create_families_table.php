@@ -23,6 +23,8 @@ class CreateFamiliesTable extends Migration
             $table->boolean('active')->default(1);
             $table->decimal('longitude', 19, 14)->nullable();
             $table->decimal('latitude', 19, 14)->nullable();
+            $table->bigInteger('created_by')->unsigned()->nullable();
+            $table->bigInteger('updated_by')->unsigned()->nullable();
             $table->timestamps();
         });
     }

@@ -18,6 +18,8 @@ class CreateFamilyMembersTable extends Migration
             $table->foreignId('person_id')->constrained();
             $table->tinyInteger('family_role');
             $table->boolean('active')->default(1);
+            $table->bigInteger('created_by')->unsigned()->nullable();
+            $table->bigInteger('updated_by')->unsigned()->nullable();
             $table->timestamps();
 
             $table->primary(['family_id', 'person_id']);

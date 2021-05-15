@@ -20,6 +20,8 @@ class CreatePrivilegesTable extends Migration
             $table->boolean('preferred_status')->nullable();
             $table->tinyInteger('min_age')->nullable();
             $table->tinyInteger('max_age')->nullable();
+            $table->bigInteger('created_by')->unsigned()->nullable();
+            $table->bigInteger('updated_by')->unsigned()->nullable();
             $table->timestamps();
         });
     }

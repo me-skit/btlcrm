@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\PrivilegeRole;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class PrivilegeRoleController extends Controller
@@ -69,9 +70,8 @@ class PrivilegeRoleController extends Controller
             'description' => ['required', 'unique:privilege_roles']
         ]);
 
-        PrivilegeRole::create([
-            'description' => $data['description']
-        ]);
+        $data['created_by'] = Auth::id();
+        PrivilegeRole::create($data);
 
         return redirect('/privilegeroles');
     }
@@ -104,6 +104,7 @@ class PrivilegeRoleController extends Controller
             'description' => 'required'
         ]);
 
+        $data['updated_by'] = Auth::id();
         $privilegeRole->fill($data);
         $privilegeRole->save();
 

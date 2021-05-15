@@ -6,6 +6,7 @@ use App\Models\Campus;
 use App\Models\Village;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class CampusController extends Controller
 {
@@ -56,10 +57,17 @@ class CampusController extends Controller
             'name' => 'required',
             'village_id' => 'required',
             'address' => 'nullable',
-            'longitude' => ['numeric', 'nullable'],
-            'latitude' => ['numeric', 'nullable']
+            'phone_number' => 'nullable'
         ]);
 
+        if ($request->input('location'))
+        {
+            $location = explode(",", $request->input('location'));
+            $data['longitude'] = $location[0];
+            $data['latitude'] = $location[1];
+        }
+
+        $data['created_by'] = Auth::id();
         Campus::create($data);
 
         return redirect('/campus');
@@ -93,12 +101,24 @@ class CampusController extends Controller
 
         $data = $request->validate([
             'name' => 'required',
-            'address' => 'required',
-            'village_id' => 'nullable',
-            'longitude' => ['numeric', 'nullable'],
-            'latitude' => ['numeric', 'nullable']
+            'village_id' => 'required',
+            'address' => 'nullable',
+            'phone_number' => 'nullable'
         ]);
 
+        if ($request->input('location'))
+        {
+            $location = explode(",", $request->input('location'));
+            $data['longitude'] = $location[0];
+            $data['latitude'] = $location[1];
+        }
+        else
+        {
+            $data['longitude'] = null;
+            $data['latitude'] = null;
+        }
+
+        $data['updated_by'] = Auth::id();
         $campus->fill($data);
         $campus->save();
 

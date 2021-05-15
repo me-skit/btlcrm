@@ -22,6 +22,7 @@
                     id="name"
                     class="form-control @error('name') is-invalid @enderror"
                     value="{{ old('name') ?? $campus->name }}"
+                    placeholder="Nombre de sede"
                     required
                     autofocus>
 
@@ -52,6 +53,7 @@
                     id="address"
                     class="form-control @error('address') is-invalid @enderror"
                     value="{{ old('address') ?? $campus->address }}"
+                    placeholder="Dirección de sede"
                     >
 
                   @error('address')
@@ -62,17 +64,18 @@
                 </div>
               </div>
 
-              <div class="row form-group">
-                <label for="longitude" class="col-md-3 col-form-label text-md-right">{{ __('Longitud') }}</label>
+              <div class="form-group row">
+                <label for="phone_number" class="col-md-3 col-form-label text-md-right">{{ __('Teléfono') }}</label>
                 <div class="col-md-7">
-                  <input type="number" step="any"
-                    name="longitude"
-                    id="longitude"
-                    class="form-control @error('longitude') is-invalid @enderror"
-                    value="{{ old('longitude') ?? $campus->longitude }}"
-                    >
-
-                  @error('longitude')
+                  <input type="text"
+                    name="phone_number"
+                    id="phone_number"
+                    class="form-control @error('phone_number') is-invalid @enderror"
+                    value="{{ old('phone_number') ?? $campus->phone_number }}"
+                    placeholder="Número de teléfono"
+                  >
+    
+                  @error('phone_nomber')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
                     </span>
@@ -81,16 +84,17 @@
               </div>
 
               <div class="row form-group">
-                <label for="latitude" class="col-md-3 col-form-label text-md-right">{{ __('Latitud') }}</label>
+                <label for="location" class="col-md-3 col-form-label text-md-right">{{ __('Long, Lat') }}</label>
                 <div class="col-md-7">
-                  <input type="number" step="any"
-                    name="latitude"
-                    id="latitude"
-                    class="form-control @error('latitude') is-invalid @enderror"
-                    value="{{ old('latitude') ?? $campus->latitude }}"
-                    >
+                  <input type="text"
+                    name="location"
+                    id="location"
+                    class="form-control @error('location') is-invalid @enderror"
+                    value="{{ old('location') ?? $campus->location }}"
+                    placeholder="Latitud, longitud"
+                  >
 
-                  @error('latitude')
+                  @error('location')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
                     </span>

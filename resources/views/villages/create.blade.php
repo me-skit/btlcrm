@@ -20,6 +20,7 @@
                     id="name"
                     class="form-control @error('name') is-invalid @enderror"
                     value="{{ old('name') }}"
+                    placeholder="Nombre del pueblo o aldea"
                     required
                     autofocus>
 

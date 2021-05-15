@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\PrivilegeRole;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class PersonController extends Controller
 {
@@ -270,17 +271,19 @@ class PersonController extends Controller
             'birthday' => ['required', 'date', 'before:today'],
             'death_date' => ['date', 'before:tomorrow', 'nullable'],
             'e_mail' => ['email', 'nullable'],
-            'cellphone' => ['numeric', 'nullable'],
+            'cellphone' => 'nullable',
             'diseases' => 'nullable',
             'handicaps' => 'nullable',
             'preferences' => 'nullable'
         ]);
 
-        if ($request->diseases) {
+        if ($request->diseases)
+        {
             $person_data['diseases'] = explode(',', $request->diseases);
         }
 
-        if ($request->handicaps) {
+        if ($request->handicaps)
+        {
             $person_data['handicaps'] = explode(',', $request->handicaps);
         }        
 
@@ -319,21 +322,24 @@ class PersonController extends Controller
             $relation_data['active'] = '2';
         }
         
+        $person_data['updated_by'] = Auth::id();
         $person->fill($person_data);
         $person->save();
 
         $membership = $person->membership;
+        $membership_data['updated_by'] = Auth::id();
         $membership->fill( $membership_data);
         $membership->save();
 
         $family = $person->family();
 
         $family_members = $family->pivot;
+        $relation_data['updated_by'] = Auth::id();
         $family_members->fill($relation_data);
         $family_members->save();
 
         // check if all family members are active=0, if there is no one family is set inactive (active=0)
-        $plucked = $family_members->pluck('active')->toArray();
+        $plucked = $family->members()->pluck('active')->toArray();
         if (!in_array(1, $plucked))
         {
             $family->active = 0;

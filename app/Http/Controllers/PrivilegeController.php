@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Privilege;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class PrivilegeController extends Controller
@@ -73,6 +74,7 @@ class PrivilegeController extends Controller
             'max_age' => ['numeric', 'nullable']
         ]);
 
+        $data['created_by'] = Auth::id();
         Privilege::create($data);
 
         return redirect('/privileges');
@@ -102,15 +104,16 @@ class PrivilegeController extends Controller
     {
         Gate::authorize('administer');
 
-        $date = $request->validate([
+        $data = $request->validate([
             'description' => 'required',
             'preferred_sex' => 'nullable',
             'preferred_status' => 'nullable',
             'min_age' => ['numeric', 'nullable'],
-            'max_age' => ['numeric', 'nullable']            
+            'max_age' => ['numeric', 'nullable']
         ]);
 
-        $privilege->fill($date);
+        $data['updated_by'] = Auth::id();
+        $privilege->fill($data);
         $privilege->save();
 
         return redirect('/privileges');

@@ -20,6 +20,8 @@
                     name="description"
                     id="description"
                     class="form-control @error('description') is-invalid @enderror"
+                    value="{{ old('description') }}"
+                    placeholder="Nombre del puesto o cargo"
                     required
                     autofocus>
 

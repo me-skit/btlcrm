@@ -7,6 +7,7 @@ use App\Models\Person;
 use App\Models\Discipline;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class DisciplineController extends Controller
 {
@@ -58,6 +59,7 @@ class DisciplineController extends Controller
         $discipline = Discipline::findOrFail($id);
         $discipline->ended = 1;
         $discipline->end_date = $data['end_date'];
+        $discipline->updated_by = Auth::id();
         $discipline->save();
 
         $all = DB::table('disciplines')
@@ -100,7 +102,10 @@ class DisciplineController extends Controller
             'end_date' => ['date', 'nullable']
         ]);
 
-        Discipline::create($data);
+        $discipline = new Discipline();
+        $discipline->fill($data);
+        $discipline->created_by = Auth::id();
+        $discipline->save();
 
         $person = Person::findOrFail($data['person_id']);
         $disciplines = $person->disciplines;
@@ -140,6 +145,7 @@ class DisciplineController extends Controller
         ]);
 
         $discipline->fill($data);
+        $discipline->updated_by = Auth::id();
         $discipline->save();
 
         $person = $discipline->person;

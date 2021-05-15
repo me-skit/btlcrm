@@ -130,7 +130,7 @@
           id="reason"
           class="form-control @error('reason') is-invalid @enderror"
           value="{{ old('reason') }}"
-          placeholder="Motivo"
+          placeholder="Motivo por el que no asiste o asiste poco"
           disabled
         >
 

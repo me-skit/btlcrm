@@ -30,4 +30,30 @@ class Family extends Model
     public function getFamilyNamesAttribute() {
         return explode(' ', $this->family_name);
     }
+
+    public function getLocationAttribute()
+    {   
+        if ($this->longitude and $this->latitude)
+        {
+            return $this->longitude . ', ' . $this->latitude;
+        }
+        else {
+            return '';
+        }
+    }
+
+    public function getUnionAttribute()
+    {
+        switch ($this->union_type)
+        {
+            case 1:
+                return 'Casados';
+            case 2:
+                return 'Unidos';
+            case 3:
+                return 'Divorciados';
+            case 4: 
+                return 'Separados';
+        }        
+    }
 }

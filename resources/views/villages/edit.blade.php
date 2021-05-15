@@ -22,8 +22,8 @@
                     id="name"
                     class="form-control @error('name') is-invalid @enderror"
                     value="{{ old('name') ?? $village->name }}"
+                    placeholder="Nombre del pueblo o aldea"
                     required
-                    autocomplete="name"
                     autofocus>
 
                   @error('name')

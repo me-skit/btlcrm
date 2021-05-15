@@ -30,6 +30,8 @@
                   <select name="union_type" class="form-control" required>
                     <option value="1">Casados</option>
                     <option value="2">Unidos</option>
+                    <option value="3">Divorciados</option>
+                    <option value="4">Separados</option>
                   </select>
                 </div>
               </div>

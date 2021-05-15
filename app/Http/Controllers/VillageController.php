@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Village;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class VillageController extends Controller
@@ -53,6 +54,7 @@ class VillageController extends Controller
             'name' => 'required'
         ]);
 
+        $data['created_by'] = Auth::id();
         Village::create($data);
 
         return redirect('/villages');
@@ -86,6 +88,7 @@ class VillageController extends Controller
             'name' => 'required'
         ]);
 
+        $data['updated_by'] = Auth::id();
         $village->fill($data);
         $village->save();
 

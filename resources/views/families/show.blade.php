@@ -29,12 +29,12 @@
         </div>
         <div class="col-md-5">
           Tipo de unión:
-          <b>{{ $family->union_type == 1 ? "Casados" : "Unidos" }}</b>
+          <b>{{ $family->union }}</b>
         </div>        
       </div>    
     </div>
     
-    <div class="row d-flex justify-content-center my-3">
+    <div class="row d-flex justify-content-center py-2 bg-light">
       <div class="col-md-10 d-flex justify-content-between align-items-baseline">
         <h4>Miembros:</h4>
         <div>

@@ -23,4 +23,15 @@ class Campus extends Model
     {
         return $this->hasMany(Membership::class);
     }
+
+    public function getLocationAttribute()
+    {   
+        if ($this->longitude and $this->latitude)
+        {
+            return $this->longitude . ', ' . $this->latitude;
+        }
+        else {
+            return '';
+        }
+    }    
 }

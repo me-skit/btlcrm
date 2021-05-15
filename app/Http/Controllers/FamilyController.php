@@ -10,6 +10,7 @@ use App\Models\Privilege;
 use App\Models\Membership;
 use App\Models\FamilyMember;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FamilyController extends Controller
 {
@@ -86,6 +87,7 @@ class FamilyController extends Controller
             $data['latitude'] = $location[1];
         }
 
+        $data['created_by'] = Auth::id();
         $family = Family::create($data);
 
         $back = $request->get('back') ? $request->get('back') : '';
@@ -134,8 +136,14 @@ class FamilyController extends Controller
             $location = explode(",", $request->input('location'));
             $data['longitude'] = $location[0];
             $data['latitude'] = $location[1];
-        }        
+        }
+        else
+        {
+            $data['longitude'] = null;
+            $data['latitude'] = null;
+        }
 
+        $data['updated_by'] = Auth::id();
         $family->fill($data);
         $family->save();
 
@@ -219,13 +227,16 @@ class FamilyController extends Controller
             'family_role' => ['required', 'numeric']
         ]);
 
+        $person_data['created_by'] = Auth::id();
         $person = Person::create($person_data);
 
         $membership_data['person_id'] = $person->id;
+        $membership_data['created_by'] = Auth::id();
         Membership::create($membership_data);
 
         $relation_data['family_id'] = $family_id;
         $relation_data['person_id'] = $person->id;
+        $relation_data['created_by'] = Auth::id();
         FamilyMember::create($relation_data);
 
         $back = $request->get('back') ? $request->get('back') : '';
@@ -323,21 +334,24 @@ class FamilyController extends Controller
             $relation_data['active'] = '2';
         }
         
+        $person_data['updated_by'] = Auth::id();
         $person->fill($person_data);
         $person->save();
 
         $membership = $person->membership;
+        $membership_data['updated_by'] = Auth::id();
         $membership->fill( $membership_data);
         $membership->save();
 
         $family = $person->family();
 
         $family_members = $family->pivot;
+        $relation_data['updated_by'] = Auth::id();
         $family_members->fill($relation_data);
         $family_members->save();
 
         // check if all family members are active=0, if there is no one family is set inactive (active=0)
-        $plucked = $family_members->pluck('active')->toArray();
+        $plucked = $family->members()->pluck('active')->toArray();
         if (!in_array(1, $plucked))
         {
             $family->active = 0;

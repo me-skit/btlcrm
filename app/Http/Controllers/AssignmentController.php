@@ -9,6 +9,7 @@ use App\Models\PrivilegeRole;
 use App\Models\PrivilegeHistory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class AssignmentController extends Controller
 {
@@ -22,47 +23,52 @@ class AssignmentController extends Controller
         Gate::authorize('consult');
 
         $privileges = Privilege::orderBy('description')->get();
-        $selected = $privileges->first();
 
-        if ($request->get('priv_id')) {
-            $selected = Privilege::findOrFail($request->get('priv_id'));
+        if ($privileges->count() > 0) {
+            $selected = $privileges->first();
+
+            if ($request->get('priv_id')) {
+                $selected = Privilege::findOrFail($request->get('priv_id'));
+            }
+    
+            $people = DB::table('privilege_histories')
+                        ->join('people', function ($join) {
+                            $join->on('privilege_histories.person_id', '=', 'people.id')
+                                 ->where(function ($query) {
+                                    $query->where('privilege_histories.end_date', null)
+                                    ->orWhereDate('privilege_histories.end_date', '>=', date('Y-m-d'));
+                                });
+                        })
+                        ->join('privileges', function ($join) use ($selected) {
+                            $join->on('privilege_histories.privilege_id', '=', 'privileges.id')
+                                 ->where('privileges.id', $selected->id);
+                        })
+                        ->leftJoin('privilege_roles', 'privilege_histories.privilege_role_id', '=', 'privilege_roles.id')
+                        ->leftJoin('disciplines', function ($join) {
+                            $join->on('people.id', '=', 'disciplines.person_id')
+                                 ->where('disciplines.ended', '0');
+                        })
+                        ->leftJoin('family_members', function ($join) {
+                            $join->on('people.id', '=', 'family_members.person_id')
+                                 ->where('active', 1);
+                        })
+                        ->leftJoin('families', 'family_members.family_id', '=', 'families.id')
+                        ->select('people.id', 'first_name', 'second_name', 'third_name', 'first_surname', 'second_surname', 'cellphone', 'privilege_roles.description as role', 'privilege_histories.start_date', 'privilege_histories.end_date', 'disciplines.id as disciplined', 'act_number', 'address', 'phone_number')
+                        ->orderBy('first_name')
+                        ->orderBy('second_name')
+                        ->orderBy('third_name')
+                        ->orderBy('first_surname')
+                        ->orderBy('second_surname')
+                        ->get();
+    
+            if ($request->get('priv_id')) {
+                return view('privilegehistory.cards', compact('people'));
+            }
+    
+            return view('privilegehistory.current', compact('privileges', 'people', 'selected'));
         }
 
-        $people = DB::table('privilege_histories')
-                    ->join('people', function ($join) {
-                        $join->on('privilege_histories.person_id', '=', 'people.id')
-                             ->where(function ($query) {
-                                $query->where('privilege_histories.end_date', null)
-                                ->orWhereDate('privilege_histories.end_date', '>=', date('Y-m-d'));
-                            });
-                    })
-                    ->join('privileges', function ($join) use ($selected) {
-                        $join->on('privilege_histories.privilege_id', '=', 'privileges.id')
-                             ->where('privileges.id', $selected->id);
-                    })
-                    ->leftJoin('privilege_roles', 'privilege_histories.privilege_role_id', '=', 'privilege_roles.id')
-                    ->leftJoin('disciplines', function ($join) {
-                        $join->on('people.id', '=', 'disciplines.person_id')
-                             ->where('disciplines.ended', '0');
-                    })
-                    ->leftJoin('family_members', function ($join) {
-                        $join->on('people.id', '=', 'family_members.person_id')
-                             ->where('active', 1);
-                    })
-                    ->leftJoin('families', 'family_members.family_id', '=', 'families.id')
-                    ->select('people.id', 'first_name', 'second_name', 'third_name', 'first_surname', 'second_surname', 'cellphone', 'privilege_roles.description as role', 'privilege_histories.start_date', 'privilege_histories.end_date', 'disciplines.id as disciplined', 'act_number', 'address', 'phone_number')
-                    ->orderBy('first_name')
-                    ->orderBy('second_name')
-                    ->orderBy('third_name')
-                    ->orderBy('first_surname')
-                    ->orderBy('second_surname')
-                    ->get();
-
-        if ($request->get('priv_id')) {
-            return view('privilegehistory.cards', compact('people'));
-        }
-
-        return view('privilegehistory.current', compact('privileges', 'people', 'selected'));
+        return view('privilegehistory.current');
     }
 
     /**
@@ -99,7 +105,10 @@ class AssignmentController extends Controller
             'end_date' => ['nullable', 'date']
         ]);
 
-        PrivilegeHistory::create($data);
+        $privilege = new PrivilegeHistory();
+        $privilege->fill($data);
+        $privilege->created_by = Auth::id();
+        $privilege->save();
 
         $person = Person::findOrFail($data['person_id']);
         $has_discipline = $person->discipline();
@@ -162,6 +171,7 @@ class AssignmentController extends Controller
 
         $privilege = PrivilegeHistory::findOrFail($id);
         $privilege->fill($data);
+        $privilege->updated_by = Auth::id();
         $privilege->save();
 
         $person = $privilege->person;

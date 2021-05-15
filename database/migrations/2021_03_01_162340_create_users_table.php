@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
             $table->boolean('active')->default(1);
             $table->string('nickname', 64)->nullable();
             $table->rememberToken();
+            $table->bigInteger('created_by')->unsigned()->nullable();
+            $table->bigInteger('updated_by')->unsigned()->nullable();
             $table->timestamps();
         });
     }

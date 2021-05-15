@@ -30,6 +30,8 @@ class CreatePeopleTable extends Migration
             $table->text('diseases')->nullable();
             $table->text('handicaps')->nullable();
             $table->text('preferences')->nullable();
+            $table->bigInteger('created_by')->unsigned()->nullable();
+            $table->bigInteger('updated_by')->unsigned()->nullable();
             $table->timestamps();
         });
     }
