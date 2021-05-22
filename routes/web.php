@@ -31,6 +31,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('campus/bunch', [CampusController::class, 'bunch']);
 Route::resource('campus', CampusController::class)->except([
     'show'
 ]);
@@ -67,6 +68,9 @@ Route::prefix('/village')->group( function() {
 
 // Route::resource('families', FamilyController::class);
 Route::get('families', [FamilyController::class, 'index'])->name('families.index');
+Route::get('families/mapping', [FamilyController::class, 'mapping'])->name('families.mapping');
+Route::get('families/bunch', [FamilyController::class, 'bunch']);
+
 Route::prefix('/family')->group( function() {
     Route::get('/create',  [FamilyController::class, 'create'])->name('family.create');
     Route::get('/{id}',  [FamilyController::class, 'show'])->name('family.show');

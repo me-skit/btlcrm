@@ -20,6 +20,30 @@ class FamilyController extends Controller
     }
 
     /**
+     * Display a map for families.
+     */
+    public function mapping()
+    {
+        return view('families.mapping');
+    }
+
+    /**
+     * Return listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function bunch()
+    {
+        $families = Family::where('active', 1)
+                            ->whereNotNull('latitude')
+                            ->whereNotNull('longitude')
+                            ->select('family_name as name', 'address', 'latitude', 'longitude')
+                            ->paginate(50);
+
+        return $families->toJson();
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -83,8 +107,8 @@ class FamilyController extends Controller
         if ($request->input('location'))
         {
             $location = explode(",", $request->input('location'));
-            $data['longitude'] = $location[0];
-            $data['latitude'] = $location[1];
+            $data['latitude'] = $location[0];
+            $data['longitude'] = $location[1];
         }
 
         $data['created_by'] = Auth::id();
@@ -115,6 +139,18 @@ class FamilyController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Family $family)
+    {
+        $villages = Village::all();
+
+        return view('families.edit', compact('family', 'villages'));
+    } 
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -134,13 +170,13 @@ class FamilyController extends Controller
         if ($request->input('location'))
         {
             $location = explode(",", $request->input('location'));
-            $data['longitude'] = $location[0];
-            $data['latitude'] = $location[1];
+            $data['latitude'] = $location[0];
+            $data['longitude'] = $location[1];
         }
         else
         {
-            $data['longitude'] = null;
             $data['latitude'] = null;
+            $data['longitude'] = null;
         }
 
         $data['updated_by'] = Auth::id();

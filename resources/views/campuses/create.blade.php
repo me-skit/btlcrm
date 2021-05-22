@@ -83,7 +83,7 @@
               </div>
 
               <div class="row form-group">
-                <label for="location" class="col-md-3 col-form-label text-md-right">{{ __('Long, Lat') }}</label>
+                <label for="location" class="col-md-3 col-form-label text-md-right">{{ __('Lat, Long') }}</label>
                 <div class="col-md-7">
                   <input type="text"
                     name="location"

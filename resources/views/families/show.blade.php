@@ -7,7 +7,7 @@
         <div class="col-md-10">
           <div class="pull-left d-flex align-items-baseline justify-content-between">
             <h3 id="family_name"><i class="fa fa-home"></i> {{ $family->family_name }}</h3>
-            <a href="#" class="btn btn-primary ml-2" data-toggle="modal" data-target="#editModal"><i class="fas fa-pencil-alt"></i> Editar</a>
+            <a href="{{ route('family.edit', $family->id) }}" class="btn btn-primary ml-2"><i class="fas fa-pencil-alt"></i> Editar</a>
           </div>
         </div>
       </div>
@@ -76,8 +76,16 @@
         <a href="{{ route('root') . '/' . $back }}" class="btn btn-dark"><i class="fas fa-angle-double-left"></i> Regresar</a>
       </div>
     </div>
-  </div>
 
-  <!-- Edit family's modal -->
-  @include('families.edit')
+    <div class="row">
+      <div class="col-md-10 offset-md-1">
+        <div id="map" class="mt-3" data-map="3" data-lat="{{ $family->latitude }}" data-lng="{{ $family->longitude }}"></div>
+      </div>
+    </div>
+  </div>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8j13SI1rqi2uNJ1OpHbE20zdMEaG8d9I&callback=initMap&libraries=&v=weekly"
+    async
+  >
+  </script>
 @endsection

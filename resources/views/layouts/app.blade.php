@@ -37,10 +37,10 @@
                 @can('consult')
                   <a class="dropdown-item" href="{{ route('people.index') }}"><i class="fas fa-users fa-fw"></i> {{ __('Listado General') }}</a>
                   <a class="dropdown-item" href="{{ route('people.nomembers') }}"><i class="far fa-user fa-fw"></i> {{ __('No Miembros') }}</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item disabled" href="#"><i class="fas fa-chart-pie fa-fw"></i> {{ __('Estadísticas') }}</a>
-                  <a class="dropdown-item disabled" href="#"><i class="fas fa-map-marked-alt fa-fw"></i> {{ __('Mapeo') }}</a>
                 @endcan
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item disabled" href="#"><i class="fas fa-chart-pie fa-fw"></i> {{ __('Estadísticas') }}</a>
+                <a class="dropdown-item" href="{{ route('families.mapping') }}"><i class="fas fa-map-marked-alt fa-fw"></i> {{ __('Mapeo') }}</a>
               </div>
             </li>
 

@@ -16,6 +16,21 @@ class CampusController extends Controller
     }
 
     /**
+     * Return listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function bunch()
+    {
+        $families = Campus::whereNotNull('latitude')
+                            ->whereNotNull('longitude')
+                            ->select('name', 'address',  'latitude', 'longitude')
+                            ->paginate(10);
+
+        return $families->toJson();
+    }    
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -63,8 +78,8 @@ class CampusController extends Controller
         if ($request->input('location'))
         {
             $location = explode(",", $request->input('location'));
-            $data['longitude'] = $location[0];
-            $data['latitude'] = $location[1];
+            $data['latitude'] = $location[0];
+            $data['longitude'] = $location[1];
         }
 
         $data['created_by'] = Auth::id();
@@ -109,13 +124,13 @@ class CampusController extends Controller
         if ($request->input('location'))
         {
             $location = explode(",", $request->input('location'));
-            $data['longitude'] = $location[0];
-            $data['latitude'] = $location[1];
+            $data['latitude'] = $location[0];
+            $data['longitude'] = $location[1];
         }
         else
         {
-            $data['longitude'] = null;
             $data['latitude'] = null;
+            $data['longitude'] = null;
         }
 
         $data['updated_by'] = Auth::id();

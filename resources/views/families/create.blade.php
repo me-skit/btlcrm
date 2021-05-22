@@ -25,7 +25,7 @@
               </div>
 
               <div class="row form-group">
-                <label for="union_type" class="col-md-3 col-form-label text-md-right">{{ __('Tipo de Unión') }}<span class="text-danger">*</span></label>
+                <label for="union_type" class="col-md-3 col-form-label text-md-right">{{ __('Situación marital') }}<span class="text-danger">*</span></label>
                 <div class="col-md-7">
                   <select name="union_type" class="form-control" required>
                     <option value="1">Casados</option>
@@ -96,7 +96,7 @@
               </div>
 
               <div class="row form-group">
-                <label for="location" class="col-md-3 col-form-label text-md-right">{{ __('Long, Lat') }}</label>
+                <label for="location" class="col-md-3 col-form-label text-md-right">{{ __('Lat, Long') }}</label>
                 <div class="col-md-7">
                   <input type="text"
                     name="location"
@@ -123,7 +123,15 @@
             </form>
           </div>
         </div>
+
+        <div id="map" data-map="1" class="mt-3"></div>
       </div>
     </div>
   </div>
+  
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8j13SI1rqi2uNJ1OpHbE20zdMEaG8d9I&callback=initMap&libraries=&v=weekly"
+    async
+  >
+  </script>
 @endsection

@@ -843,6 +843,135 @@ if (end_discipline) {
   });
 }
 
+// map and markers
+objectPosition = (strLatitude, strLongitude) => {
+  let lat = parseFloat(strLatitude);
+  let lng = parseFloat(strLongitude);
+  return {lat, lng};
+}
+
+setLocationInForm = position => {
+  let location = document.getElementById('location');
+  location.value = position.lat + ', ' + position.lng;
+}
+
+addMarker = (position, map) => {
+  let icon = {
+    url: '../../images/red-with-house.png',
+    scaledSize: new google.maps.Size(23, 40),
+  };
+
+  let marker = new google.maps.Marker({
+    position,
+    map,
+    icon
+  });
+
+  return marker;
+}
+
+initMap = () => {
+  let marker;
+  const bethel = {lat: 14.632584549506703, lng: -90.92646535338397};
+  const div_map = document.getElementById("map");
+  const map = new google.maps.Map(div_map, {
+    zoom: 16,
+    center: bethel
+  });
+
+  if (div_map.dataset.map == 0) {
+    div_map.style.height = "700px";
+    //map.setZoom(15);
+    let page = 1;
+    getABunch(page, map, 'campus', 'black-with-church.png');
+    getABunch(page, map, 'families', 'red-with-house.png');  
+  }
+  else if (div_map.dataset.map == 1) {
+    map.addListener("click", (event) => {
+      if (marker) marker.setMap(null);
+
+      let pos = event.latLng.toJSON();
+      let position = objectPosition(pos.lat, pos.lng);
+
+      marker = addMarker(position, map);
+      map.panTo(position);
+      setLocationInForm(position);
+    });
+  }
+  else if (div_map.dataset.map == 2) {
+    if (div_map.dataset.lat && div_map.dataset.lng) {
+      let position = objectPosition(div_map.dataset.lat, div_map.dataset.lng);
+      map.setCenter(position);
+      marker = addMarker(position, map);
+    }
+
+    map.addListener("click", (event) => {
+      if (marker) marker.setMap(null);
+
+      let pos = event.latLng.toJSON();
+      let position = objectPosition(pos.lat, pos.lng);
+
+      marker = addMarker(position, map);
+      map.panTo(position);
+      setLocationInForm(position);
+    });
+  }
+  else {
+    if (div_map.dataset.lat && div_map.dataset.lng) {
+      let position = objectPosition(div_map.dataset.lat, div_map.dataset.lng);
+      map.setCenter(position);
+      addMarker(position, map);
+    }
+  }
+}
+
+getABunch = (page, map, model, image) => {
+
+  fetch('/' + model + '/bunch?page=' + page)
+  .then(response => {
+    if (response.ok) return  response.json();
+    
+    // throw new Error('No se pudieron obtener datos de familias');
+  })
+  .then(json => {
+    let list = json.data;
+    list.forEach(item => {
+      let icon = {
+        url: '../images/' + image,
+        scaledSize: new google.maps.Size(23, 40),
+      };
+
+      let position = objectPosition(item.latitude, item.longitude);
+      let marker = new google.maps.Marker({
+        position,
+        map,
+        icon
+      });
+
+      let info = new google.maps.InfoWindow({
+        content: '<b>' + item.name + '</b><br />' + item.address
+      });
+
+      marker.addListener('click', () => {
+        info.open(map, marker);
+      });
+    });
+
+    page++;
+    if (page <= json.last_page) {
+      getABunch(page, map, model, image);
+    }
+  })
+  .catch(error => {
+    console.log(error);
+  });
+}
+
+// const div_map = document.getElementById("map");
+// if (div_map) {
+//   initMap;
+// }
+
 // $(document).ready(function(){
 //   $("p").click(function(){
 //     alert("The paragraph was clicked.");
