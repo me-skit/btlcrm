@@ -57,7 +57,7 @@ class Person extends Model
         return $this->hasOne(Membership::class);
     }
 
-    public function privileges()
+    public function privilege_history()
     {
         return $this->belongsToMany(Privilege::class, 'privilege_histories')
                     ->withPivot('id', 'privilege_role_id', 'start_date', 'end_date')
@@ -117,5 +117,21 @@ class Person extends Model
             }
         }
 
+    }
+
+    public function getFamilyRoleAttribute()
+    {
+        $role = $this->pivot ? $this->pivot->family_role : $this->family()->pivot->family_role;
+
+        switch ($role) {
+            case 1:
+                return 'Padre/Esposo';
+            case 2:
+                return 'Madre/Esposa';
+            case 3:
+                return 'Hijo';
+            default:
+                return 'Hija';
+        }
     }
 }

@@ -45,7 +45,7 @@
               <div class="row form-group">
                 <label for="preferred_sex" class="col-md-4 col-form-label text-md-right">{{ __('Sexo') }}<span class="text-danger">*</span></label>
                 <div class="col-md-6">
-                  <select name="preferred_sex" class="form-control" required>
+                  <select name="preferred_sex" class="form-control">
                     <option value selected>Ambos sexos</option>
                     <option value="M">Masculino</option>
                     <option value="F">Femenino</option>
@@ -56,7 +56,7 @@
               <div class="row form-group">
                 <label for="preferred_status" class="col-md-4 col-form-label text-md-right">{{ __('Estado civil') }}<span class="text-danger">*</span></label>
                 <div class="col-md-6">
-                  <select name="preferred_status" class="form-control" required>
+                  <select name="preferred_status" class="form-control">
                     <option value selected>Cualquier estado civil</option>
                     <option value="1">Casado(a)</option>
                     <option value="2">Soltero(a)</option>

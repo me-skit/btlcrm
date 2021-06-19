@@ -92,7 +92,7 @@ class DisciplineController extends Controller
      */
     public function store(Request $request)
     {
-        Gate::authorize('administer');
+        //Gate::authorize('administer');
 
         $data = $request->validate([
             'person_id' => 'required',
@@ -108,9 +108,8 @@ class DisciplineController extends Controller
         $discipline->save();
 
         $person = Person::findOrFail($data['person_id']);
-        $disciplines = $person->disciplines;
 
-        return view('disciplinehistory.index', compact('disciplines'));        
+        return view('disciplinehistory.index', compact('person'));        
     }
 
     /**
@@ -149,9 +148,8 @@ class DisciplineController extends Controller
         $discipline->save();
 
         $person = $discipline->person;
-        $disciplines = $person->disciplines;
 
-        return view('disciplinehistory.index', compact('disciplines'));         
+        return view('disciplinehistory.index', compact('person'));         
     }
 
     /**
@@ -167,8 +165,7 @@ class DisciplineController extends Controller
         $discipline->delete();
 
         $person = $discipline->person;
-        $disciplines = $person->disciplines;
 
-        return view('disciplinehistory.index', compact('disciplines'));        
+        return view('disciplinehistory.index', compact('person'));        
     }
 }

@@ -73,7 +73,7 @@ Route::get('families/bunch', [FamilyController::class, 'bunch']);
 
 Route::prefix('/family')->group( function() {
     Route::get('/create',  [FamilyController::class, 'create'])->name('family.create');
-    Route::get('/{id}',  [FamilyController::class, 'show'])->name('family.show');
+    Route::get('/{family}',  [FamilyController::class, 'show'])->name('family.show');
 
     Route::get('/{family}/createmember',  [FamilyController::class, 'createmember'])->name('family.createmember');
     Route::post('/{family_id}/addmember',  [FamilyController::class, 'addmember'])->name('family.addmember');

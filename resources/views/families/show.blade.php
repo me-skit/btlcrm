@@ -4,7 +4,7 @@
   <div class="container p-4">
     <div class="header">
       <div class="row d-flex justify-content-center">
-        <div class="col-md-10">
+        <div class="col-md-12">
           <div class="pull-left d-flex align-items-baseline justify-content-between">
             <h3 id="family_name"><i class="fa fa-home"></i> {{ $family->family_name }}</h3>
             <a href="{{ route('family.edit', $family->id) }}" class="btn btn-primary ml-2"><i class="fas fa-pencil-alt"></i> Editar</a>
@@ -13,21 +13,21 @@
       </div>
 
       <div class="row d-flex justify-content-center">
-        <div class="col-md-5">
+        <div class="col-md-6">
           Ubicación:
           <b>{{ $family->village->name }}</b>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-6">
           Dirección:
           <b>{{ $family->address }}</b>
         </div>
       </div>
       <div class="row d-flex justify-content-center">
-        <div class="col-md-5">
+        <div class="col-md-6">
           Teléfono residencial:
           <b>{{ $family->phone_number }}</b>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-6">
           Tipo de unión:
           <b>{{ $family->union }}</b>
         </div>        
@@ -35,7 +35,7 @@
     </div>
     
     <div class="row d-flex justify-content-center py-2 bg-light">
-      <div class="col-md-10 d-flex justify-content-between align-items-baseline">
+      <div class="col-md-12 d-flex justify-content-between align-items-baseline">
         <h4>Miembros:</h4>
         <div>
           <a href="{{ route('family.createmember', $family->id) . '?back=' . $back }}" class="btn btn-success"><i class="fas fa-plus"></i> Agregar</a>
@@ -44,24 +44,24 @@
     </div>
 
     <div class="row d-flex justify-content-center mb-2">
-      <div class="col-md-10">
+      <div class="col-md-12">
         <div id="accordion">
-          @foreach ($family->members as $member)
+          @foreach ($family->members as $person)
             <div class="card">
-              <div class="card-header bg-secondary py-2" id="heading-{{ $member->id }}">
+              <div class="card-header bg-secondary py-2" id="heading-{{ $person->id }}">
                 <h5 class="mb-0 d-flex justify-content-between">
-                  <button class="btn btn-link text-light collapsed py-0" data-toggle="collapse" data-target="#collapse-{{ $member->id }}" aria-expanded="false" aria-controls="collapse-{{ $member->id }}">
-                    <i class="far fa-address-card"></i> {{ $member->full_name }}
-                    {!! $member->death_date ? "<small class='badge badge-dark'>Q.D.E.P.</small>" : "" !!}
+                  <button class="btn btn-link text-light collapsed py-0" data-toggle="collapse" data-target="#collapse-{{ $person->id }}" aria-expanded="false" aria-controls="collapse-{{ $person->id }}">
+                    <i class="far fa-address-card"></i> {{ $person->full_name }}
+                    {!! $person->death_date ? "<small class='badge badge-dark'>Q.D.E.P.</small>" : "" !!}
                   </button>
-                  <a href="{{ route('family.editmember', [$family->id, $member->id]) . '?back=' . $back }}" class="btn btn-primary mr-3 py-0 {{  $member->death_date ? 'disabled' : '' }}"><i class="fas fa-pencil-alt"></i> Editar</a>
+                  <a href="{{ route('family.editmember', [$family->id, $person->id]) . '?back=' . $back }}" class="btn btn-primary mr-3 py-0 {{  $person->death_date ? 'disabled' : '' }}"><i class="fas fa-pencil-alt"></i> Editar</a>
                 </h5>
               </div>
           
-              <div id="collapse-{{ $member->id }}" class="collapse" aria-labelledby="heading-{{ $member->id }}" data-parent="#accordion">
+              <div id="collapse-{{ $person->id }}" class="collapse" aria-labelledby="heading-{{ $person->id }}" data-parent="#accordion">
                 <div class="card-body">
 
-                  @include('families.members.show')
+                  @include('people.show.info')
                   
                 </div>
               </div>
@@ -72,7 +72,7 @@
     </div>
 
     <div class="row">
-      <div class="col-md-10 offset-md-1 text-right">
+      <div class="col-md-12 text-right">
         <a href="{{ route('root') . '/' . $back }}" class="btn btn-dark"><i class="fas fa-angle-double-left"></i> Regresar</a>
       </div>
     </div>
@@ -83,8 +83,11 @@
       </div>
     </div>
   </div>
+
+  @include('people.show.modals')
+
   <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA8j13SI1rqi2uNJ1OpHbE20zdMEaG8d9I&callback=initMap&libraries=&v=weekly"
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCavQwdjCznGj6eF1Kufdacu6pJ8AA7vPs&callback=initMap&libraries=&v=weekly"
     async
   >
   </script>

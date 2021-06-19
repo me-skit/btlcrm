@@ -6,7 +6,7 @@
       </div>
       <div class="col-7 col-sm-8 col-md-9 col-lg-7">
         <b>
-          {{ $family->pivot->family_role == 1 ? "Padre" : ($family->pivot->family_role == 2 ? "Madre" : ($family->pivot->family_role == 3 ? "Hijo" : "Hija")) }}
+          {{ $person->family_role }}
         </b>
       </div>
     </div>

@@ -81,10 +81,8 @@ class AssignmentController extends Controller
         Gate::authorize('administer');
         
         $person = Person::findOrFail($request->get('userid'));
-        $has_discipline = $person->discipline();
-        $privs_assigned = $person->privileges;
 
-        return view('privilegehistory.index', compact('privs_assigned', 'has_discipline'));
+        return view('privilegehistory.index', compact('person'));
     }
 
     /**
@@ -95,7 +93,7 @@ class AssignmentController extends Controller
      */
     public function store(Request $request)
     {
-        Gate::authorize('administer');
+        //Gate::authorize('administer');
         
         $data = $request->validate([
             'person_id' => 'required',
@@ -111,10 +109,8 @@ class AssignmentController extends Controller
         $privilege->save();
 
         $person = Person::findOrFail($data['person_id']);
-        $has_discipline = $person->discipline();
-        $privs_assigned = $person->privileges;
 
-        return view('privilegehistory.index', compact('privs_assigned', 'has_discipline'));
+        return view('privilegehistory.index', compact('person'));
     }
 
     /**
@@ -175,10 +171,8 @@ class AssignmentController extends Controller
         $privilege->save();
 
         $person = $privilege->person;
-        $has_discipline = $person->discipline();
-        $privs_assigned = $person->privileges;
 
-        return view('privilegehistory.index', compact('privs_assigned', 'has_discipline'));
+        return view('privilegehistory.index', compact('person'));
     }
 
     /**
@@ -195,9 +189,7 @@ class AssignmentController extends Controller
         $privilege->delete();
 
         $person = $privilege->person;
-        $has_discipline = $person->discipline();
-        $privs_assigned = $person->privileges;
 
-        return view('privilegehistory.index', compact('privs_assigned', 'has_discipline'));
+        return view('privilegehistory.index', compact('person'));
     }
 }

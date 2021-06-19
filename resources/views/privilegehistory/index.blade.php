@@ -1,8 +1,9 @@
-@if ($privs_assigned->count())
+@if ($person->privilege_history->count())
+    
 <p class="my-0"><b><i class="fas fa-user-tie"></i> Privilegios:</b></p>
 
 <ul class="list-group mt-1">
-  @foreach ($privs_assigned as $privilege)
+  @foreach ($person->privilege_history as $privilege)
     <li class="list-group-item py-1">
       <div class="row">
         <div class="col-sm-12 col-md-8 col-lg-9 pr-1 {{ $privilege->pivot->is_active ? '' : 'text-secondary' }}">
@@ -33,12 +34,12 @@
               @endif
 
               @can('administer')
-                {!! ($has_discipline and $privilege->pivot->is_active) ? "<span class='badge badge-danger'>Susp. Act. No. " . $has_discipline->act_number . "</span>"  : "" !!}
+                {!! ($person->discipline() and $privilege->pivot->is_active) ? "<span class='badge badge-danger'>Susp. Act. No. " . $person->discipline()->act_number . "</span>"  : "" !!}
               @else
                 @if ($person->sex == 'M')
-                  {!! ($has_discipline and $privilege->pivot->is_active) ? "<span class='badge badge-danger'>Susppendido</span>"  : "" !!}
+                  {!! ($person->discipline() and $privilege->pivot->is_active) ? "<span class='badge badge-danger'>Susppendido</span>"  : "" !!}
                 @else
-                  {!! ($has_discipline and $privilege->pivot->is_active) ? "<span class='badge badge-danger'>Susppendida</span>"  : "" !!}
+                  {!! ($person->discipline() and $privilege->pivot->is_active) ? "<span class='badge badge-danger'>Susppendida</span>"  : "" !!}
                 @endif
               @endcan
               {!! $privilege->pivot->is_active ? '' : '</s>' !!}
@@ -49,16 +50,18 @@
         <div class="col-sm-12 col-md-4 col-lg-3 text-right px-1">
           <button
             class="btn btn-success btn-sm py-0 mr-1"
-            name="btn-edit-privilege"
+            name="btn-editprivilege"
             data-id="{{ $privilege->pivot->id }}"
+            data-user="{{ $person->id }}"
             data-toggle="modal"
             data-target="#editPrivilegeModal">
             Modificar
           </button>
           <button
             class="btn btn-danger btn-sm py-0"
-            name="btn-del-privilege"
+            name="btn-delprivilege"
             data-id="{{ $privilege->pivot->id }}"
+            data-user="{{ $person->id }}"
             data-toggle="modal"
             data-target="#delPrivilegeModal">
             Eliminar

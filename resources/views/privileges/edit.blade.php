@@ -46,7 +46,7 @@
               <div class="row form-group">
                 <label for="preferred_sex" class="col-md-4 col-form-label text-md-right">{{ __('Sexo') }}<span class="text-danger">*</span></label>
                 <div class="col-md-6">
-                  <select name="preferred_sex" class="form-control" required>
+                  <select name="preferred_sex" class="form-control">
                     <option value {{ $privilege->preferred_sex ? '' : 'selected' }} >Ambos sexos</option>
                     <option value="M" {{ $privilege->preferred_sex == 'M' ? 'selected' : '' }}>Masculino</option>
                     <option value="F" {{ $privilege->preferred_sex == 'F' ? 'selected' : '' }}>Femenino</option>
@@ -57,7 +57,7 @@
               <div class="row form-group">
                 <label for="preferred_status" class="col-md-4 col-form-label text-md-right">{{ __('Estado civil') }}<span class="text-danger">*</span></label>
                 <div class="col-md-6">
-                  <select name="preferred_status" class="form-control" required>
+                  <select name="preferred_status" class="form-control">
                     <option value {{ $privilege->preferred_status ? '' : 'selected' }}>Cualquier estado civil</option>
                     <option value="1" {{ $privilege->preferred_status == 1 ? 'selected' : '' }}>Casado(a)</option>
                     <option value="2" {{ $privilege->preferred_status == 2 ? 'selected' : '' }}>Soltero(a)</option>

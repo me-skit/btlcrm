@@ -7,6 +7,7 @@ use App\Models\Village;
 use App\Models\Campus;
 use App\Models\Person;
 use App\Models\Privilege;
+use App\Models\PrivilegeRole;
 use App\Models\Membership;
 use App\Models\FamilyMember;
 use Illuminate\Http\Request;
@@ -56,7 +57,8 @@ class FamilyController extends Controller
             $query = str_replace(" ", "%", $request->get('query'));
             $families = Family::where('active', 1)
                             ->where('family_name', 'like', '%' . $query . '%')
-                            ->orderBy('family_name')
+                            ->orderBy('created_at', 'DESC')
+                            // ->orderBy('family_name')
                             ->with('village')
                             ->paginate(7);
 
@@ -64,7 +66,8 @@ class FamilyController extends Controller
         }
 
         $families = Family::where('active', 1)
-                        ->orderBy('family_name')
+                        // ->orderBy('family_name')
+                        ->orderBy('created_at', 'DESC')
                         ->with('village')
                         ->paginate(7);
 
@@ -124,18 +127,18 @@ class FamilyController extends Controller
      * @param  \App\Models\Family  $family
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $id)
+    public function show(Request $request, Family $family)
     {
-        $family = Family::findOrFail($id);
         $villages = Village::all();
         $campuses = Campus::all();
         $privileges = Privilege::all();
+        $privilege_roles = PrivilegeRole::orderBy('description')->get();
 
         $sexes = array('M' => 'male', 'F' => 'female');
         $statuses = array(1 => 'married', 2 => 'single');
 
         $back = $request->get('back') ? $request->get('back') : '';
-        return view('families.show', compact('family', 'villages', 'campuses', 'privileges', 'sexes', 'statuses', 'back'));
+        return view('families.show', compact('family', 'villages', 'campuses', 'privileges', 'privilege_roles', 'sexes', 'statuses', 'back'));
     }
 
     /**
