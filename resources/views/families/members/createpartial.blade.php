@@ -147,7 +147,7 @@
 <div class="row">
   <div class="col-md-12">
     <div class="row form-group">
-      <label for="campus_id" class="col-md-4 col-lg-2 col-form-label text-md-right">{{ __('Cede') }}<span class="text-primary">*</span></label>
+      <label for="campus_id" class="col-md-4 col-lg-2 col-form-label text-md-right">{{ __('Sede') }}<span class="text-primary">*</span></label>
       <div class="col-md-8 col-lg-4">
         <select name="campus_id" id="campus_id" class="form-control campus" required>
           <option selected value> -- </option>

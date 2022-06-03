@@ -19,7 +19,7 @@
             <div class="col-md-9">
               <select name="query_type" id="query_type" class="form-control" required>
                 <option value="1">Por nombre</option>
-                <option value="2">Por cede</option>
+                <option value="2">Por sede</option>
                 <option value="3">Por preferencia de privilegio</option>
                 <option value="4">Bautizados</option>
                 <option value="5">No bautizados</option>

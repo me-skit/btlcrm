@@ -145,7 +145,7 @@
 <div class="row">
   <div class="col-md-12">
     <div class="row form-group">
-      <label for="campus_id" class="col-md-4 col-lg-2 col-form-label text-md-right">{{ __('Cede') }}</label>
+      <label for="campus_id" class="col-md-4 col-lg-2 col-form-label text-md-right">{{ __('Sede') }}</label>
       <div class="col-md-8 col-lg-4">
         <select name="campus_id" id="campus_id" class="form-control campus" {{ $person->membership->attend_church == 1 ? 'required' : '' }}>
           <option selected value> -- </option>
