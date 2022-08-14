@@ -75,4 +75,9 @@ class User extends Authenticatable
     {
         return $this->role ? false : true;
     }
+
+    public function isCensor()
+    {
+        return $this->role == 2 ? true : false;
+    }
 }

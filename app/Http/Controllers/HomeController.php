@@ -25,6 +25,11 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
+        if ($user->isCensor())
+        {
+            return redirect('/families');
+        }
+
         $greeting = $user->sex ? '¡Bienvenida!' : '¡Bienvenido!';
 
         return view('home', compact('greeting'));

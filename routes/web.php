@@ -29,7 +29,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ro
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('campus/bunch', [CampusController::class, 'bunch']);
 Route::resource('campus', CampusController::class)->except([
