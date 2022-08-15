@@ -1,31 +1,6 @@
 <div class="row">
   <div class="col-lg-6">
     <div class="row form-group">
-      <label for="dpi" class="col-md-5 col-form-label text-md-right">{{ __('No. DPI') }}</label>
-      <div class="col-md-7">
-        <input type="text"
-          name="dpi"
-          id="dpi"
-          class="form-control @error('dpi') is-invalid @enderror"
-          value="{{ old('dpi') ?? $person->dpi }}"
-          pattern="[0-9]{13}"
-          title="Trece números sin espacios"
-          placeholder="Número de DPI"
-          >
-
-        @error('dpi')
-          <span class="invalid-feedback" role="alert">
-            <strong>{{ $message }}</strong>
-          </span>
-        @enderror
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-lg-6">
-    <div class="row form-group">
       <label for="first_name" class="col-md-5 col-form-label text-md-right">{{ __('Primer nombre') }}<span class="text-danger">*</span></label>
       <div class="col-md-7">
         <input type="text"
