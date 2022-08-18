@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Campus;
 use App\Models\Village;
-use Illuminate\Http\Request;
+use App\Http\Requests\CampusRequest;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 
@@ -64,16 +64,11 @@ class CampusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CampusRequest $request)
     {
         Gate::authorize('administer');
 
-        $data = $request->validate([
-            'name' => 'required',
-            'village_id' => 'required',
-            'address' => 'nullable',
-            'phone_number' => 'nullable'
-        ]);
+        $data = $request->validated();
 
         if ($request->input('location'))
         {
@@ -110,16 +105,11 @@ class CampusController extends Controller
      * @param  \App\Models\Campus  $campus
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Campus $campus)
+    public function update(CampusRequest $request, Campus $campus)
     {
         Gate::authorize('administer');
 
-        $data = $request->validate([
-            'name' => 'required',
-            'village_id' => 'required',
-            'address' => 'nullable',
-            'phone_number' => 'nullable'
-        ]);
+        $data = $request->validated();
 
         if ($request->input('location'))
         {
