@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AssignmentRequest;
 use Illuminate\Http\Request;
 use App\Models\Person;
 use App\Models\Privilege;
@@ -22,7 +23,7 @@ class AssignmentController extends Controller
     {
         Gate::authorize('consult');
 
-        $privileges = Privilege::orderBy('description')->get();
+        $privileges = Privilege::all();
 
         if ($privileges->count() > 0) {
             $selected = $privileges->first();
@@ -53,7 +54,7 @@ class AssignmentController extends Controller
                                  ->where('active', 1);
                         })
                         ->leftJoin('families', 'family_members.family_id', '=', 'families.id')
-                        ->select('people.id', 'first_name', 'second_name', 'third_name', 'first_surname', 'second_surname', 'cellphone', 'privilege_roles.description as role', 'privilege_histories.start_date', 'privilege_histories.end_date', 'disciplines.id as disciplined', 'act_number', 'address', 'phone_number')
+                        ->select('people.id', 'first_name', 'second_name', 'third_name', 'first_surname', 'second_surname', 'cellphone', 'privilege_roles.name as role', 'privilege_histories.start_date', 'privilege_histories.end_date', 'disciplines.id as disciplined', 'act_number', 'address', 'phone_number')
                         ->orderBy('first_name')
                         ->orderBy('second_name')
                         ->orderBy('third_name')
@@ -91,17 +92,11 @@ class AssignmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AssignmentRequest $request)
     {
         //Gate::authorize('administer');
-        
-        $data = $request->validate([
-            'person_id' => 'required',
-            'privilege_id' => 'required',
-            'privilege_role_id' => 'nullable',
-            'start_date' => ['nullable', 'date'],
-            'end_date' => ['nullable', 'date']
-        ]);
+
+        $data = $request->validated();
 
         $privilege = new PrivilegeHistory();
         $privilege->fill($data);
@@ -140,9 +135,9 @@ class AssignmentController extends Controller
             $privileges_tmp = $privileges_tmp->concat([$privilege]);
         }
 
-        $privileges = $privileges_tmp->sortBy('description');
+        $privileges = $privileges_tmp;
 
-        $privilege_roles = PrivilegeRole::orderBy('description')->get();        
+        $privilege_roles = PrivilegeRole::all();
 
         return view('privilegehistory.edit', compact('the_privilege', 'privileges', 'privilege_roles'));
     }
@@ -154,16 +149,10 @@ class AssignmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AssignmentRequest $request, $id)
     {
-        Gate::authorize('administer');
-
-        $data = $request->validate([
-            'privilege_id' => 'required',
-            'privilege_role_id' => 'nullable',
-            'start_date' => ['nullable', 'date'],
-            'end_date' => ['nullable', 'date']
-        ]);
+        //Gate::authorize('administer');
+        $data = $request->validated();
 
         $privilege = PrivilegeHistory::findOrFail($id);
         $privilege->fill($data);
