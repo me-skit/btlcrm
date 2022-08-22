@@ -19,7 +19,7 @@
         @foreach($privilegeRoles as $key => $privilegeRole)
           <tr>
             <td>{{ ($privilegeRoles->currentPage() - 1) * 7 + $key + 1 }}</td>
-            <td>{{ $privilegeRole->description }}</td>
+            <td>{{ $privilegeRole->name }}</td>
             <td>{{ date_format($privilegeRole->created_at, 'd/m/Y H:i:s') }}</td>
             <td>
               <div class="d-flex">

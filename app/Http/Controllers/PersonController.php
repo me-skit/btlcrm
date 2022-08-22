@@ -141,7 +141,7 @@ class PersonController extends Controller
         }
 
         $campuses = Campus::all();
-        $privileges = Privilege::orderBy('description')->get();
+        $privileges = Privilege::all();
 
         return view('people.index', compact('people', 'campuses', 'privileges'));
     }
@@ -204,8 +204,7 @@ class PersonController extends Controller
     {
         Gate::authorize('consult');
 
-        $privileges = Privilege::orderBy('description')
-                        ->where(function ($query) use ($person) {
+        $privileges = Privilege::where(function ($query) use ($person) {
                             $query->whereNull('preferred_sex')
                                   ->orWhere('preferred_sex', $person->sex);
                         })
@@ -214,7 +213,8 @@ class PersonController extends Controller
                                   ->orWhere('preferred_status', $person->status);
                         })
                         ->get();
-        $privilege_roles = PrivilegeRole::orderBy('description')->get();
+
+        $privilege_roles = PrivilegeRole::all();
 
         return view('people.show', compact('person', 'privileges', 'privilege_roles'));
     }

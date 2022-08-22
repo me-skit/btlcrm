@@ -132,10 +132,10 @@ class FamilyController extends Controller
         $villages = Village::all();
         $campuses = Campus::all();
         $privileges = Privilege::all();
-        $privilege_roles = PrivilegeRole::orderBy('description')->get();
+        $privilege_roles = PrivilegeRole::orderBy('name')->get();
 
         $sexes = array('M' => 'male', 'F' => 'female');
-        $statuses = array(1 => 'married', 2 => 'single');
+        $statuses = array(1 => 'single', 2 => 'married');
 
         $back = $request->get('back') ? $request->get('back') : '';
         return view('families.show', compact('family', 'villages', 'campuses', 'privileges', 'privilege_roles', 'sexes', 'statuses', 'back'));

@@ -26,11 +26,11 @@
             </div>
             <div class="col-12 col-sm-7 col-md-7 col-lg-8 px-1">
               {!! $privilege->pivot->is_active ? '' : '<s>' !!}
-              {{ $privilege->description }}
+              {{ $privilege->name }}
               @if ($privilege->pivot->is_active)
-                {!! $privilege->pivot->privilege_role_id ? "<span class='badge badge-dark'>" . $privilege->pivot->role->description . "</span>"  : "" !!}
+                {!! $privilege->pivot->privilege_role_id ? "<span class='badge badge-dark'>" . $privilege->pivot->role->name . "</span>"  : "" !!}
               @else
-                {!! $privilege->pivot->privilege_role_id ? "<span class='badge badge-secondary'>" . $privilege->pivot->role->description . "</span>"  : "" !!}
+                {!! $privilege->pivot->privilege_role_id ? "<span class='badge badge-secondary'>" . $privilege->pivot->role->name . "</span>"  : "" !!}
               @endif
 
               @can('administer')

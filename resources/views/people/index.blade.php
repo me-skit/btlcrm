@@ -60,7 +60,7 @@
           <div class="col-md-8 form-group for-query d-none" id="by-privilege">
             <select name="privilege_query" id="privilege_query" class="form-control" required>
               @foreach ($privileges as $privilege)
-                <option value="{{ $privilege->id }}">{{ $privilege->description }}</option>                    
+                <option value="{{ $privilege->id }}">{{ $privilege->name }}</option>                    
               @endforeach
             </select>
           </div>          

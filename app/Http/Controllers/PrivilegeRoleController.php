@@ -34,7 +34,7 @@ class PrivilegeRoleController extends Controller
             return view('privilegeroles.pagination', compact('privilegeRoles'));
         }
 
-        $privilegeRoles = PrivilegeRole::orderBy('description')->paginate(7);
+        $privilegeRoles = PrivilegeRole::paginate(7);
 
         if ($request->get('page'))
         {
@@ -67,7 +67,7 @@ class PrivilegeRoleController extends Controller
         Gate::authorize('administer');
 
         $data = $request->validate([
-            'description' => ['required', 'unique:privilege_roles']
+            'name' => ['required', 'unique:privilege_roles']
         ]);
 
         $data['created_by'] = Auth::id();
@@ -101,7 +101,7 @@ class PrivilegeRoleController extends Controller
         Gate::authorize('administer');
 
         $data = $request->validate([
-            'description' => 'required'
+            'name' => 'required'
         ]);
 
         $data['updated_by'] = Auth::id();

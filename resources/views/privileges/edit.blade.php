@@ -15,19 +15,19 @@
               @method('PATCH')
 
               <div class="row form-group">
-                <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}<span class="text-danger">*</span></label>
+                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}<span class="text-danger">*</span></label>
 
                 <div class="col-md-6">
                   <input type="text"
-                    name="description"
-                    id="description"
-                    class="form-control @error('description') is-invalid @enderror"
-                    value="{{ old('description') ?? $privilege->description }}"
+                    name="name"
+                    id="name"
+                    class="form-control @error('name') is-invalid @enderror"
+                    value="{{ old('name') ?? $privilege->name }}"
                     placeholder="Nombre del privilegio"
                     required
                     autofocus>
 
-                  @error('description')
+                  @error('name')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
                     </span>
@@ -47,7 +47,7 @@
                 <label for="preferred_sex" class="col-md-4 col-form-label text-md-right">{{ __('Sexo') }}<span class="text-danger">*</span></label>
                 <div class="col-md-6">
                   <select name="preferred_sex" class="form-control">
-                    <option value {{ $privilege->preferred_sex ? '' : 'selected' }} >Ambos sexos</option>
+                    <option value {{ $privilege->preferred_sex ? '' : 'selected' }} >Masculino o femenino</option>
                     <option value="M" {{ $privilege->preferred_sex == 'M' ? 'selected' : '' }}>Masculino</option>
                     <option value="F" {{ $privilege->preferred_sex == 'F' ? 'selected' : '' }}>Femenino</option>
                   </select>
@@ -58,9 +58,9 @@
                 <label for="preferred_status" class="col-md-4 col-form-label text-md-right">{{ __('Estado civil') }}<span class="text-danger">*</span></label>
                 <div class="col-md-6">
                   <select name="preferred_status" class="form-control">
-                    <option value {{ $privilege->preferred_status ? '' : 'selected' }}>Cualquier estado civil</option>
-                    <option value="1" {{ $privilege->preferred_status == 1 ? 'selected' : '' }}>Casado(a)</option>
-                    <option value="2" {{ $privilege->preferred_status == 2 ? 'selected' : '' }}>Soltero(a)</option>
+                    <option value {{ $privilege->preferred_status ? '' : 'selected' }}>Casado(a) o soltero(a)</option>
+                    <option value="1" {{ $privilege->preferred_status == 1 ? 'selected' : '' }}>Soltero(a)</option>
+                    <option value="2" {{ $privilege->preferred_status == 2 ? 'selected' : '' }}>Casado(a)</option>
                   </select>
                 </div>
               </div>

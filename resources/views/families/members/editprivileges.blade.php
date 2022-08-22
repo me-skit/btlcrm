@@ -21,12 +21,12 @@
           <input type="checkbox"
             name="preferences[{{ $privilege->id }}]"
             id="check-{{ $privilege->id }}"
-            value="{{ $privilege->description }}"
+            value="{{ $privilege->name }}"
             @if($person->preferences)
               {{ array_key_exists($privilege->id, $person->preferences) ? 'checked' : '' }}
             @endif
             class="custom-control-input">
-          <label for="check-{{ $privilege->id }}" class="custom-control-label">{{ $privilege->description }}</label>
+          <label for="check-{{ $privilege->id }}" class="custom-control-label">{{ $privilege->name }}</label>
         </div>
       </div>
     @endforeach

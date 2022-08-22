@@ -14,19 +14,19 @@
               @method('PATCH')
 
               <div class="form-group row">
-                <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Descripción') }}<span class="text-danger">*</span></label>
+                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Descripción') }}<span class="text-danger">*</span></label>
 
                 <div class="col-md-6">
                   <input type="text"
-                    name="description"
-                    id="description"
-                    class="form-control @error('description') is-invalid @enderror"
-                    value="{{ old('description') ?? $privilegeRole->description }}"
+                    name="name"
+                    id="name"
+                    class="form-control @error('name') is-invalid @enderror"
+                    value="{{ old('name') ?? $privilegeRole->name }}"
                     placeholder="Nombre del puesto o cargo"
                     required
                     autofocus>
 
-                  @error('description')
+                  @error('name')
                     <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
                     </span>

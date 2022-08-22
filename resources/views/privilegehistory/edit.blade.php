@@ -3,7 +3,7 @@
     <label for="privilege_select_edit">{{ __('Nombre del privilegio') }}<span class="text-danger">*</span></label>
     <select name="privilege_id" id="privilege_select_edit" class="form-control selectpicker show-tick" data-live-search="true" required>
       @foreach ($privileges as $privilege)
-        <option value="{{ $privilege->id }}" {{ $privilege->id == $the_privilege->privilege_id ? 'selected' : '' }}>{{ $privilege->description }}</option>
+        <option value="{{ $privilege->id }}" {{ $privilege->id == $the_privilege->privilege_id ? 'selected' : '' }}>{{ $privilege->name }}</option>
       @endforeach
     </select>
   </div>
@@ -45,7 +45,7 @@
     <select name="privilege_role_id" id="privilege_role_id_edit" class="form-control selectpicker show-tick" data-live-search="true">
       <option value="">Sin puesto</option>
       @foreach ($privilege_roles as $privilege_role)
-        <option value="{{ $privilege_role->id }}" {{ $privilege_role->id == $the_privilege->privilege_role_id ? 'selected' : '' }}>{{ $privilege_role->description }}</option>
+        <option value="{{ $privilege_role->id }}" {{ $privilege_role->id == $the_privilege->privilege_role_id ? 'selected' : '' }}>{{ $privilege_role->name }}</option>
       @endforeach
     </select>
   </div>

@@ -9,7 +9,7 @@
       <select name="privilege_id" id="privilege-select-{{ $person->id }}" class="form-control selectpicker show-tick" data-live-search="true" required>
         <option value="">Seleccione un privilegio...</option>
         @foreach ($privileges as $privilege)
-          <option value="{{ $privilege->id }}">{{ $privilege->description }}</option>
+          <option value="{{ $privilege->id }}">{{ $privilege->name }}</option>
         @endforeach
       </select>
     </div>
@@ -51,7 +51,7 @@
       <select name="privilege_role_id" id="privilege-role-{{ $person->id }}" class="form-control selectpicker show-tick" data-live-search="true">
         <option value="">Sin puesto</option>
         @foreach ($privilege_roles as $privilege_role)
-          <option value="{{ $privilege_role->id }}">{{ $privilege_role->description }}</option>
+          <option value="{{ $privilege_role->id }}">{{ $privilege_role->name }}</option>
         @endforeach
       </select>
     </div>
