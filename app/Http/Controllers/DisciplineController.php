@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DisciplineRequest;
 use Illuminate\Http\Request;
 use App\Models\Person;
 use App\Models\Discipline;
@@ -48,13 +49,11 @@ class DisciplineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function end(Request $request, $id)
+    public function end(DisciplineRequest $request, $id)
     {
         Gate::authorize('administer');
 
-        $data = $request->validate([
-            'end_date' => ['required', 'date']
-        ]);        
+        $data = $request->validated();
 
         $discipline = Discipline::findOrFail($id);
         $discipline->ended = 1;
@@ -90,17 +89,11 @@ class DisciplineController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DisciplineRequest $request)
     {
         //Gate::authorize('administer');
 
-        $data = $request->validate([
-            'person_id' => 'required',
-            'discipline_type' =>'required',
-            'act_number' => 'required',
-            'start_date' => ['required', 'date'],
-            'end_date' => ['date', 'nullable']
-        ]);
+        $data = $request->validated();
 
         $discipline = new Discipline();
         $discipline->fill($data);
@@ -132,16 +125,11 @@ class DisciplineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Discipline $discipline)
+    public function update(DisciplineRequest $request, Discipline $discipline)
     {
         Gate::authorize('administer');
 
-        $data = $request->validate([
-            'discipline_type' =>'required',
-            'act_number' => 'required',
-            'start_date' => ['required', 'date'],
-            'end_date' => ['date', 'nullable']
-        ]);
+        $data = $request->validated();
 
         $discipline->fill($data);
         $discipline->updated_by = Auth::id();
