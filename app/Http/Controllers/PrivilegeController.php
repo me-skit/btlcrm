@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PrivilegeRequest;
 use App\Models\Privilege;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,7 +35,7 @@ class PrivilegeController extends Controller
             return view('privileges.pagination', compact('privileges'));
         }
 
-        $privileges = Privilege::orderBy('description')->paginate(7);
+        $privileges = Privilege::paginate(7);
         
         if ($request->get('page'))
         {
@@ -62,17 +63,11 @@ class PrivilegeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PrivilegeRequest $request)
     {
         Gate::authorize('administer');
 
-        $data = $request->validate([
-            'description' => ['required', 'unique:privileges'],
-            'preferred_sex' => 'nullable',
-            'preferred_status' => 'nullable',
-            'min_age' => ['numeric', 'nullable'],
-            'max_age' => ['numeric', 'nullable']
-        ]);
+        $data = $request->validated();
 
         $data['created_by'] = Auth::id();
         Privilege::create($data);
@@ -104,13 +99,7 @@ class PrivilegeController extends Controller
     {
         Gate::authorize('administer');
 
-        $data = $request->validate([
-            'description' => 'required',
-            'preferred_sex' => 'nullable',
-            'preferred_status' => 'nullable',
-            'min_age' => ['numeric', 'nullable'],
-            'max_age' => ['numeric', 'nullable']
-        ]);
+        $data = $request->validated();
 
         $data['updated_by'] = Auth::id();
         $privilege->fill($data);
