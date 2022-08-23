@@ -9,7 +9,15 @@ class Family extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'village_id',
+        'union_type',
+        'family_name',
+        'address',
+        'phone_number',
+        'created_by',
+        'updated_by'
+    ];
 
     /**
      *  get the village in wich the family live

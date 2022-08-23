@@ -9,7 +9,16 @@ class Campus extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $fillable = [
+        'name',
+        'village_id',
+        'address',
+        'phone_number',
+        'latitude',
+        'longitude',
+        'created_by',
+        'updated_by'
+    ];
 
     /**
      *  get the village that owns the campus

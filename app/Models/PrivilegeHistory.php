@@ -31,6 +31,6 @@ class PrivilegeHistory extends Pivot
 
     public function getIsActiveAttribute()
     {
-        return $this->end_date ? ($this->end_date < date("Y-m-d") ? false : true) : true;
+        return $this->end_date and $this->end_date < date("Y-m-d") ? false : true;
     }
 }
