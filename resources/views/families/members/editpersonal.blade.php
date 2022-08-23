@@ -129,8 +129,8 @@
       <label for="status" class="col-md-5 col-form-label text-md-right">{{ __('Estado civil') }}<span class="text-danger">*</span></label>
       <div class="col-md-7">
         <select name="status" id="status" class="form-control">
-          <option value="1" {{ $person->status == 1 ? 'selected' : '' }}>Casado(a)</option>
-          <option value="2" {{ $person->status == 2 ? 'selected' : '' }}>Soltero(a)</option>
+          <option value="1" {{ $person->status == 1 ? 'selected' : '' }}>Soltero(a)</option>
+          <option value="2" {{ $person->status == 2 ? 'selected' : '' }}>Casado(a)</option>
           <option value="3" {{ $person->status == 3 ? 'selected' : '' }}>Unido(a)</option>
           <option value="4" {{ $person->status == 4 ? 'selected' : '' }}>Divorciado(a)</option>
           <option value="6" {{ $person->status == 6 ? 'selected' : '' }}>Viudo(a)</option>

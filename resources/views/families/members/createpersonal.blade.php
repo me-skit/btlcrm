@@ -130,8 +130,8 @@
       <div class="col-md-7">
         <select name="status" id="status" class="form-control" required>
           <option value selected>Seleccionar...</option>
-          <option value="1">Casado(a)</option>
-          <option value="2">Soltero(a)</option>
+          <option value="1">Soltero(a)</option>
+          <option value="2">Casado(a)</option>
           <option value="3">Unido(a)</option>
           <option value="4">Divorciado(a)</option>
           <option value="6">Viudo(a)</option>
