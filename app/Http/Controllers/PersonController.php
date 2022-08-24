@@ -37,7 +37,7 @@ class PersonController extends Controller
                 $people = Person::where('death_date', null)
                             ->join('memberships', function($query) use ($request) {
                                 $query->on('people.id', '=', 'memberships.person_id')
-                                    ->where('memberships.status', 1)
+                                    ->where('memberships.member', 1)
                                     ->where('campus_id', $request->get('id'));
                             })
                             ->orderBy('first_name')
@@ -53,7 +53,7 @@ class PersonController extends Controller
                             ->where('preferences', 'like', '%\"' . $request->get('id') . '\"%')
                             ->join('memberships', function($query) {
                                 $query->on('people.id', '=', 'memberships.person_id')
-                                    ->where('memberships.status', 1);
+                                    ->where('memberships.member', 1);
                             })
                             ->orderBy('first_name')
                             ->orderBy('second_name')
@@ -70,7 +70,7 @@ class PersonController extends Controller
                 $people = Person::where('death_date', null)
                             ->join('memberships', function($query) use ($field, $value) {
                                 $query->on('people.id', '=', 'memberships.person_id')
-                                    ->where('memberships.status', 1)
+                                    ->where('memberships.member', 1)
                                     ->where($field, $value);
                             })
                             ->orderBy('first_name')
@@ -88,7 +88,7 @@ class PersonController extends Controller
                             ->whereNotNull($field)
                             ->join('memberships', function($query) {
                                 $query->on('people.id', '=', 'memberships.person_id')
-                                    ->where('memberships.status', 1);
+                                    ->where('memberships.member', 1);
                             })
                             ->orderBy('first_name')
                             ->orderBy('second_name')
@@ -108,7 +108,7 @@ class PersonController extends Controller
             $people = Person::where('death_date', null)
                         ->join('memberships', function($query) {
                             $query->on('people.id', '=', 'memberships.person_id')
-                                ->where('memberships.status', 1);
+                                ->where('memberships.member', 1);
                         })
                         ->where(DB::raw('CONCAT_WS(" ", first_name, second_name, third_name, first_surname, second_surname)'), 'like', '%' . $query . '%')
                         ->orderBy('first_name')
@@ -125,7 +125,7 @@ class PersonController extends Controller
         $people = Person::where('death_date', null)
                     ->join('memberships', function($query) {
                         $query->on('people.id', '=', 'memberships.person_id')
-                             ->where('memberships.status', 1);
+                             ->where('memberships.member', 1);
                     })
                     ->orderBy('first_name')
                     ->orderBy('second_name')

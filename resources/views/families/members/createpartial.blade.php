@@ -110,11 +110,17 @@
     <div class="row form-group">
       <label for="member" class="col-md-5 col-form-label text-md-right">{{ __('¿Miembro de Bethel?') }}<span class="text-danger">*</span></label>
       <div class="col-md-7">
-        <select name="member" id="member" class="form-control attend">
+        <select name="member" id="member" class="form-control attend" required>
           <option value="1">Si</option>
           <option value="0">No</option>
           <option value="-1">No, de otra iglesia</option>
         </select>
+
+        @error('member')
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+          </span>
+        @enderror        
       </div>
     </div>
   </div>
@@ -129,6 +135,12 @@
             <option value="{{ $campus->id }}">{{ $campus->name }}</option>
           @endforeach
         </select>
+
+        @error('campus_id')
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+          </span>
+        @enderror
       </div>
     </div>
   </div>
@@ -137,7 +149,7 @@
 <div class="row">
   <div class="col-lg-6">
     <div class="row form-group">
-      <label for="attend_church" class="col-md-5 col-form-label text-md-right">{{ __('¿Asiste a la iglesia?') }}<span class="text-danger">*</span></label>
+      <label for="attend_church" class="col-md-5 col-form-label text-md-right">{{ __('¿Asiste a la iglesia?') }}<span class="text-primary">*</span></label>
       <div class="col-md-7">
         <select name="attend_church" id="attend_church" class="form-control attend">
           <option value="1">Si</option>
@@ -145,6 +157,12 @@
           <option value="2">Ocasionalmente</option>
           <option value="3">Con problemas físicos para asistir</option>
         </select>
+
+        @error('attend_church')
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+          </span>
+        @enderror         
       </div>    
     </div>
   </div>

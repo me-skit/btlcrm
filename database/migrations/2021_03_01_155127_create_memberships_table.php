@@ -22,9 +22,9 @@ class CreateMembershipsTable extends Migration
             $table->boolean('baptized');
             $table->date('date_baptized')->nullable();
             $table->boolean('discipleship');
-            $table->boolean('attend_church');
+            $table->boolean('member');
+            $table->boolean('attend_church')->nullable();
             $table->string('reason')->nullable();
-            $table->boolean('member')->default();
             $table->bigInteger('created_by')->unsigned()->nullable();
             $table->bigInteger('updated_by')->unsigned()->nullable();
             $table->timestamps();

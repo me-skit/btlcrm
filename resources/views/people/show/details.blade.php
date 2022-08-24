@@ -134,7 +134,11 @@
   <div class="col-lg-6">
     <div class="row">
       <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
-        Aceptado:
+        @if ($person->sex == 'M')
+          Aceptado:
+        @else
+          Aceptada:
+        @endif
       </div>
       <div class="col-7 col-sm-8 col-md-9 col-lg-7">
         <b>
@@ -194,49 +198,6 @@
 
 <div class="row">
   <div class="col-lg-6">
-    @if (!$person->death_date)
-    <div class="row">
-      <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
-        Asiste a la iglesia:
-      </div>
-      <div class="col-7 col-sm-8 col-md-9 col-lg-7">
-        <b>
-          {{ $person->membership->attendance }}
-        </b>
-      </div>
-    </div>
-    @endif
-  </div>
-  <div class="col-lg-6">
-    @if ($person->membership->reason)
-    <div class="row">
-      <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
-        Motivo:
-      </div>
-      <div class="col-7 col-sm-8 col-md-9 col-lg-7">
-        <b>
-          {{ $person->membership->reason }}
-        </b>
-      </div>
-    </div>
-    @endif
-  </div>  
-</div>
-
-<div class="row">
-  <div class="col-lg-6">
-    <div class="row">
-      <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
-        Sede:
-      </div>
-      <div class="col-7 col-sm-8 col-md-9 col-lg-7">
-        <b>
-          {{ $person->membership->campus_id ? $person->membership->campus->name : "" }}
-        </b>
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-6">
     <div class="row">
       <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
         Recibió discipulado:
@@ -263,7 +224,54 @@
       </div>
     </div>
   </div>
+  @if ($person->membership->member)
+    <div class="col-lg-6">
+      <div class="row">
+        <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
+          Sede:
+        </div>
+        <div class="col-7 col-sm-8 col-md-9 col-lg-7">
+          <b>
+            {{ $person->membership->campus_id ? $person->membership->campus->name : "" }}
+          </b>
+        </div>
+      </div>
+    </div>      
+  @endif
 </div>
+
+@if ($person->membership->member)
+  <div class="row">
+    <div class="col-lg-6">
+      @if (!$person->death_date)
+      <div class="row">
+        <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
+          Asiste a la iglesia:
+        </div>
+        <div class="col-7 col-sm-8 col-md-9 col-lg-7">
+          <b>
+            {{ $person->membership->attendance }}
+          </b>
+        </div>
+      </div>
+      @endif
+    </div>
+    <div class="col-lg-6">
+      @if ($person->membership->reason)
+      <div class="row">
+        <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
+          Motivo:
+        </div>
+        <div class="col-7 col-sm-8 col-md-9 col-lg-7">
+          <b>
+            {{ $person->membership->reason }}
+          </b>
+        </div>
+      </div>
+      @endif
+    </div>  
+  </div>
+@endif
 
 @if ($person->preferences and !$person->death_date)
   <div class="row">

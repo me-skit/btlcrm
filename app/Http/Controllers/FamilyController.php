@@ -249,18 +249,10 @@ class FamilyController extends Controller
             'baptized' => ['required', 'numeric'],
             'date_baptized' =>['date', 'before:tomorrow', 'nullable'],
             'discipleship' => ['required', 'numeric'],
-            'attend_church' => ['required', 'numeric'],
+            'member' => 'required',
+            'attend_church' => ['numeric', 'nullable'],
             'reason' => 'nullable'
         ]);
-
-        // attend_church in membership could be: 0:no, 1:yes, 2:occasionally, 3:problem attending, -1:another church
-        $attend = $membership_data['attend_church'];
-        if ($attend == '0' or $attend == '-1')
-        {
-            // status in membership could be: 0:inactive, 1:active, 2:passed away
-            // if person don't attend church or attend another church, membership is inactive
-            $membership_data['status'] = '0';
-        }
 
         $relation_data = $request->validate([
             'family_role' => ['required', 'numeric']
@@ -345,21 +337,10 @@ class FamilyController extends Controller
             'baptized' => ['required', 'numeric'],
             'date_baptized' =>['date', 'before:tomorrow', 'nullable'],
             'discipleship' => ['required', 'numeric'],
+            'member' => 'required',
             'attend_church' => ['required', 'numeric'],
             'reason' => 'nullable'
         ]);
-
-        // attend_church in membership could be: 0:no, 1:yes, 2:occasionally, 3:problem attending, -1:another church
-        $attend = $membership_data['attend_church'];
-        if ($attend == '0' or $attend == '-1')
-        {
-            // status in membership could be: 0:inactive, 1:active, 2:passed away
-            $membership_data['status'] = '0';
-        }
-        else
-        {
-            $membership_data['status'] = '1';
-        }
 
         $relation_data = $request->validate([
             'family_role' => ['required', 'numeric']
