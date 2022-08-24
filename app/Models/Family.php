@@ -58,10 +58,8 @@ class Family extends Model
                 return 'Casados';
             case 2:
                 return 'Unidos';
-            case 3:
-                return 'Divorciados';
-            case 4: 
-                return 'Separados';
+            default:
+                return 'Otro';
         }        
     }
 }

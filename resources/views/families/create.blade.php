@@ -25,13 +25,12 @@
               </div>
 
               <div class="row form-group">
-                <label for="union_type" class="col-md-3 col-form-label text-md-right">{{ __('Situación marital') }}<span class="text-danger">*</span></label>
+                <label for="union_type" class="col-md-3 col-form-label text-md-right">{{ __('Tipo de unión') }}<span class="text-danger">*</span></label>
                 <div class="col-md-7">
                   <select name="union_type" class="form-control" required>
                     <option value="1">Casados</option>
                     <option value="2">Unidos</option>
-                    <option value="3">Divorciados</option>
-                    <option value="4">Separados</option>
+                    <option value="3">Otro</option>
                   </select>
                 </div>
               </div>
