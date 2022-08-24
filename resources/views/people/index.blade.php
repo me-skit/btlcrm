@@ -7,7 +7,7 @@
       <div class="col-md-10 d-flex justify-content-between align-items-baseline">
         <h2 id="title" data-name="members"><i class="fas fa-users"></i> Miembros</h2>
         <div>
-          <a href="{{ route('people.index') }}" class="btn btn-light"><i class="fas fa-redo-alt"></i> Recargar</a>
+          <a href="{{ route('members.index') }}" class="btn btn-light"><i class="fas fa-redo-alt"></i> Recargar</a>
         </div>
       </div>
     </div>

@@ -35,8 +35,8 @@
               <div class="dropdown-menu" aria-labelledby="dropdownFamilias">
                 <a class="dropdown-item" href="{{ route('families.index') }}"><i class="fas fa-house-user fa-fw"></i> {{ __('Por Familias') }}</a>
                 @can('consult')
-                  <a class="dropdown-item" href="{{ route('people.index') }}"><i class="fas fa-users fa-fw"></i> {{ __('Listado General') }}</a>
-                  <a class="dropdown-item" href="{{ route('people.nomembers') }}"><i class="far fa-user fa-fw"></i> {{ __('No Miembros') }}</a>
+                  <a class="dropdown-item" href="{{ route('members.index') }}"><i class="fas fa-users fa-fw"></i> {{ __('Listado General') }}</a>
+                  <a class="dropdown-item" href="{{ route('nomembers.index') }}"><i class="far fa-user fa-fw"></i> {{ __('No Miembros') }}</a>
                 @endcan
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item disabled" href="#"><i class="fas fa-chart-pie fa-fw"></i> {{ __('Estadísticas') }}</a>

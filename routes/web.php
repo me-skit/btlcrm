@@ -12,6 +12,9 @@ use App\Http\Controllers\PersonController;
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\DisciplineController;
 
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\NoMemberController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -99,15 +102,16 @@ Route::prefix('/user')->group( function() {
     Route::get('/{user}/edit',  [UserController::class, 'edit'])->name('user.edit');
 });
 
-// // Route::resource('people', PersonController::class);
-Route::get('members', [PersonController::class, 'index'])->name('people.index');
-Route::get('nomembers', [PersonController::class, 'no_members'])->name('people.nomembers');
-Route::get('nomember/{person}', [PersonController::class, 'show_nomember']);
-Route::prefix('/member')->group( function() {
+Route::prefix('/people')->group( function() {
     Route::get('/{person}',  [PersonController::class, 'show'])->name('person.show');
     Route::patch('/{person}',  [PersonController::class, 'update'])->name('person.update');
     Route::get('/{person}/edit',  [PersonController::class, 'edit'])->name('person.edit');
 });
+
+Route::get('members', [MemberController::class, 'index'])->name('members.index');
+
+Route::get('nomembers', [NoMemberController::class, 'index'])->name('nomembers.index');
+Route::get('nomember/{person}', [NoMemberController::class, 'show']);
 
 Route::get('directory', [AssignmentController::class, 'directory'])->name('directory');
 Route::resource('assignments', AssignmentController::class)->except([
