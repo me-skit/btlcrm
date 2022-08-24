@@ -106,6 +106,35 @@
 <div class="row">
   <div class="col-lg-6">
     <div class="row form-group">
+      <label for="member" class="col-md-5 col-form-label text-md-right">{{ __('¿Miembro de Bethel?') }}<span class="text-danger">*</span></label>
+      <div class="col-md-7">
+        <select name="member" id="member" class="form-control attend">
+          <option value="1" {{ $person->membership->member == 1 ? 'selected' : '' }}>Si</option>
+          <option value="0" {{ $person->membership->member ? '' : 'selected' }}>No</option>
+          <option value="-1" {{ $person->membership->member == -1 ? 'selected' : '' }}>No, de otra iglesia</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="row form-group">
+      <label for="campus_id" class="col-md-5 col-form-label text-md-right">{{ __('Sede') }}<span class="text-primary">*</span></label>
+      <div class="col-md-7">
+        <select name="campus_id" id="campus_id" class="form-control campus" {{ $person->membership->member == 1 ? 'required' : '' }}>
+          <option selected value> -- </option>
+          @foreach ($campuses as $campus)
+            <option value="{{ $campus->id }}" {{ $person->membership->campus_id ? ($person->membership->campus_id == $campus->id ? 'selected' : '') : '' }}>{{ $campus->name }}</option>
+          @endforeach
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-6">
+    <div class="row form-group">
       <label for="attend_church" class="col-md-5 col-form-label text-md-right">{{ __('Asiste a la iglesia') }}<span class="text-danger">*</span></label>
       <div class="col-md-7">
         <select name="attend_church" id="attend_church" class="form-control attend">
@@ -113,7 +142,6 @@
           <option value="0" {{ $person->membership->attend_church ? '' : 'selected' }}>No</option>
           <option value="2" {{ $person->membership->attend_church == 2 ? 'selected' : '' }}>Ocasionalmente</option>
           <option value="3" {{ $person->membership->attend_church == 3 ? 'selected' : '' }}>Con problemas físicos para asistir</option>
-          <option value="-1" {{ $person->membership->attend_church == 4 ? 'selected' : '' }}>Si, otra iglesia</option>
         </select>
       </div>
     </div>
@@ -121,8 +149,8 @@
   
   <div class="col-lg-6">
     <div class="row form-group">
-      <label for="reason" class="col-md-4 col-lg-2 col-form-label text-md-right">{{ __('Motivo') }}</label>
-      <div class="col-md-8 col-lg-10">
+      <label for="reason" class="col-md-5 col-form-label text-md-right">{{ __('Motivo') }}</label>
+      <div class="col-md-7">
         <input type="text"
           name="reason"
           id="reason"
@@ -137,22 +165,6 @@
             <strong>{{ $message }}</strong>
           </span>
         @enderror
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-md-12">
-    <div class="row form-group">
-      <label for="campus_id" class="col-md-4 col-lg-2 col-form-label text-md-right">{{ __('Sede') }}</label>
-      <div class="col-md-8 col-lg-4">
-        <select name="campus_id" id="campus_id" class="form-control campus" {{ $person->membership->attend_church == 1 ? 'required' : '' }}>
-          <option selected value> -- </option>
-          @foreach ($campuses as $campus)
-            <option value="{{ $campus->id }}" {{ $person->membership->campus_id ? ($person->membership->campus_id == $campus->id ? 'selected' : '') : '' }}>{{ $campus->name }}</option>
-          @endforeach
-        </select>
       </div>
     </div>
   </div>

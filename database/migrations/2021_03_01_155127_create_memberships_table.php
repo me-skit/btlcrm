@@ -24,7 +24,7 @@ class CreateMembershipsTable extends Migration
             $table->boolean('discipleship');
             $table->boolean('attend_church');
             $table->string('reason')->nullable();
-            $table->boolean('status')->default(1);
+            $table->boolean('member')->default();
             $table->bigInteger('created_by')->unsigned()->nullable();
             $table->bigInteger('updated_by')->unsigned()->nullable();
             $table->timestamps();

@@ -250,6 +250,21 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="col-lg-6">
+    <div class="row">
+      <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
+        Miembro:
+      </div>
+      <div class="col-7 col-sm-8 col-md-9 col-lg-7">
+        <b>
+          {{ $person->membership->member == 1 ? "Si" : "No" }}
+        </b>
+      </div>
+    </div>
+  </div>
+</div>
+
 @if ($person->preferences and !$person->death_date)
   <div class="row">
     <div class="col-lg-12">
