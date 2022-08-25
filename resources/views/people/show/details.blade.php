@@ -33,7 +33,7 @@
       </div>
       <div class="col-7 col-sm-8 col-md-9 col-lg-7">
         <b>
-          {{ $person->sex == 'M' ? "Masculino" : "Femenino" }}
+          {{ $person->sex_decoded }}
         </b>
       </div>
     </div>
@@ -48,7 +48,7 @@
       </div>
       <div class="col-7 col-sm-8 col-md-9 col-lg-7">
         <b>
-          {{ \Carbon\Carbon::parse($person->birthday)->format('d/m/Y')}}
+          {{ $person->birthday }}
         </b>
       </div>
     </div>
@@ -60,11 +60,7 @@
       </div>
       <div class="col-7 col-sm-8 col-md-9 col-lg-7">
         <b>
-          @if ($person->death_date)
-            {{ floor((strtotime($person->death_date) -  strtotime($person->birthday)) / 31536000) }}
-          @else
-            {{ \Carbon\Carbon::parse($person->birthday)->age }}
-          @endif
+          {{ $person->age }}
         </b>
       </div>
     </div>
@@ -219,7 +215,7 @@
       </div>
       <div class="col-7 col-sm-8 col-md-9 col-lg-7">
         <b>
-          {{ $person->membership->member == 1 ? "Si" : "No" }}
+          {{ $person->member }}
         </b>
       </div>
     </div>

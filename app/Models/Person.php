@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,6 +17,8 @@ class Person extends Model
         'diseases' => 'array',
         'handicaps' => 'array'
     ];
+
+    protected const SECONDS_PER_YEAR = 31536000;
 
     /**
      *  get the families which the person belongs
@@ -77,6 +80,31 @@ class Person extends Model
                     ->where('ended', '0')->first();
     }
 
+    public function setFirstNameAttribute($value)
+    {
+        $this->attributes['first_name'] = ucfirst(strtolower($value));
+    }
+
+    public function setSecondNameAttribute($value)
+    {
+        $this->attributes['second_name'] = ucfirst(strtolower($value));
+    }
+
+    public function setThirdNameAttribute($value)
+    {
+        $this->attributes['third_name'] = ucfirst(strtolower($value));
+    }
+
+    public function setFirstSurnameAttribute($value)
+    {
+        $this->attributes['first_surname'] = ucfirst(strtolower($value));
+    }
+
+    public function setSecondSurnameAttribute($value)
+    {
+        $this->attributes['second_surname'] = ucfirst(strtolower($value));
+    }
+
     public function getFullNameAttribute() {
         $fullname = [$this->first_name, $this->second_name, $this->third_name, $this->first_surname, $this->second_surname];
         return implode(' ', array_filter($fullname));
@@ -89,9 +117,9 @@ class Person extends Model
             switch ($this->status)
             {
                 case 1:
-                    return 'Casado';
-                case 2:
                     return 'Soltero';
+                case 2:
+                    return 'Casado';
                 case 3:
                     return 'Unido';
                 case 4: 
@@ -105,9 +133,9 @@ class Person extends Model
             switch ($this->status)
             {
                 case 1:
-                    return 'Casada';
-                case 2:
                     return 'Soltera';
+                case 2:
+                    return 'Casada';
                 case 3:
                     return 'Unida';
                 case 4: 
@@ -116,7 +144,6 @@ class Person extends Model
                     return 'Viuda';
             }
         }
-
     }
 
     public function getFamilyRoleAttribute()
@@ -133,5 +160,32 @@ class Person extends Model
             default:
                 return 'Hija';
         }
+    }
+
+    public function getSexDecodedAttribute()
+    {
+        return $this->sex === 'M' ? "Masculino" : "Femenino";
+    }
+
+    public function getMemberAttribute()
+    {
+        return $this->membership->member ? "Si" : "No";
+    }
+
+    public function getAgeAttribute()
+    {
+        if ($this->death_date)
+        {
+            return floor((strtotime($this->death_date) -  strtotime($this->birthday)) / $this->SECONDS_PER_YEAR);
+        }
+        else
+        {
+            return Carbon::parse($this->birthday)->age;
+        }
+    }
+
+    public function getBirthdayAttribute($value)
+    {
+        return Carbon::parse($value)->format('d/m/Y');
     }
 }
