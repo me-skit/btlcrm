@@ -184,8 +184,13 @@ class Person extends Model
         }
     }
 
-    public function getBirthdayAttribute($value)
+    public function getFormattedBirthdayAttribute()
     {
-        return Carbon::parse($value)->format('d/m/Y');
+        return Carbon::parse($this->birthday)->format('d/m/Y');
+    }
+
+    public function getAttendChurchAttribute($value)
+    {
+        return $value ? ($value == 1 ? "Si" : ($value == 2 ? "En ocasiones" : "Con problemas")) : "No";
     }
 }

@@ -37,7 +37,7 @@
     <div class="col-lg-6">
       Fecha de nacimiento:
       <b>
-        {{ $person->birthday }}
+        {{ $person->formatted_birthday }}
       </b>
     </div>
     <div class="col-lg-6">

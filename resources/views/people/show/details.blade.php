@@ -48,7 +48,7 @@
       </div>
       <div class="col-7 col-sm-8 col-md-9 col-lg-7">
         <b>
-          {{ $person->birthday }}
+          {{ $person->formatted_birthday }}
         </b>
       </div>
     </div>

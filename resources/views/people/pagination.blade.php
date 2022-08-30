@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-md-10 offset-md-1">
+  <div class="col-md-12">
     {{ $people->links("pagination::bootstrap-4") }}
   </div>
 </div>
@@ -30,7 +30,7 @@
           <td>{{ $person->baptized ? "Si" : "No" }}</td>
           <td>
             @if (!$person->death_date)
-              {{ $person->attend_church ? ($person->attend_church == 1 ? "Si" : "Otra iglesia") : "No" }}
+              {{ $person->attend_church }}
             @endif
           </td>
           <td class="d-md-none d-lg-block">{{ $person->membership->campus_id ? $person->membership->campus->name : "" }}</td>
