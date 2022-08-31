@@ -6,44 +6,41 @@
 
 <div class="row justify-content-center">
   <div class="col-md-10">
-    <table class="table table-hover table-responsive-md table-responsive-lg">
+    <table class="table table-sm table-hover table-responsive-md">
       <thead>
           <tr>
-            <th>No.</th>
+            <th class="text-center">No.</th>
             <th>Nombre</th>
-            <th>Aceptado</th>
-            <th>Bautizado</th>
-            <th>Asiste</th>
+            <th>Acept.</th>
+            <th>Baut.</th>
+            <th>Religión</th>
             <th>Acciones</th>
           </tr>
       </thead>
       <tbody>
         @foreach ($people as $key => $person)
         <tr>
-          <td>{{ ($people->currentPage() - 1) * 7 +$key + 1 }}</td>
-          <td>
+          <td class="align-middle text-center">{{ ($people->currentPage() - 1) * 7 +$key + 1 }}</td>
+          <td class="align-middle text-truncate">
             {{ $person->full_name }} 
-            {!! $person->death_date ? "<small class='badge badge-dark'>Q.D.E.P.</small>" : "" !!}
           </td>
-          <td>{{ $person->accepted ? "Si" : "No" }}</td>
-          <td>{{ $person->baptized ? "Si" : "No" }}</td>
-          <td>
-            @if (!$person->death_date)
-              {{ $person->attend_church ? ($person->attend_church == 1 ? "Si" : "Otra iglesia") : "No" }}
-            @endif
+          <td class="align-middle">{{ $person->accepted ? "Si" : "No" }}</td>
+          <td class="align-middle">{{ $person->baptized ? "Si" : "No" }}</td>
+          <td class="align-middle">
+            {{ $person->religion }}
           </td>
-          <td>
+          <td class="align-middle">
             <div class="d-flex">
               <button type="button"
                 class="btn btn-secondary mr-3 btn-f-details"
                 data-toggle="modal"
                 data-target="#detailsModal"
                 data-id="{{ $person->id }}">
-                  <i class="far fa-eye"></i> Detalles
+                  <i class="far fa-eye"></i><span class="d-none d-xl-inline"> Detalles</span>
                 </button>
 
-              <a href="{{ route('person.edit', $person->id ) }}" class="btn btn-primary mr-3"><i class="fas fa-pencil-alt"></i> Editar</a>
-              <a href="{{ route('family.show', $person->family()->id ) . '?back=nomembers' }}" class="btn btn-link"><i class="fas fa-house-user"></i> Familia</a>
+              <a href="{{ route('person.edit', $person->id ) }}" class="btn btn-primary mr-3"><i class="fas fa-pencil-alt"></i><span class="d-none d-xl-inline"> Editar</span></a>
+              <a href="{{ route('family.show', $person->family()->id ) . '?back=nomembers' }}" class="btn btn-outline-primary"><i class="fas fa-house-user"></i><span class="d-none d-xl-inline"> Familia</span></a>
             </div>
           </td>
         </tr>
