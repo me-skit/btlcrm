@@ -18,6 +18,7 @@ class CreateFamiliesTable extends Migration
             $table->foreignId('village_id')->constrained();
             $table->tinyInteger('union_type');
             $table->string("family_name", 128);
+            $table->tinyInteger('zone')->default(0);
             $table->string('address');
             $table->string('phone_number', 16)->nullable();
             $table->boolean('active')->default(1);

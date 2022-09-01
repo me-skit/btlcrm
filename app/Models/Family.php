@@ -13,6 +13,7 @@ class Family extends Model
         'village_id',
         'union_type',
         'family_name',
+        'zone',
         'address',
         'phone_number',
         'created_by',

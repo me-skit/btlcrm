@@ -6,12 +6,12 @@
 
 <div class="row justify-content-center">
   <div class="col-md-10">
-    <table class="table table-hover table-responsive-md">
+    <table class="table table-sm table-hover table-responsive-md">
       <thead>
           <tr>
-              <th>No.</th>
+              <th class="text-center">No.</th>
               <th>Apellidos</th>
-              <th>Lugar</th>
+              <th class="text-center">Zona</th>
               <th>Dirección</th>
               <th>Acciones</th>
           </tr>
@@ -19,13 +19,13 @@
       <tbody>
         @foreach ($families as $key => $family)
           <tr>
-            <td>{{ ($families->currentPage() - 1) * 7 + $key + 1 }}</td>
-            <td>{{ $family->family_name }}</td>
-            <td>{{ $family->village->name }}</td>
-            <td>{{ $family->address }}</td>
-            <td>
+            <td class="align-middle text-center">{{ ($families->currentPage() - 1) * 7 + $key + 1 }}</td>
+            <td class="align-middle text-truncate">{{ $family->family_name }}</td>
+            <td class="align-middle text-center">{{ $family->zone }}</td>
+            <td class="align-middle text-truncate">{{ $family->address }}</td>
+            <td class="align-middle">
               <div class="d-flex">
-                <a href="{{ route('family.show', $family->id ) . '?back=families' }}" class="btn btn-primary mr-3"><i class="far fa-eye"></i> Detalles</a>
+                <a href="{{ route('family.show', $family->id ) . '?back=families' }}" class="btn btn-primary mr-3"><i class="far fa-eye"></i><span class="d-none d-lg-inline"> Detalles</span></a>
               </div>
             </td>
           </tr>

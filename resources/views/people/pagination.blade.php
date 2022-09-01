@@ -27,9 +27,9 @@
           <td class="align-middle">{{ $person->baptized ? "Si" : "No" }}</td>
           <td class="align-middle">
             <div class="d-flex">
-              <a href="{{ route('person.show', $person->id ) }}" class="btn btn-secondary mr-3"><i class="far fa-eye"></i><span class="d-none d-xl-inline"> Detalles</span></a>
-              <a href="{{ route('person.edit', $person->id ) }}" class="btn btn-primary mr-3"><i class="fas fa-pencil-alt"></i><span class="d-none d-xl-inline"> Editar</span></a>
-              <a href="{{ route('family.show', $person->family()->id ) . '?back=members' }}" class="btn btn-outline-primary mr-3"><i class="fas fa-house-user"></i><span class="d-none d-xl-inline"> Familia</span></a>
+              <a href="{{ route('person.show', $person->id ) }}" class="btn btn-secondary mr-3"><i class="far fa-eye"></i><span class="d-none d-lg-inline"> Detalles</span></a>
+              <a href="{{ route('person.edit', $person->id ) }}" class="btn btn-primary mr-3"><i class="fas fa-pencil-alt"></i><span class="d-none d-lg-inline"> Editar</span></a>
+              <a href="{{ route('family.show', $person->family()->id ) . '?back=members' }}" class="btn btn-outline-primary mr-3"><i class="fas fa-house-user"></i><span class="d-none d-lg-inline"> Familia</span></a>
             </div>
           </td>
         </tr>

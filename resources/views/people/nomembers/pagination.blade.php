@@ -36,11 +36,11 @@
                 data-toggle="modal"
                 data-target="#detailsModal"
                 data-id="{{ $person->id }}">
-                  <i class="far fa-eye"></i><span class="d-none d-xl-inline"> Detalles</span>
+                  <i class="far fa-eye"></i><span class="d-none d-lg-inline"> Detalles</span>
                 </button>
 
-              <a href="{{ route('person.edit', $person->id ) }}" class="btn btn-primary mr-3"><i class="fas fa-pencil-alt"></i><span class="d-none d-xl-inline"> Editar</span></a>
-              <a href="{{ route('family.show', $person->family()->id ) . '?back=nomembers' }}" class="btn btn-outline-primary"><i class="fas fa-house-user"></i><span class="d-none d-xl-inline"> Familia</span></a>
+              <a href="{{ route('person.edit', $person->id ) }}" class="btn btn-primary mr-3"><i class="fas fa-pencil-alt"></i><span class="d-none d-lg-inline"> Editar</span></a>
+              <a href="{{ route('family.show', $person->family()->id ) . '?back=nomembers' }}" class="btn btn-outline-primary"><i class="fas fa-house-user"></i><span class="d-none d-lg-inline"> Familia</span></a>
             </div>
           </td>
         </tr>

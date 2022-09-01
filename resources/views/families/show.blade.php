@@ -19,7 +19,7 @@
         </div>
         <div class="col-md-6">
           Dirección:
-          <b>{{ $family->address }}</b>
+          <b>{{ $family->address . ', zona ' . $family->zone }}</b>
         </div>
       </div>
       <div class="row d-flex justify-content-center">

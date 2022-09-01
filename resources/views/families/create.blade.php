@@ -33,6 +33,12 @@
                     <option value="3">Otro</option>
                   </select>
                 </div>
+
+                @error('union_type')
+                <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+              @enderror
               </div>
 
               <div class="row form-group">
@@ -53,6 +59,27 @@
                     </span>
                   @enderror
                 </div>
+              </div>
+
+              <div class="row form-group">
+                <label for="zone" class="col-md-3 col-form-label text-md-right">{{ __('Zona') }}<span class="text-danger">*</span></label>
+                <div class="col-md-2">
+                  <select name="zone" class="form-control" required>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                  </select>
+                </div>
+
+                @error('zone')
+                <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+                @enderror
               </div>
 
               <div class="row form-group">

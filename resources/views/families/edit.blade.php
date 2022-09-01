@@ -56,6 +56,28 @@
                 </div>
               </div>
             
+              <div class="row form-group">
+                <label for="zone" class="col-md-3 col-form-label text-md-right">{{ __('Zona') }}<span class="text-danger">*</span></label>
+                <div class="col-md-2">
+                  <select name="zone" class="form-control" required>
+                    <option value="0" {{ $family->zone ? '' : 'selected' }}>--</option>
+                    <option value="1" {{ $family->zone == 1 ? 'selected' : '' }}>01</option>
+                    <option value="2" {{ $family->zone == 2 ? 'selected' : '' }}>02</option>
+                    <option value="3" {{ $family->zone == 3 ? 'selected' : '' }}>03</option>
+                    <option value="4" {{ $family->zone == 4 ? 'selected' : '' }}>04</option>
+                    <option value="5" {{ $family->zone == 5 ? 'selected' : '' }}>05</option>
+                    <option value="6" {{ $family->zone == 6 ? 'selected' : '' }}>06</option>
+                    <option value="7" {{ $family->zone == 7 ? 'selected' : '' }}>07</option>
+                  </select>
+                </div>
+
+                @error('zone')
+                <span class="invalid-feedback" role="alert">
+                  <strong>{{ $message }}</strong>
+                </span>
+                @enderror
+              </div>
+
               <div class="form-group row">
                 <label for="address" class="col-md-3 col-form-label text-md-right">{{ __('Dirección') }}<span class="text-danger">*</span></label>
                 <div class="col-md-7">
