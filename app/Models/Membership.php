@@ -26,9 +26,9 @@ class Membership extends Model
             case 1:
                 return 'Si';
             case 2:
-                return 'Ocasionalmente';
+                return 'En ocasiones';
             case 3: 
-                return 'Problemas físicos para asistir';
+                return 'Con problemas';
             case 0:
                 return 'No';
             default:

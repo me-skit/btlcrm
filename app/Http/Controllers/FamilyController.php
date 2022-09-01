@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Auth;
 
 class FamilyController extends Controller
 {
+    protected const MEMBER_NO = 0;
+    protected const MEMBER_YES = 1;
+    protected const MEMBER_ANOTHER_PLACE = -1;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -103,6 +107,7 @@ class FamilyController extends Controller
             'village_id' => 'required',
             'union_type' => 'required',
             'family_name' => 'required',
+            'zone' => 'nullable',
             'address' => 'required',
             'phone_number' => 'nullable'
         ]);
@@ -166,6 +171,7 @@ class FamilyController extends Controller
             'village_id' => 'required',
             'union_type' => 'required',
             'family_name' => 'required',
+            'zone' => 'nullable',
             'address' => 'required',
             'phone_number' => 'nullable'
         ]);
@@ -216,7 +222,6 @@ class FamilyController extends Controller
     public function addmember(Request $request, $family_id)
     {
         $person_data = $request->validate([
-            'dpi' => ['numeric', 'nullable'],
             'first_name' => 'required',
             'second_name' => 'nullable',
             'third_name' => 'nullable',
@@ -229,7 +234,8 @@ class FamilyController extends Controller
             'cellphone' => 'nullable',
             'diseases' => 'nullable',
             'handicaps' => 'nullable',
-            'preferences' => 'nullable'
+            'preferences' => 'nullable',
+            'religion' => ['numeric', 'nullable']
         ]);
 
         if ($request->diseases)
@@ -303,7 +309,6 @@ class FamilyController extends Controller
     public function updatemember(Request $request, $family_id, Person $person)
     {
         $person_data = $request->validate([
-            'dpi' => ['numeric', 'nullable'],
             'first_name' => 'required',
             'second_name' => 'nullable',
             'third_name' => 'nullable',
@@ -317,7 +322,8 @@ class FamilyController extends Controller
             'cellphone' => 'nullable',
             'diseases' => 'nullable',
             'handicaps' => 'nullable',
-            'preferences' => 'nullable'
+            'preferences' => 'nullable',
+            'religion' => ['numeric', 'nullable']
         ]);
 
         if ($request->diseases)
@@ -338,9 +344,14 @@ class FamilyController extends Controller
             'date_baptized' =>['date', 'before:tomorrow', 'nullable'],
             'discipleship' => ['required', 'numeric'],
             'member' => 'required',
-            'attend_church' => ['required', 'numeric'],
+            'attend_church' => ['numeric', 'nullable'],
             'reason' => 'nullable'
         ]);
+
+        if ($membership_data['member'] != $this->MEMBER_YES) {
+            $membership_data['attend_church'] = NULL;
+            $membership_data['campus_id'] = NULL;
+        }
 
         $relation_data = $request->validate([
             'family_role' => ['required', 'numeric']

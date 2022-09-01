@@ -169,7 +169,7 @@ class Person extends Model
 
     public function getMemberAttribute()
     {
-        return $this->membership->member ? "Si" : "No";
+        return $this->membership->member ? ($this->membership->member == 1 ? "Si" : "De otra iglesia") : "No";
     }
 
     public function getAgeAttribute()
@@ -192,5 +192,21 @@ class Person extends Model
     public function getAttendChurchAttribute($value)
     {
         return $value ? ($value == 1 ? "Si" : ($value == 2 ? "En ocasiones" : "Con problemas")) : "No";
+    }
+
+    public function getReligionAttribute($value)
+    {
+        switch ($value) {
+            case 1:
+                return $this->sex === 'M' ? "Evangélico" : "Evangélica";
+            case 2:
+                return $this->sex === 'M' ? "Católico" : "Católica";
+            case 3:
+                return $this->sex === 'M' ? "Mormon" : "Mormona";
+            case 4:
+                return "Adventista";
+            default:
+                return 'Ninguna';
+        }
     }
 }

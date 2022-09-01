@@ -188,6 +188,29 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="col-lg-6" id="religion-column">
+    <div class="row form-group">
+      <label for="religion" class="col-md-5 col-form-label text-md-right">{{ __('Religión') }}<span class="text-primary">*</span></label>
+      <div class="col-md-7">
+        <select name="religion" id="religion" class="form-control">
+          <option value="0" {{ $person->religion ? '' : 'selected' }}>Ninguna</option>
+          <option value="1" {{ $person->religion == 1 ? 'selected' : '' }}>Evangélico(a)</option>
+          <option value="2" {{ $person->religion == 2 ? 'selected' : '' }}>Católico(a)</option>
+          <option value="3" {{ $person->religion == 3 ? 'selected' : '' }}>Mormón</option>
+          <option value="4" {{ $person->religion == 4 ? 'selected' : '' }}>Adventista</option>
+        </select>
+
+        @error('religion')
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+          </span>
+        @enderror         
+      </div>    
+    </div>
+  </div>
+</div>
+
 <!-- * * * * * * * preferences  * * * * * * *-->
 
 @include('families.members.editprivileges')

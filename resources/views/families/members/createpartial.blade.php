@@ -151,7 +151,7 @@
     <div class="row form-group">
       <label for="attend_church" class="col-md-5 col-form-label text-md-right">{{ __('¿Asiste a la iglesia?') }}<span class="text-primary">*</span></label>
       <div class="col-md-7">
-        <select name="attend_church" id="attend_church" class="form-control attend">
+        <select name="attend_church" id="attend_church" class="form-control">
           <option value="1">Si</option>
           <option value="0">No</option>
           <option value="2">Ocasionalmente</option>
@@ -186,6 +186,29 @@
           </span>
         @enderror
       </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-6 d-none" id="religion-column">
+    <div class="row form-group">
+      <label for="religion" class="col-md-5 col-form-label text-md-right">{{ __('Religión') }}<span class="text-primary">*</span></label>
+      <div class="col-md-7">
+        <select name="religion" id="religion" class="form-control">
+          <option value="0">Ninguna</option>
+          <option value="1">Evangélico(a)</option>
+          <option value="2">Católico(a)</option>
+          <option value="3">Mormón</option>
+          <option value="4">Adventista</option>
+        </select>
+
+        @error('religion')
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+          </span>
+        @enderror         
+      </div>    
     </div>
   </div>
 </div>

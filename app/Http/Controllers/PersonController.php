@@ -72,7 +72,6 @@ class PersonController extends Controller
         Gate::authorize('consult');
 
         $person_data = $request->validate([
-            'dpi' => ['numeric', 'nullable'],
             'first_name' => 'required',
             'second_name' => 'nullable',
             'third_name' => 'nullable',
@@ -86,7 +85,8 @@ class PersonController extends Controller
             'cellphone' => 'nullable',
             'diseases' => 'nullable',
             'handicaps' => 'nullable',
-            'preferences' => 'nullable'
+            'preferences' => 'nullable',
+            'religion' => ['numeric', 'nullable']
         ]);
 
         if ($request->diseases)
