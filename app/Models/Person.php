@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,6 +18,11 @@ class Person extends Model
         'diseases' => 'array',
         'handicaps' => 'array'
     ];
+
+    public const NO_BAPTIZED = 0;
+    public const BAPTIZED = 1;
+    public const NO_MEMBER = 0;
+    public const MEMBER = 1;
 
     protected const SECONDS_PER_YEAR = 31536000;
 
@@ -112,37 +118,18 @@ class Person extends Model
 
     public function getCivilStatusAttribute()
     {
-        if ($this->sex === 'M')
+        switch ($this->status)
         {
-            switch ($this->status)
-            {
-                case 1:
-                    return 'Soltero';
-                case 2:
-                    return 'Casado';
-                case 3:
-                    return 'Unido';
-                case 4: 
-                    return 'Divorciado';
-                case 6:
-                    return 'Viudo';
-            }
-        }
-        else
-        {
-            switch ($this->status)
-            {
-                case 1:
-                    return 'Soltera';
-                case 2:
-                    return 'Casada';
-                case 3:
-                    return 'Unida';
-                case 4: 
-                    return 'Divorciada';
-                case 6:
-                    return 'Viuda';
-            }
+            case 1:
+                return $this->sex === 'M' ? 'Soltero' : 'Soltera';
+            case 2:
+                return $this->sex === 'M' ? 'Casado' : 'Casada ';
+            case 3:
+                return $this->sex === 'M' ? 'Unido' : 'Unida';
+            case 4: 
+                return $this->sex === 'M' ? 'Divorciado' : 'Divorciada';
+            case 6:
+                return $this->sex === 'M' ? 'Viudo' : 'Viuda';
         }
     }
 
@@ -208,5 +195,74 @@ class Person extends Model
             default:
                 return 'Ninguna';
         }
+    }
+
+    // static methods
+    public static function queryPeopleByMembership($membership, $substr)
+    {
+        return Person::where('death_date', null)
+                    ->join('memberships', function($query) use ($membership) {
+                        $query->on('people.id', '=', 'memberships.person_id')
+                            ->where('memberships.member', $membership);
+                        })
+                    ->where(DB::raw('CONCAT_WS(" ", first_name, second_name, third_name, first_surname, second_surname)'), 'like', '%' . $substr . '%')
+                    ->orderBy('first_name')
+                    ->orderBy('second_name')
+                    ->orderBy('third_name')
+                    ->orderBy('first_surname')
+                    ->orderBy('second_surname')
+                    ->with('membership')
+                    ->paginate(35);
+    }
+
+    public static function getPeopleByMembership($membership)
+    {
+        return Person::where('death_date', null)
+                    ->join('memberships', function($query) use ($membership) {
+                        $query->on('people.id', '=', 'memberships.person_id')
+                            ->where('memberships.member', $membership);
+                    })
+                    ->orderBy('first_name')
+                    ->orderBy('second_name')
+                    ->orderBy('third_name')
+                    ->orderBy('first_surname')
+                    ->orderBy('second_surname')
+                    ->with('membership')
+                    ->paginate(35);
+    }
+
+    public static function queryMembersBy($field, $value, $substr)
+    {
+        return Person::where('death_date', null)
+                    ->join('memberships', function($query) use ($field, $value) {
+                        $query->on('people.id', '=', 'memberships.person_id')
+                            ->where('memberships.member', Person::MEMBER)
+                            ->where('memberships.' . $field, $value);
+                        })
+                    ->where(DB::raw('CONCAT_WS(" ", first_name, second_name, third_name, first_surname, second_surname)'), 'like', '%' . $substr . '%')
+                    ->orderBy('first_name')
+                    ->orderBy('second_name')
+                    ->orderBy('third_name')
+                    ->orderBy('first_surname')
+                    ->orderBy('second_surname')
+                    ->with('membership')
+                    ->paginate(35);
+    }
+
+    public static function getMembersBy($field, $value)
+    {
+        return Person::where('death_date', null)
+                    ->join('memberships', function($query) use ($field, $value) {
+                        $query->on('people.id', '=', 'memberships.person_id')
+                            ->where('memberships.member', Person::MEMBER)
+                            ->where('memberships.' . $field, $value);
+                    })
+                    ->orderBy('first_name')
+                    ->orderBy('second_name')
+                    ->orderBy('third_name')
+                    ->orderBy('first_surname')
+                    ->orderBy('second_surname')
+                    ->with('membership')
+                    ->paginate(35);
     }
 }
