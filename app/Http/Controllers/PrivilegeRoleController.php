@@ -27,8 +27,8 @@ class PrivilegeRoleController extends Controller
         if ($request->get('query'))
         {
             $query = str_replace(" ", "%", $request->get('query'));
-            $privilegeRoles = PrivilegeRole::where('description', 'like', '%' . $query . '%')
-                            ->orderBy('description')
+            $privilegeRoles = PrivilegeRole::where('name', 'like', '%' . $query . '%')
+                            ->orderBy('name')
                             ->paginate(7);
 
             return view('privilegeroles.pagination', compact('privilegeRoles'));
