@@ -3,10 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Person;
-use App\Models\Campus;
-use App\Models\Privilege;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 
 class MemberController extends Controller
@@ -22,44 +19,89 @@ class MemberController extends Controller
     {
         Gate::authorize('consult');
 
+        $address = "members";
+        $title = 'Miembros';
+
         if ($request->get('query'))
         {
-            $query = str_replace(" ", "%", $request->get('query'));
-            $people = Person::where('death_date', null)
-                        ->join('memberships', function($query) {
-                            $query->on('people.id', '=', 'memberships.person_id')
-                                ->where('memberships.member', 1);
-                        })
-                        ->where(DB::raw('CONCAT_WS(" ", first_name, second_name, third_name, first_surname, second_surname)'), 'like', '%' . $query . '%')
-                        ->orderBy('first_name')
-                        ->orderBy('second_name')
-                        ->orderBy('third_name')
-                        ->orderBy('first_surname')
-                        ->orderBy('second_surname')
-                        ->with('membership')
-                        ->paginate(7);
+            $substr = str_replace(" ", "%", $request->get('query'));
+            $people = Person::queryPeopleByMembership(Person::MEMBER, $substr);
 
-            return view('people.pagination', compact('people'));            
+            return view('people.pagination', compact('people', 'address', 'title'));            
         }
 
-        $people = Person::where('death_date', null)
-                    ->join('memberships', function($query) {
-                        $query->on('people.id', '=', 'memberships.person_id')
-                             ->where('memberships.member', 1);
-                    })
-                    ->orderBy('first_name')
-                    ->orderBy('second_name')
-                    ->orderBy('third_name')
-                    ->orderBy('first_surname')
-                    ->orderBy('second_surname')
-                    ->with('membership')
-                    ->paginate(7);
+        $people = Person::getPeopleByMembership(Person::MEMBER);
 
         if ($request->get('page'))
         {
-            return view('people.pagination', compact('people'));
+            return view('people.pagination', compact('people', 'address', 'title'));
         }
 
-        return view('people.index', compact('people'));
+        return view('people.index', compact('people', 'address', 'title'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+    public function baptized(Request $request)
+    {
+        Gate::authorize('consult');
+
+        $address = "members/baptized";
+        $title = 'Bautizados';
+
+        if ($request->get('query'))
+        {
+            $substr = str_replace(" ", "%", $request->get('query'));
+            $people = Person::queryMembersBy('baptized', Person::BAPTIZED, $substr);
+
+            return view('people.pagination', compact('people', 'address', 'title'));            
+        }
+
+        $people = Person::getMembersBy('baptized', Person::BAPTIZED);
+
+        if ($request->get('page'))
+        {
+            return view('people.pagination', compact('people', 'address', 'title'));
+        }
+
+        return view('people.index', compact('people', 'address', 'title'));
+    }
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+    public function nobaptized(Request $request)
+    {
+        Gate::authorize('consult');
+    
+        $address = "members/nobaptized";
+        $title = 'No Bautizados';
+
+        if ($request->get('query'))
+        {
+            $substr = str_replace(" ", "%", $request->get('query'));
+            $people = Person::queryMembersBy('baptized', Person::NO_BAPTIZED, $substr);
+
+            return view('people.pagination', compact('people', 'address', 'title'));            
+        }
+
+        $people = Person::getMembersBy('baptized', Person::NO_BAPTIZED);
+
+        if ($request->get('page'))
+        {
+            return view('people.pagination', compact('people', 'address', 'title'));
+        }
+
+        return view('people.index', compact('people', 'address', 'title'));
     }
 }
