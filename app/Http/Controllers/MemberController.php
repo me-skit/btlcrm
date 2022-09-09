@@ -80,11 +80,11 @@ class MemberController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function nobaptized(Request $request)
+    public function unbaptized(Request $request)
     {
         Gate::authorize('consult');
     
-        $address = "members/nobaptized";
+        $address = "members/unbaptized";
         $title = 'No Bautizados';
 
         if ($request->get('query'))

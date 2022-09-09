@@ -109,6 +109,10 @@ Route::prefix('/people')->group( function() {
 });
 
 Route::get('members', [MemberController::class, 'index'])->name('members.index');
+Route::prefix('/members')->group( function() {
+    Route::get('/baptized', [MemberController::class, 'baptized'])->name('members.baptized');
+    Route::get('/unbaptized', [MemberController::class, 'unbaptized'])->name('members.unbaptized');
+});
 
 Route::get('nomembers', [NoMemberController::class, 'index'])->name('nomembers.index');
 Route::get('nomember/{person}', [NoMemberController::class, 'show']);

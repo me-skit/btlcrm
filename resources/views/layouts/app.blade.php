@@ -33,45 +33,55 @@
                 <i class="fas fa-church"></i> {{ __('Miembros') }}
               </a>
               <div class="dropdown-menu" aria-labelledby="dropdownFamilias">
-                <a class="dropdown-item" href="{{ route('families.index') }}"><i class="fas fa-house-user fa-fw"></i> {{ __('Por Familias') }}</a>
+                <a class="dropdown-item" href="{{ route('families.index') }}"><i class="fas fa-house-user fa-fw"></i> Por familias</a>
                 @can('consult')
-                  <a class="dropdown-item" href="{{ route('members.index') }}"><i class="fas fa-users fa-fw"></i> {{ __('Listado General') }}</a>
-                  <a class="dropdown-item" href="{{ route('nomembers.index') }}"><i class="far fa-user fa-fw"></i> {{ __('No Miembros') }}</a>
+                <a class="dropdown-item" href="{{ route('members.index') }}"><i class="fas fa-users fa-fw"></i> Listado general</a>
+
+                <div class="dropdown-submenu">
+                  <a class="dropdown-item dropdown-toggle" href="#"><i class="fas fa-poll-people fa-fw"></i> Por estado</a>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{{ route('members.baptized') }}"><i class="fas fa-users fa-fw"></i> Bautizados</a>
+                    <a class="dropdown-item" href="{{ route('members.unbaptized') }}"><i class="far fa-users fa-fw"></i> No bautizados</a>
+                  </div>
+                </div>
+
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ route('nomembers.index') }}"><i class="far fa-user fa-fw"></i> No miembros</a>
                 @endcan
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item disabled" href="#"><i class="fas fa-chart-pie fa-fw"></i> {{ __('Estadísticas') }}</a>
-                <a class="dropdown-item" href="{{ route('families.mapping') }}"><i class="fas fa-map-marked-alt fa-fw"></i> {{ __('Mapeo') }}</a>
+                <a class="dropdown-item disabled" href="#"><i class="fas fa-chart-pie fa-fw"></i> Estadísticas</a>
+                <a class="dropdown-item" href="{{ route('families.mapping') }}"><i class="fas fa-map-marked-alt fa-fw"></i> Mapeo</a>
               </div>
             </li>
 
             @can('consult')
-              <li class="nav-item dropdown">
-                  <a id="dropdownCatal" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                    <i class="fas fa-sitemap"></i> {{ __('Organización') }}
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="dropdownCatal">
-                    <a class="dropdown-item" href="{{ route('directory') }}"><i class="fas fa-user-tie fa-fw"></i> {{ __('Nomina de Privilegios') }}</a>
-                    @can('administer')
-                      <a class="dropdown-item" href="{{ route('disciplines.index') }}"><i class="fas fa-user-lock fa-fw"></i> {{ __('Disciplinas') }}</a>                      
-                    @endcan
-                  </div>
-              </li>
+            <li class="nav-item dropdown">
+                <a id="dropdownCatal" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                  <i class="fas fa-sitemap"></i> {{ __('Organización') }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownCatal">
+                  <a class="dropdown-item" href="{{ route('directory') }}"><i class="fas fa-user-tie fa-fw"></i> {{ __('Nomina de privilegios') }}</a>
+                  @can('administer')
+                    <a class="dropdown-item" href="{{ route('disciplines.index') }}"><i class="fas fa-user-lock fa-fw"></i> {{ __('Disciplinas') }}</a>                      
+                  @endcan
+                </div>
+            </li>
             @endcan
 
             @can('administer')
-              <li class="nav-item dropdown">
+            <li class="nav-item dropdown">
                 <a id="dropdownAdmin" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                   <i class="fas fa-user-shield"></i> {{ __('Administrar') }}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownAdmin">
                   <a class="dropdown-item" href="{{ route('users.index') }}"><i class="fas fa-user-cog fa-fw"></i> {{ __('Usuarios') }}</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="{{ route('villages.index') }}"><i class="fas fa-map-marked-alt fa-fw"></i> {{ __('Pueblos y Aldeas') }}</a>
+                  <a class="dropdown-item" href="{{ route('villages.index') }}"><i class="fas fa-map-marked-alt fa-fw"></i> {{ __('Pueblos y aldeas') }}</a>
                   <a class="dropdown-item" href="{{ route('campus.index') }}"><i class="fas fa-place-of-worship fa-fw"></i> {{ __('Sedes') }}</a>
                   <a class="dropdown-item" href="{{ route('privileges.index') }}"><i class="fas fa-user-tie fa-fw"></i> {{ __('Privilegios') }}</a>
-                  <a class="dropdown-item" href="{{ route('privilegeroles.index') }}"><i class="fas fa-id-card-alt fa-fw"></i> {{ __('Puestos en Privilegios') }}</a>
+                  <a class="dropdown-item" href="{{ route('privilegeroles.index') }}"><i class="fas fa-id-card-alt fa-fw"></i> {{ __('Puestos en privilegios') }}</a>
               </div>
-              </li>
+            </li>
             @endcan
 
             @endauth
