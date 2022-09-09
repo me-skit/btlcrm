@@ -24,7 +24,7 @@ class PrivilegeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'unique:privileges'],
+            'name' => 'required',
             'preferred_sex' => 'nullable',
             'preferred_status' => 'nullable',
             'min_age' => ['numeric', 'nullable'],

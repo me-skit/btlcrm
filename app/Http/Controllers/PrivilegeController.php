@@ -28,8 +28,8 @@ class PrivilegeController extends Controller
         if ($request->get('query'))
         {
             $query = str_replace(" ", "%", $request->get('query'));
-            $privileges = Privilege::where('description', 'like', '%' . $query . '%')
-                            ->orderBy('description')
+            $privileges = Privilege::where('name', 'like', '%' . $query . '%')
+                            ->orderBy('name')
                             ->paginate(7);
 
             return view('privileges.pagination', compact('privileges'));
@@ -95,7 +95,7 @@ class PrivilegeController extends Controller
      * @param  \App\Models\Privilege  $privilege
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Privilege $privilege)
+    public function update(PrivilegeRequest $request, Privilege $privilege)
     {
         Gate::authorize('administer');
 
