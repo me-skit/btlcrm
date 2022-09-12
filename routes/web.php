@@ -112,6 +112,8 @@ Route::get('members', [MemberController::class, 'index'])->name('members.index')
 Route::prefix('/members')->group( function() {
     Route::get('/baptized', [MemberController::class, 'baptized'])->name('members.baptized');
     Route::get('/unbaptized', [MemberController::class, 'unbaptized'])->name('members.unbaptized');
+    Route::get('/accepted', [MemberController::class, 'accepted'])->name('members.accepted');
+    Route::get('/unaccepted', [MemberController::class, 'unaccepted'])->name('members.unaccepted');
 });
 
 Route::get('nomembers', [NoMemberController::class, 'index'])->name('nomembers.index');

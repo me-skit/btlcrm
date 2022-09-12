@@ -42,6 +42,9 @@
                   <div class="dropdown-menu">
                     <a class="dropdown-item" href="{{ route('members.baptized') }}"><i class="fas fa-users fa-fw"></i> Bautizados</a>
                     <a class="dropdown-item" href="{{ route('members.unbaptized') }}"><i class="far fa-users fa-fw"></i> No bautizados</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ route('members.accepted') }}"><i class="fas fa-users fa-fw"></i> Aceptados</a>
+                    <a class="dropdown-item" href="{{ route('members.unaccepted') }}"><i class="far fa-users fa-fw"></i> No aceptados</a>
                   </div>
                 </div>
 

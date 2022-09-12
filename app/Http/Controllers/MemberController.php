@@ -90,12 +90,77 @@ class MemberController extends Controller
         if ($request->get('query'))
         {
             $substr = str_replace(" ", "%", $request->get('query'));
-            $people = Person::queryMembersBy('baptized', Person::NO_BAPTIZED, $substr);
+            $people = Person::queryMembersBy('baptized', Person::UNBAPTIZED, $substr);
 
             return view('people.pagination', compact('people', 'address', 'title'));            
         }
 
-        $people = Person::getMembersBy('baptized', Person::NO_BAPTIZED);
+        $people = Person::getMembersBy('baptized', Person::UNBAPTIZED);
+
+        if ($request->get('page'))
+        {
+            return view('people.pagination', compact('people', 'address', 'title'));
+        }
+
+        return view('people.index', compact('people', 'address', 'title'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+    public function accepted(Request $request)
+    {
+        Gate::authorize('consult');
+
+        $address = "members/accepted";
+        $title = 'Aceptados';
+
+        if ($request->get('query'))
+        {
+            $substr = str_replace(" ", "%", $request->get('query'));
+            $people = Person::queryMembersBy('accepted', Person::ACCEPTED, $substr);
+
+            return view('people.pagination', compact('people', 'address', 'title'));            
+        }
+
+        $people = Person::getMembersBy('accepted', Person::ACCEPTED);
+
+        if ($request->get('page'))
+        {
+            return view('people.pagination', compact('people', 'address', 'title'));
+        }
+
+        return view('people.index', compact('people', 'address', 'title'));
+    }
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+    public function unaccepted(Request $request)
+    {
+        Gate::authorize('consult');
+    
+        $address = "members/unaccepted";
+        $title = 'No Aceptados';
+
+        if ($request->get('query'))
+        {
+            $substr = str_replace(" ", "%", $request->get('query'));
+            $people = Person::queryMembersBy('accepted', Person::UNACCEPTED, $substr);
+
+            return view('people.pagination', compact('people', 'address', 'title'));            
+        }
+
+        $people = Person::getMembersBy('accepted', Person::UNACCEPTED);
 
         if ($request->get('page'))
         {

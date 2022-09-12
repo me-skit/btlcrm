@@ -19,10 +19,12 @@ class Person extends Model
         'handicaps' => 'array'
     ];
 
-    public const NO_BAPTIZED = 0;
-    public const BAPTIZED = 1;
     public const NO_MEMBER = 0;
     public const MEMBER = 1;
+    public const UNBAPTIZED = 0;
+    public const BAPTIZED = 1;
+    public const UNACCEPTED = 0;
+    public const ACCEPTED = 1;
 
     protected const SECONDS_PER_YEAR = 31536000;
 
