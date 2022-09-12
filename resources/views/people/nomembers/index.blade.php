@@ -5,13 +5,14 @@
     <!-- the query thing -->
     <div class="row justify-content-center mb-3">
       <div class="col-md-10 d-flex justify-content-between align-items-baseline">
-        <h2 id="title" data-name="nomembers"><i class="far fa-user"></i> No Miembros</h2>
-        <div>
+        <h3 id="title" data-name="nomembers"><i class="far fa-user"></i> No Miembros</h3>
+        <div class="d-print-none">
+          <a id="btn-print" href="#" class="btn btn-light"><i class="fas fa-print"></i><span class="d-none d-lg-inline"> Imprimir</span></a>
         </div>
       </div>
     </div>
 
-    <div class="row form-group">
+    <div class="row form-group d-print-none">
       <div class="col-sm-7 col-md-5 col-lg-4 offset-md-1">
         <div class="input-group">
           <input type="text"
