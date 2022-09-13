@@ -2,6 +2,26 @@ const { Alert } = require('bootstrap');
 
 require('./bootstrap');
 
+// const
+const FAMILY_ROLE_HEAD_MALE = 1;
+const FAMILY_ROLE_HEAD_FEMALE = 2;
+const FAMILY_ROLE_SON = 3;
+const FAMILY_ROLE_DAUGHTER = 4;
+
+const STATUS_SINGLE = 1;
+const STATUS_MARRIED = 2;
+
+const SEX_MALE = 1;
+const SEX_FEMALE = 2;
+
+const ATTEND_NO = 0;
+const ATTEND_YES = 1;
+const ATTEND_OCATIONALY = 2;
+
+const MEMBER_NO = 0;
+const MEMBER_YES = 1;
+
+
 // hiding privileges
 hidePrivilegesByGender = (sex, allchecks) => {
   Array.prototype.forEach.call(allchecks, item => {
@@ -28,31 +48,31 @@ cleanPrivilegeChecked = (allchecks) => {
   });
 }
 
-checkPrivilegesByGender = (gender, allchecks) => {
-  if (gender == 1 || gender == 3) {
-    hidePrivilegesByGender(2, allchecks);
+checkPrivilegesByGender = (role, allchecks) => {
+  if (role == FAMILY_ROLE_HEAD_MALE || role == FAMILY_ROLE_SON) {
+    hidePrivilegesByGender(SEX_FEMALE, allchecks);
   }
   else {
-    hidePrivilegesByGender(1, allchecks);
+    hidePrivilegesByGender(SEX_MALE, allchecks);
   }
 }
 
 checkPrivilegesByStatus = (status, allchecks, role) => {
   if (status) {
     switch (status) {
-      case '1'://married
-        hidePrivilegesByStatus(2, allchecks);
-        break;
-      case '2'://single
-        if (role == 1 || role == 2) {
-          hidePrivilegesByStatus(2, allchecks);
+      case STATUS_SINGLE:
+        if (role == FAMILY_ROLE_HEAD_MALE || role == FAMILY_ROLE_HEAD_FEMALE) {
+          hidePrivilegesByStatus(STATUS_SINGLE, allchecks);
         }
 
-        hidePrivilegesByStatus(1, allchecks);
+        hidePrivilegesByStatus(STATUS_MARRIED, allchecks);
+        break;
+      case STATUS_MARRIED:
+        hidePrivilegesByStatus(STATUS_SINGLE, allchecks);
         break;
       default:
-        hidePrivilegesByStatus(1, allchecks);
-        hidePrivilegesByStatus(2, allchecks);
+        hidePrivilegesByStatus(STATUS_MARRIED, allchecks);
+        hidePrivilegesByStatus(STATUS_SINGLE, allchecks);
         break;
     }
   }
@@ -64,11 +84,11 @@ settingSurnames = (role) => {
   let second_surname = document.getElementById('second_surname');
   
   if (family_names) {
-    if (role == 1) {
+    if (role == FAMILY_ROLE_HEAD_MALE) {
       first_surname.value = family_names.dataset.first;
       second_surname.value = '';
     }
-    else if (role == 2){
+    else if (role == FAMILY_ROLE_HEAD_FEMALE){
       first_surname.value = family_names.dataset.second;
       second_surname.value = '';
     }
@@ -82,7 +102,7 @@ settingSurnames = (role) => {
 settingSex = (role) => {
   const sex_select = document.getElementById('sex');
 
-  if (role == 1 || role == 3) {
+  if (role == FAMILY_ROLE_HEAD_MALE || role == FAMILY_ROLE_SON) {
     sex_select.value = 'M';
   }
   else {
@@ -96,7 +116,8 @@ if (family_role) {
   const allchecks = document.getElementsByClassName('divcheckbox');
   settingSurnames(family_role.value);
   settingSex(family_role.value);
-  hidePrivilegesByGender(2, allchecks);
+  // at first load
+  hidePrivilegesByGender(SEX_FEMALE, allchecks);
 
   family_role.addEventListener('change', event => {
     const status = document.getElementById('status');
@@ -105,7 +126,7 @@ if (family_role) {
     settingSex(event.target.value);
     cleanPrivilegeChecked(allchecks);
     checkPrivilegesByGender(event.target.value, allchecks);
-    checkPrivilegesByStatus(status.value, allchecks, event.target.value);
+    checkPrivilegesByStatus(parseInt(status.value), allchecks, event.target.value);
   })
 }
 
@@ -118,7 +139,7 @@ if (edit_family_role) {
 
     cleanPrivilegeChecked(allchecks);
     checkPrivilegesByGender(event.target.value, allchecks);
-    checkPrivilegesByStatus(status.value, allchecks, event.target.value);
+    checkPrivilegesByStatus(parseInt(status.value), allchecks, event.target.value);
   })  
 }
 
@@ -132,7 +153,7 @@ if (status) {
 
     cleanPrivilegeChecked(allchecks);
     checkPrivilegesByGender(family_role.value, allchecks);
-    checkPrivilegesByStatus(event.target.value, allchecks, family_role.value);
+    checkPrivilegesByStatus(parseInt(event.target.value), allchecks, family_role.value);
   });
 }
 
@@ -148,7 +169,7 @@ hideByAge = (value, allchecks, clean) => {
   if (clean) cleanPrivilegeChecked(allchecks);
 
   checkPrivilegesByGender(family_role.value, allchecks);
-  checkPrivilegesByStatus(status.value, allchecks, family_role.value);
+  checkPrivilegesByStatus(parseInt(status.value), allchecks, family_role.value);
 
   Array.prototype.forEach.call(allchecks, item => {
     if (item.dataset.min > 0 && item.dataset.max > 0) {
@@ -186,13 +207,13 @@ showPrivilegeSection = (allchecks) => {
 
   p_section.classList.remove('d-none');
   checkPrivilegesByGender(family_role.value, allchecks);
-  checkPrivilegesByStatus(status.value, allchecks, family_role.value);
+  checkPrivilegesByStatus(parseInt(status.value), allchecks, family_role.value);
 }
 
 toggleReasonField = (attend) => {
   const reason = document.getElementById('reason');
 
-  if (attend == 0 || attend == 2) {
+  if (attend == ATTEND_NO || attend == ATTEND_OCATIONALY) {
     reason.disabled = false;
   }
   else {
@@ -201,27 +222,24 @@ toggleReasonField = (attend) => {
   }
 }
 
-toggleCampusField = (attend) => {
+toggleCampusField = (membership) => {
   const campus = document.getElementById('campus_id');
 
-  if (attend == -1 || attend == 0) {
-    campus.value = '';
-    campus.required = false;
-    campus.disabled = true;
-  }
-  else if (attend == 1) {
+  if (membership == MEMBER_YES) {
+    campus.value = '1';
     campus.required = true;
     campus.disabled = false;
   }
   else {
+    campus.value = '';
     campus.required = false;
-    campus.disabled = false;
+    campus.disabled = true;
   }
 }
 
-togglePrivilegesSection = (attend) => {
+togglePrivilegesSection = (membership) => {
   let allchecks = document.getElementsByClassName('divcheckbox');
-  if (attend == 1 || attend == 2) {
+  if (membership == MEMBER_YES) {
     showPrivilegeSection(allchecks);
   }
   else {
@@ -229,25 +247,60 @@ togglePrivilegesSection = (attend) => {
   }
 }
 
+toggleAttendSelect = (membership, attendSelect) => {
+  if (membership == MEMBER_YES) {
+    attendSelect.value = '1';
+    attendSelect.required = true;
+    attendSelect.disabled = false;
+  }
+  else {
+    attendSelect.value = '';
+    attendSelect.required = false;
+    attendSelect.disabled = true;
+  }
+}
+
+toggleReligionSelect = (member) => {
+  const religionSelect = document.getElementById('religion');
+  const religionColumn = document.getElementById('religion-column');
+  if (member == MEMBER_NO) {
+    religionSelect.required = true;
+    religionColumn.classList.remove('d-none');
+  }
+  else {
+    religionSelect.required = false;
+    religionColumn.classList.add('d-none');
+  }
+}
+
 const attend = document.getElementById('attend_church');
-if (attend) {
+const member = document.getElementById('member');
+if (attend && member) {
   toggleReasonField(attend.value);
-  toggleCampusField(attend.value);
-  togglePrivilegesSection(attend.value);
 
   attend.addEventListener('change', event => {
     toggleReasonField(event.target.value);
+  });
+
+  toggleCampusField(member.value);
+  togglePrivilegesSection(member.value);
+  toggleAttendSelect(member.value, attend);
+  toggleReligionSelect(member.value);
+
+  member.addEventListener('change', event => {
     toggleCampusField(event.target.value);
     togglePrivilegesSection(event.target.value);
+    toggleAttendSelect(event.target.value, attend);
+    toggleReligionSelect(event.target.value);
   });
 }
 
 // the search thing
-searchQuery = (query, page = 1, type, id) => {
+searchQuery = (query, page = 1) => {
   const pagination = document.getElementById('pagination');
   const title = document.getElementById('title');
 
-  fetch('/' + title.dataset.name + '?page=' + page + '&query=' + query + (type ? '&type=' + type : '') + (id ? '&id=' + id : ''))
+  fetch('/' + title.dataset.name + '?page=' + page + '&query=' + query)
   .then(response => {
     if (response.ok) return  response.text();
     
@@ -269,92 +322,21 @@ if (search) {
   search.addEventListener('keyup', () => searchQuery(search.value));
 }
 
-pagination = (event, item, querytype, id) => {
+// pagination of the result of a search
+pagination = (event, item) => {
   event.preventDefault();
   let page = String(item);
   page = page.split('page=')[1];
   let value = search ? search.value : '';
-  searchQuery(value, page, querytype, id);
+  searchQuery(value, page);
 }
 
 paginate = () => {
   const paginations = document.getElementsByClassName('page-link');
-
-  if (paginations)
-  {
-    const query_type = document.getElementById('query_type');
-
-    if (query_type)
-    {
-      const query_value = query_type.value;
-      if (query_value === '2')
-      {
-        let campus = document.getElementById('campus_query').value;
-        Array.prototype.forEach.call(paginations, item => item.addEventListener('click', () => pagination(event, item, query_value, campus)));
-      } else if (query_value === '3')
-      {
-        let privilege = document.getElementById('privilege_query').value;
-        Array.prototype.forEach.call(paginations, item => item.addEventListener('click', () => pagination(event, item, query_value, privilege)));
-      }
-      else
-      {
-        Array.prototype.forEach.call(paginations, item => item.addEventListener('click', () => pagination(event, item, query_value)));
-      }
-    }
-    else
-    {
-      Array.prototype.forEach.call(paginations, item => item.addEventListener('click', () => pagination(event, item)));
-    }
-  }
+  Array.prototype.forEach.call(paginations, item => item.addEventListener('click', () => pagination(event, item)));
 }
 
 paginate();
-
-// hiding options and inputs when the type of query changes making a query at once
-const query_type = document.getElementById('query_type');
-
-if (query_type)
-{
-  const for_queries = document.getElementsByClassName('for-query');
-
-  query_type.addEventListener('change', (event) => {
-    Array.prototype.forEach.call(for_queries, item => item.classList.add('d-none'));
-    let query_type = event.target.value;
-
-    switch(query_type) {
-      case '1':
-        let search = document.getElementById('search');
-        search.value = '';
-        document.getElementById('by-name').classList.remove('d-none');
-        searchQuery('', 1, query_type);
-        break;
-      case '2':
-        let campus = document.getElementById('campus_query').value;
-        document.getElementById('by-campus').classList.remove('d-none');
-        searchQuery('', 1, query_type, campus);
-        break;
-      case '3':
-        let privilege = document.getElementById('privilege_query').value;
-        document.getElementById('by-privilege').classList.remove('d-none');
-        searchQuery('', 1, query_type, privilege);
-        break;
-      default:
-        searchQuery('', 1, query_type);
-        break;
-      }
-  });
-}
-
-// when the second query option changes
-const campus_query = document.getElementById('campus_query');
-if (campus_query) {
-  campus_query.addEventListener('change', (event) => searchQuery('', 1, 2, event.target.value));
-}
-
-const privilege_query = document.getElementById('privilege_query');
-if (privilege_query) {
-  privilege_query.addEventListener('change', (event) => searchQuery('', 1, 3, event.target.value));
-}
 
 // person details
 showPersonDetails = (event, button) => {
@@ -401,6 +383,8 @@ addPrivilege = (event) => {
       start_date: formData.get('start_date'),
       end_date: formData.get('end_date')
     }
+
+    console.log(_data);
 
     fetch('/assignments', {
       method: "POST",
@@ -939,15 +923,23 @@ getABunch = (page, map, model, image) => {
   });
 }
 
-// const div_map = document.getElementById("map");
-// if (div_map) {
-//   initMap;
-// }
+// print button
+const printBtn = document.getElementById('btn-print');
+if (printBtn) {
+  printBtn.addEventListener('click', () => print());
+}
 
-// $(document).ready(function(){
-//   $("p").click(function(){
-//     alert("The paragraph was clicked.");
-//     $("#privilege_role_id").val('');
-//     $("#privilege_role_id").selectpicker("refresh");
-//   });
-// });
+// the sub-menu thing
+$('.dropdown-menu a.dropdown-toggle').on('click', function(e) {
+  if (!$(this).next().hasClass('show')) {
+    $(this).parents('.dropdown-menu').first().find('.show').removeClass('show');
+  }
+  var $subMenu = $(this).next('.dropdown-menu');
+  $subMenu.toggleClass('show');
+
+  $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function(e) {
+    $('.dropdown-submenu .show').removeClass('show');
+  });
+
+  return false;
+});
