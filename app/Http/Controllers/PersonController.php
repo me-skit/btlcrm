@@ -107,9 +107,14 @@ class PersonController extends Controller
             'date_baptized' =>['date', 'before:tomorrow', 'nullable'],
             'discipleship' => ['required', 'numeric'],
             'member' => 'required',
-            'attend_church' => ['required', 'numeric'],
+            'attend_church' => ['numeric', 'nullable'],
             'reason' => 'nullable'
         ]);
+
+        if ($membership_data['member'] != Person::MEMBER) {
+            $membership_data['attend_church'] = NULL;
+            $membership_data['campus_id'] = NULL;
+        }
 
         $relation_data = $request->validate([
             'family_role' => ['required', 'numeric']

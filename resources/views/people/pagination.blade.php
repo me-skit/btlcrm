@@ -1,11 +1,11 @@
 <div class="row justify-content-center d-print-none">
-  <div class="col-md-10">
+  <div class="col-md-12">
     {{ $people->links("pagination::bootstrap-4") }}
   </div>
 </div>
 
 <div class="row justify-content-center">
-  <div class="col-md-10">
+  <div class="col-md-12">
     <table class="table table-sm table-hover table-responsive-md">
       <thead>
         <tr>
@@ -15,6 +15,8 @@
           <th>B</th>
           <th class="text-center">Edad</th>
           <th class="text-center">EC</th>
+          <th class="text-center">Enf.</th>
+          <th class="text-center">Disc.</th>
           <th class="d-print-none">Acciones</th>
         </tr>
       </thead>
@@ -29,6 +31,8 @@
           <td class="align-middle">{{ $person->baptized ? "Si" : "No" }}</td>
           <td class="align-middle text-center">{{ $person->age }}</td>
           <td class="align-middle text-center">{{ $person->civil_status }}</td>
+          <td class="align-middle text-center text-truncate">{{ $person->diseases ? implode(",", $person->diseases) : '' }}</td>
+          <td class="align-middle text-center text-truncate">{{ $person->handicaps ? implode(",", $person->handicaps) : '' }}</td>
           <td class="align-middle d-print-none">
             <div class="d-flex">
               <a href="{{ route('person.show', $person->id ) }}" class="btn btn-sm btn-secondary mr-3"><i class="far fa-eye"></i><span class="d-none d-lg-inline"> Detalles</span></a>

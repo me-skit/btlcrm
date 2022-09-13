@@ -15,10 +15,6 @@ use Illuminate\Support\Facades\Auth;
 
 class FamilyController extends Controller
 {
-    protected const MEMBER_NO = 0;
-    protected const MEMBER_YES = 1;
-    protected const MEMBER_ANOTHER_PLACE = -1;
-
     public function __construct()
     {
         $this->middleware('auth');
@@ -348,7 +344,7 @@ class FamilyController extends Controller
             'reason' => 'nullable'
         ]);
 
-        if ($membership_data['member'] != $this->MEMBER_YES) {
+        if ($membership_data['member'] != Person::MEMBER) {
             $membership_data['attend_church'] = NULL;
             $membership_data['campus_id'] = NULL;
         }

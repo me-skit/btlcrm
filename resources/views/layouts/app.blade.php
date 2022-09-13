@@ -45,6 +45,9 @@
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{ route('members.accepted') }}"><i class="fas fa-users fa-fw"></i> Aceptados</a>
                     <a class="dropdown-item" href="{{ route('members.unaccepted') }}"><i class="far fa-users fa-fw"></i> No aceptados</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ route('members.withdiseases') }}"><i class="fas fa-procedures fa-fw"></i> Enfermos</a>
+                    <a class="dropdown-item" href="{{ route('members.withhandicaps') }}"><i class="fas fa-wheelchair fa-fw"></i> Discapacitados</a>
                   </div>
                 </div>
 

@@ -267,4 +267,39 @@ class Person extends Model
                     ->with('membership')
                     ->paginate(35);
     }
+
+    public static function queryMembersWith($field, $substr)
+    {
+        return Person::where('death_date', null)
+                    ->whereNotNull($field)
+                    ->join('memberships', function($query) {
+                        $query->on('people.id', '=', 'memberships.person_id')
+                            ->where('memberships.member', Person::MEMBER);
+                        })
+                    ->where(DB::raw('CONCAT_WS(" ", first_name, second_name, third_name, first_surname, second_surname)'), 'like', '%' . $substr . '%')
+                    ->orderBy('first_name')
+                    ->orderBy('second_name')
+                    ->orderBy('third_name')
+                    ->orderBy('first_surname')
+                    ->orderBy('second_surname')
+                    ->with('membership')
+                    ->paginate(35);
+    }
+
+    public static function getMembersWith($field, )
+    {
+        return Person::where('death_date', null)
+                    ->whereNotNull($field)
+                    ->join('memberships', function($query) {
+                        $query->on('people.id', '=', 'memberships.person_id')
+                            ->where('memberships.member', Person::MEMBER);
+                    })
+                    ->orderBy('first_name')
+                    ->orderBy('second_name')
+                    ->orderBy('third_name')
+                    ->orderBy('first_surname')
+                    ->orderBy('second_surname')
+                    ->with('membership')
+                    ->paginate(35);
+    }
 }

@@ -86,23 +86,24 @@ class MemberController extends Controller
     
         $address = "members/unbaptized";
         $title = 'No Bautizados';
+        $icon = 'far fa-users';
 
         if ($request->get('query'))
         {
             $substr = str_replace(" ", "%", $request->get('query'));
             $people = Person::queryMembersBy('baptized', Person::UNBAPTIZED, $substr);
 
-            return view('people.pagination', compact('people', 'address', 'title'));            
+            return view('people.pagination', compact('people', 'address', 'title', 'icon'));            
         }
 
         $people = Person::getMembersBy('baptized', Person::UNBAPTIZED);
 
         if ($request->get('page'))
         {
-            return view('people.pagination', compact('people', 'address', 'title'));
+            return view('people.pagination', compact('people', 'address', 'title', 'icon'));
         }
 
-        return view('people.index', compact('people', 'address', 'title'));
+        return view('people.index', compact('people', 'address', 'title', 'icon'));
     }
 
     /**
@@ -151,22 +152,88 @@ class MemberController extends Controller
     
         $address = "members/unaccepted";
         $title = 'No Aceptados';
+        $icon = 'far fa-users';
 
         if ($request->get('query'))
         {
             $substr = str_replace(" ", "%", $request->get('query'));
             $people = Person::queryMembersBy('accepted', Person::UNACCEPTED, $substr);
 
-            return view('people.pagination', compact('people', 'address', 'title'));            
+            return view('people.pagination', compact('people', 'address', 'title', 'icon'));            
         }
 
         $people = Person::getMembersBy('accepted', Person::UNACCEPTED);
 
         if ($request->get('page'))
         {
-            return view('people.pagination', compact('people', 'address', 'title'));
+            return view('people.pagination', compact('people', 'address', 'title', 'icon'));
         }
 
-        return view('people.index', compact('people', 'address', 'title'));
+        return view('people.index', compact('people', 'address', 'title', 'icon'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+    public function withdiseases(Request $request)
+    {
+        Gate::authorize('consult');
+    
+        $address = "members/withdiseases";
+        $title = 'Enfermos';
+        $icon = 'fas fa-procedures';
+
+        if ($request->get('query'))
+        {
+            $substr = str_replace(" ", "%", $request->get('query'));
+            $people = Person::queryMembersWith('diseases', $substr);
+
+            return view('people.pagination', compact('people', 'address', 'title', 'icon'));            
+        }
+
+        $people = Person::getMembersWith('diseases');
+
+        if ($request->get('page'))
+        {
+            return view('people.pagination', compact('people', 'address', 'title', 'icon'));
+        }
+
+        return view('people.index', compact('people', 'address', 'title', 'icon'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function withhandicaps(Request $request)
+    {
+        Gate::authorize('consult');
+    
+        $address = "members/withhandicaps";
+        $title = 'Enfermos';
+        $icon = 'fas fa-wheelchair';
+
+        if ($request->get('query'))
+        {
+            $substr = str_replace(" ", "%", $request->get('query'));
+            $people = Person::queryMembersWith('handicaps', $substr);
+
+            return view('people.pagination', compact('people', 'address', 'title', 'icon'));            
+        }
+
+        $people = Person::getMembersWith('handicaps');
+
+        if ($request->get('page'))
+        {
+            return view('people.pagination', compact('people', 'address', 'title', 'icon'));
+        }
+
+        return view('people.index', compact('people', 'address', 'title', 'icon'));
     }
 }
