@@ -726,8 +726,9 @@ updatePrivilegesView = (id) => {
 }
 
 // change select when shows privilege directory
-let privilege_list = document.getElementById('privilege_list');
-if (privilege_list) {
+let directory = document.getElementById('directory')
+if (directory) {
+  let privilege_list = document.getElementById('privilege_list');
   privilege_list.addEventListener('change', (event) => {
     let accordion = document.getElementById('accordion');
 

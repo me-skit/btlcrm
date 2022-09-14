@@ -67,10 +67,10 @@ class AssignmentController extends Controller
                 return view('privilegehistory.cards', compact('people'));
             }
     
-            return view('privilegehistory.current', compact('privileges', 'people', 'selected'));
+            return view('privilegehistory.directory', compact('privileges', 'people', 'selected'));
         }
 
-        return view('privilegehistory.current');
+        return view('privilegehistory.directory');
     }
 
     /**

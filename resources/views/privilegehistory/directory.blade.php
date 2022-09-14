@@ -11,7 +11,7 @@
     @if (isset($privileges))
       <div class="row justify-content-center">
         <div class="form-group col-md-10">
-          <div class="row">
+          <div class="row" id="directory">
             <label for="privilege_list" class="col-md-1 pt-2">{{ __('Privilegio: ') }}</label>
             <select name="privilege_list" id="privilege_list" class="selectpicker show-tick col-sm-8 col-md-6 col-lg-4" data-live-search="true" required>
               @foreach ($privileges as $privilege)
