@@ -10,7 +10,7 @@
   </div>
 @endcan
 
-@if ($person->membership->baptized)
+@if (($person->membership->baptized) and ($person->membership->member))
   @include('people.show.addprivilege')
 
   @can('administer')

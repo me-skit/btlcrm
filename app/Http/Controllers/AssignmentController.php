@@ -26,10 +26,11 @@ class AssignmentController extends Controller
         $privileges = Privilege::all();
 
         if ($privileges->count() > 0) {
-            $selected = $privileges->first();
-
             if ($request->get('priv_id')) {
                 $selected = Privilege::findOrFail($request->get('priv_id'));
+            }
+            else {
+                $selected = $privileges->first();
             }
     
             $people = DB::table('privilege_histories')
@@ -54,7 +55,7 @@ class AssignmentController extends Controller
                                  ->where('active', 1);
                         })
                         ->leftJoin('families', 'family_members.family_id', '=', 'families.id')
-                        ->select('people.id', 'first_name', 'second_name', 'third_name', 'first_surname', 'second_surname', 'cellphone', 'privilege_roles.name as role', 'privilege_histories.start_date', 'privilege_histories.end_date', 'disciplines.id as disciplined', 'act_number', 'address', 'phone_number')
+                        ->select('people.id', 'first_name', 'second_name', 'third_name', 'first_surname', 'second_surname', 'cellphone', 'privilege_roles.name as role', 'privilege_histories.start_date', 'privilege_histories.end_date', 'disciplines.id as disciplined', 'act_number', 'address', 'zone', 'phone_number', 'family_members.family_id as family_id')
                         ->orderBy('first_name')
                         ->orderBy('second_name')
                         ->orderBy('third_name')

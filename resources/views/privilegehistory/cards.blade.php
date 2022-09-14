@@ -17,12 +17,12 @@
         <div class="col-lg-6">
           <div class="row">
             <div class="col-5 col-sm-4 col-md-4 col-lg-5 border-bottom">
-              Estado de privilegio:
+              Estado privilegio:
             </div>
             <div class="col-7 col-sm-8 col-md-8 col-lg-7">
               <b>
                 @can('administer')
-                  {!! $person->disciplined ? "<span class='text-danger'>Suspendido, Acta No. " . $person->act_number . "</span>" : "Activo" !!}
+                  {!! $person->disciplined ? "<span class='text-danger'>Susp., Acta No. " . $person->act_number . "</span>" : "Activo" !!}
                 @else
                   {!! $person->disciplined ? "<span class='text-danger'>Suspendido</span>" : "Activo" !!}
                 @endcan
@@ -37,7 +37,7 @@
             </div>
             <div class="col-7 col-sm-8 col-md-8 col-lg-7">
               <b>
-                {{ $person->address }}
+                {{ $person->address . ', zona ' . $person->zone }}
               </b>
             </div>
           </div>
@@ -74,6 +74,7 @@
       <div class="row">
         <div class="col-lg-12 text-right pt-3">
           <a href="{{ route('person.show', $person->id) }}" class="btn btn-primary"><i class="far fa-eye"></i> Detalles</a>
+          <a href="{{ route('family.show', $person->family_id) }}" class="btn btn-outline-primary"><i class="fas fa-house-user"></i> Familia</a>
         </div>
       </div>
     </div>
