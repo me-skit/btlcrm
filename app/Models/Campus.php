@@ -35,9 +35,9 @@ class Campus extends Model
 
     public function getLocationAttribute()
     {   
-        if ($this->longitude and $this->latitude)
+        if ($this->latitude and $this->longitude)
         {
-            return $this->longitude . ', ' . $this->latitude;
+            return $this->latitude . ', ' . $this->longitude;
         }
         else {
             return '';

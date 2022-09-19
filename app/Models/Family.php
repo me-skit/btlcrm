@@ -15,6 +15,8 @@ class Family extends Model
         'family_name',
         'zone',
         'address',
+        'latitude',
+        'longitude',
         'phone_number',
         'created_by',
         'updated_by'
@@ -42,9 +44,9 @@ class Family extends Model
 
     public function getLocationAttribute()
     {   
-        if ($this->longitude and $this->latitude)
+        if ($this->latitude and $this->longitude)
         {
-            return $this->longitude . ', ' . $this->latitude;
+            return $this->latitude . ', ' . $this->longitude;
         }
         else {
             return '';
