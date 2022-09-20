@@ -51,6 +51,7 @@
                   </div>
                 </div>
 
+                <a class="dropdown-item" href="{{ route('members.bypreferences') }}"><i class="fas fa-tasks fa-fw"></i> Por preferencias</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{ route('nomembers.index') }}"><i class="far fa-user fa-fw"></i> No miembros</a>
                 @endcan

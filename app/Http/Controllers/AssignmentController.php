@@ -26,8 +26,8 @@ class AssignmentController extends Controller
         $privileges = Privilege::all();
 
         if ($privileges->count() > 0) {
-            if ($request->get('priv_id')) {
-                $selected = Privilege::findOrFail($request->get('priv_id'));
+            if ($request->get('privilege_id')) {
+                $selected = Privilege::findOrFail($request->get('privilege_id'));
             }
             else {
                 $selected = $privileges->first();
@@ -63,7 +63,7 @@ class AssignmentController extends Controller
                         ->orderBy('second_surname')
                         ->get();
     
-            if ($request->get('priv_id')) {
+            if ($request->get('privilege_id')) {
                 return view('privilegehistory.cards', compact('people'));
             }
     

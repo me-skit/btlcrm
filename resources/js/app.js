@@ -299,8 +299,10 @@ if (attend && member) {
 searchQuery = (query, page = 1) => {
   const pagination = document.getElementById('pagination');
   const title = document.getElementById('title');
+  const privilege_list = document.getElementById('privilege_list');
 
-  fetch('/' + title.dataset.name + '?page=' + page + '&query=' + query)
+  const url = '/' + title.dataset.name + '?page=' + page + '&query=' + query + '&privilege_id=' + (privilege_list ? privilege_list.value : '');
+  fetch(url)
   .then(response => {
     if (response.ok) return  response.text();
     
@@ -358,10 +360,7 @@ showPersonDetails = (event, button) => {
 
 addShowFunction = () => {
   let d_buttons = document.getElementsByClassName('btn-f-details');
-  if (d_buttons)
-  {
-    Array.prototype.forEach.call(d_buttons, item => item.addEventListener('click', () => showPersonDetails(event, item)));
-  }
+  Array.prototype.forEach.call(d_buttons, item => item.addEventListener('click', () => showPersonDetails(event, item)));
 }
 
 addShowFunction();
@@ -383,8 +382,6 @@ addPrivilege = (event) => {
       start_date: formData.get('start_date'),
       end_date: formData.get('end_date')
     }
-
-    console.log(_data);
 
     fetch('/assignments', {
       method: "POST",
@@ -725,24 +722,24 @@ updatePrivilegesView = (id) => {
   });
 }
 
-// change select when shows privilege directory
-let directory = document.getElementById('directory')
-if (directory) {
-  let privilege_list = document.getElementById('privilege_list');
+// change select when shows privilege directory or query by preferences
+let privilege_list = document.getElementById('privilege_list');
+if (privilege_list) {
   privilege_list.addEventListener('change', (event) => {
-    let accordion = document.getElementById('accordion');
+    let pagination = document.getElementById('pagination');
 
-    fetch('/directory?priv_id=' + event.target.value)
+    fetch('/' + event.target.dataset.path + '?privilege_id=' + event.target.value)
     .then(response => {
       if (response.ok) return  response.text();
       
       throw new Error('No se pudo obtener la lista de personas en ese privilegio');
     })
     .then(data => {
-      accordion.innerHTML = data;
+      pagination.innerHTML = data;
+      paginate();
     })
     .catch(error => {
-      accordion.innerHTML = error;
+      pagination.innerHTML = error;
     });
   });
 }
