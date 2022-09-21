@@ -19,13 +19,13 @@
       <tbody>
         @foreach ($families as $key => $family)
           <tr>
-            <td class="align-middle text-center">{{ ($families->currentPage() - 1) * 7 + $key + 1 }}</td>
+            <td class="align-middle text-center">{{ ($families->currentPage() - 1) * $families->perPage() + $key + 1 }}</td>
             <td class="align-middle text-truncate">{{ $family->family_name }}</td>
             <td class="align-middle text-center">{{ $family->zone }}</td>
             <td class="align-middle text-truncate">{{ $family->address }}</td>
             <td class="align-middle">
               <div class="d-flex">
-                <a href="{{ route('family.show', $family->id ) . '?back=families' }}" class="btn btn-primary mr-3"><i class="far fa-eye"></i><span class="d-none d-lg-inline"> Detalles</span></a>
+                <a href="{{ route('family.show', $family->id ) . '?back=families' }}" class="btn btn-sm btn-primary mr-3"><i class="far fa-eye"></i><span class="d-none d-lg-inline"> Detalles</span></a>
               </div>
             </td>
           </tr>

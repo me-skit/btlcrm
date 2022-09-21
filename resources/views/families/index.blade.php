@@ -6,7 +6,7 @@
       <div class="col-md-10 d-flex justify-content-between align-items-baseline">
         <h2 id="title" data-name="families"><i class="fas fa-house-user"></i></i> Familias</h2>
         <div>
-          <a href="{{ route('family.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Agregar</a>
+          <a href="{{ route('family.create') }}" class="btn btn-success"><i class="fas fa-plus"></i><span class="d-none d-lg-inline"> Agregar</span></a>
         </div>
       </div>
     </div>

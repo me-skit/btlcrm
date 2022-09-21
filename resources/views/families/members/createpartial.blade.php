@@ -125,7 +125,7 @@
     </div>
   </div>
 
-  <div class="col-md-6">
+  <div class="col-lg-6">
     <div class="row form-group">
       <label for="campus_id" class="col-md-5 col-form-label text-md-right">{{ __('Sede') }}<span class="text-primary">*</span></label>
       <div class="col-md-7">
