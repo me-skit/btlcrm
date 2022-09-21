@@ -286,7 +286,7 @@ class Person extends Model
                     ->paginate(35);
     }
 
-    public static function getMembersWith($field, )
+    public static function getMembersWith($field)
     {
         return Person::where('death_date', null)
                     ->whereNotNull($field)
@@ -294,6 +294,50 @@ class Person extends Model
                         $query->on('people.id', '=', 'memberships.person_id')
                             ->where('memberships.member', Person::MEMBER);
                     })
+                    ->orderBy('first_name')
+                    ->orderBy('second_name')
+                    ->orderBy('third_name')
+                    ->orderBy('first_surname')
+                    ->orderBy('second_surname')
+                    ->with('membership')
+                    ->paginate(35);
+    }
+
+    public static function queryMembers($accepted, $baptized, $status, $sex, $min, $max)
+    {
+        $details = array(array('death_date', null));
+        $membership = array(array('memberships.member', Person::MEMBER));
+
+        // add membership conditions
+        if ($accepted != -1)
+        {
+            $membership[] = array('memberships.accepted', $accepted);
+        }
+
+        if ($baptized != -1)
+        {
+            $membership[] = array('memberships.baptized', $baptized);
+        }
+
+        // add people conditions
+        if ($status != 0)
+        {
+            $details[] = array('status', $status);
+        }
+
+        if ($sex != 'B')
+        {
+            $details[] = array('sex', $sex);
+        }
+
+        $details[] = array('birthday', '<=', date('Y-m-d', strtotime($min . ' years ago')));
+        $details[] = array('birthday', '>=', date('Y-m-d', strtotime($max . ' years ago')));
+
+        return Person::where($details)
+                    ->join('memberships', function($query) use($membership) {
+                        $query->on('people.id', '=', 'memberships.person_id')
+                            ->where($membership);
+                        })
                     ->orderBy('first_name')
                     ->orderBy('second_name')
                     ->orderBy('third_name')

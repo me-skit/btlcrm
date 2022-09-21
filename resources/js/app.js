@@ -151,9 +151,11 @@ if (status) {
     let family_role = document.getElementById('family_role');
     if (!family_role) family_role = document.getElementById('edit_family_role');
 
-    cleanPrivilegeChecked(allchecks);
-    checkPrivilegesByGender(family_role.value, allchecks);
-    checkPrivilegesByStatus(parseInt(event.target.value), allchecks, family_role.value);
+    if (family_role) {
+      cleanPrivilegeChecked(allchecks);
+      checkPrivilegesByGender(family_role.value, allchecks);
+      checkPrivilegesByStatus(parseInt(event.target.value), allchecks, family_role.value);
+    }
   });
 }
 
@@ -925,6 +927,109 @@ getABunch = (page, map, model, image) => {
 const printBtn = document.getElementById('btn-print');
 if (printBtn) {
   printBtn.addEventListener('click', () => print());
+}
+
+// query
+lableStatusBySex = (sex, status) => {
+  switch (status) {
+    case '1':
+      return sex === 'B' ? ', solteros(as)' : (sex === 'M' ? ', solteros' : ', solteras');
+    case '2':
+      return sex === 'B' ? ', casados(as)' : (sex === 'M' ? ', casados' : ', casadas');
+    case '3':
+      return sex === 'B' ? ', unidos(as)' : (sex === 'M' ? ', unidos' : ', unidas');
+    case '4':
+      return sex === 'B' ? ', divorciados(as)' : (sex === 'M' ? ', divorciados' : ', divorciadas');
+    case '6':
+      return sex === 'B' ? ', viudos(as)' : (sex === 'M' ? ', viudos' : ', viudas');
+  }
+}
+
+freezeQueryInputs = () => {
+  const min = document.getElementById('min');
+  const max = document.getElementById('max');
+  const sex = document.getElementById('sex');
+  const status = document.getElementById('status');
+  const accepted = document.getElementById('accepted');
+  const baptized = document.getElementById('baptized');
+
+  min.readOnly = true;
+  max.readOnly = true;
+  sex.disabled = true;
+  status.disabled = true;
+  accepted.disabled = true;
+  baptized.disabled = true;
+
+  const label = document.getElementById('report-label');
+
+  let text = '';
+  text += sex.value === 'B' ? 'Hombres y mujeres ' : (sex.value == 'M' ? 'Hombres ' : 'Mujeres ');
+  text += 'entre los ' + min.value + ' y ' + max.value + ' años';
+  text += status.value === '0' ? '' : lableStatusBySex(sex.value, status.value);
+  text += accepted.value === '0' ? ', que no han aceptado, ' : accepted.value === '1' ? ', que han aceptado, ' : sex.value === 'F' ? ', aceptadas y no aceptadas, ' : ', aceptados y no aceptados, ';
+  text += baptized.value === '0' ? 'que no se han bautizado.' : baptized.value === '1' ? 'que se han bautizado.' : sex.value === 'F' ? 'bautizadas y no bautizadas.' : 'bautizados y no bautizados.';
+
+  label.innerHTML = text;
+}
+
+unfreezeQueryInputs = () => {
+  document.getElementById('min').readOnly = false;
+  document.getElementById('max').readOnly = false;
+  document.getElementById('sex').disabled = false;
+  document.getElementById('status').disabled = false;
+  document.getElementById('accepted').disabled = false;
+  document.getElementById('baptized').disabled = false;
+}
+
+makeAQuery = (event, page = 1) => {
+  event.preventDefault();
+  const pagination = document.getElementById('pagination');
+
+  const min = document.getElementById('min');
+  const max = document.getElementById('max');
+  const sex = document.getElementById('sex');
+  const status = document.getElementById('status');
+  const accepted = document.getElementById('accepted');
+  const baptized = document.getElementById('baptized');
+
+  if (!min.checkValidity() || !max.checkValidity()) {
+    min.reportValidity();
+    max.reportValidity();
+    return;
+  }
+
+  fetch('/members/queryresult' + '?min=' + min.value + '&max=' + max.value + '&sex=' + sex.value + '&status=' + status.value + '&accepted=' + accepted.value + '&baptized=' + baptized.value + '&page=' + page)
+  .then(response => {
+    if (response.ok) return  response.text();
+    
+    throw new Error('Error al cargar los datos, intente de nuevo');
+  })
+  .then(data => {
+    pagination.innerHTML = data;
+    paginateQuery();
+    freezeQueryInputs();
+  })
+  .catch(error => { 
+    pagination.innerHTML = error;
+  });
+} 
+
+query_btn = document.getElementById('btn-query');
+redo_btn = document.getElementById('btn-redo');
+if (query_btn) {
+  query_btn.addEventListener('click', () => makeAQuery(event))
+  redo_btn.addEventListener('click', () => unfreezeQueryInputs());
+}
+
+setPagination = (event, item) => {
+  let page = String(item);
+  page = page.split('page=')[1];
+  makeAQuery(event, page);
+}
+
+paginateQuery = () => {
+  const paginations = document.getElementsByClassName('page-link');
+  Array.prototype.forEach.call(paginations, item => item.addEventListener('click', () => setPagination(event, item)));
 }
 
 // the sub-menu thing

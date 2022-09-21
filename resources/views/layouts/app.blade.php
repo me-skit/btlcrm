@@ -38,20 +38,23 @@
                 <a class="dropdown-item" href="{{ route('members.index') }}"><i class="fas fa-users fa-fw"></i> Listado general</a>
 
                 <div class="dropdown-submenu">
-                  <a class="dropdown-item dropdown-toggle" href="#"><i class="fas fa-poll-people fa-fw"></i> Por estado</a>
+                  <a class="dropdown-item dropdown-toggle" href="#"><i class="fas fa-poll-people fa-fw"></i> Consultas</a>
                   <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{{ route('members.queryform') }}"><i class="far fa-file-search fa-fw"></i> Consulta</a>
+                    <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{ route('members.baptized') }}"><i class="fas fa-users fa-fw"></i> Bautizados</a>
                     <a class="dropdown-item" href="{{ route('members.unbaptized') }}"><i class="far fa-users fa-fw"></i> No bautizados</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{ route('members.accepted') }}"><i class="fas fa-users fa-fw"></i> Aceptados</a>
                     <a class="dropdown-item" href="{{ route('members.unaccepted') }}"><i class="far fa-users fa-fw"></i> No aceptados</a>
                     <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ route('members.bypreferences') }}"><i class="fas fa-tasks fa-fw"></i> Por preferencias</a>
+                    <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{ route('members.withdiseases') }}"><i class="fas fa-procedures fa-fw"></i> Enfermos</a>
                     <a class="dropdown-item" href="{{ route('members.withhandicaps') }}"><i class="fas fa-wheelchair fa-fw"></i> Discapacitados</a>
                   </div>
                 </div>
 
-                <a class="dropdown-item" href="{{ route('members.bypreferences') }}"><i class="fas fa-tasks fa-fw"></i> Por preferencias</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{ route('nomembers.index') }}"><i class="far fa-user fa-fw"></i> No miembros</a>
                 @endcan

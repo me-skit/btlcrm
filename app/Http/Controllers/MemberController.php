@@ -262,4 +262,32 @@ class MemberController extends Controller
         $address = "members/bypreferences";
         return view('people.bypreferences.index', compact('people', 'privileges', 'address'));
     }
+
+    /**
+     * Show the a form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function queryform(Request $request)
+    {
+        Gate::authorize('consult');
+
+        $address = "members/byquery";
+        return view('people.byquery.index', compact('address'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function queryresult(Request $request)
+    {
+        Gate::authorize('consult');
+
+        $people = Person::queryMembers($request->get('accepted'), $request->get('baptized'), $request->get('status'), $request->get('sex'), $request->get('min'), $request->get('max'));
+
+        return view('people.pagination', compact('people'));
+    }
 }
