@@ -233,41 +233,6 @@ class Person extends Model
                     ->paginate(35);
     }
 
-    public static function queryMembersBy($field, $value, $substr)
-    {
-        return Person::where('death_date', null)
-                    ->join('memberships', function($query) use ($field, $value) {
-                        $query->on('people.id', '=', 'memberships.person_id')
-                            ->where('memberships.member', Person::MEMBER)
-                            ->where('memberships.' . $field, $value);
-                        })
-                    ->where(DB::raw('CONCAT_WS(" ", first_name, second_name, third_name, first_surname, second_surname)'), 'like', '%' . $substr . '%')
-                    ->orderBy('first_name')
-                    ->orderBy('second_name')
-                    ->orderBy('third_name')
-                    ->orderBy('first_surname')
-                    ->orderBy('second_surname')
-                    ->with('membership')
-                    ->paginate(35);
-    }
-
-    public static function getMembersBy($field, $value)
-    {
-        return Person::where('death_date', null)
-                    ->join('memberships', function($query) use ($field, $value) {
-                        $query->on('people.id', '=', 'memberships.person_id')
-                            ->where('memberships.member', Person::MEMBER)
-                            ->where('memberships.' . $field, $value);
-                    })
-                    ->orderBy('first_name')
-                    ->orderBy('second_name')
-                    ->orderBy('third_name')
-                    ->orderBy('first_surname')
-                    ->orderBy('second_surname')
-                    ->with('membership')
-                    ->paginate(35);
-    }
-
     public static function queryMembersWith($field, $substr)
     {
         return Person::where('death_date', null)
