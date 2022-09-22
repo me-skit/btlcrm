@@ -31,9 +31,7 @@
         @foreach ($people as $key => $person)
         <tr>
           <td class="align-middle text-center">{{ ($people->currentPage() - 1) * $people->perPage() + $key + 1 }}</td>
-          <td class="align-middle text-truncate">
-            {{ $person->full_name }} 
-          </td>
+          <td class="align-middle text-truncate">{{ $person->full_name }}</td>
           <td class="align-middle">{{ $person->accepted ? "Si" : "No" }}</td>
           <td class="align-middle">{{ $person->baptized ? "Si" : "No" }}</td>
           <td class="align-middle text-center">{{ $person->age }}</td>

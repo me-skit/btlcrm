@@ -33,20 +33,18 @@ class UserController extends Controller
             $query = $request->get('query');
             $users = User::where('email', 'like', '%' . $query . '%')
                             ->orderBy('created_at', 'desc')
-                            ->paginate(7);
+                            ->paginate(35);
 
             return view('users.pagination', compact('users'));
         }
+
+        $users = User::orderBy('created_at', 'desc')->paginate(35);
 
         if ($request->get('page'))
         {
-            $users = User::orderBy('created_at', 'desc')->paginate(7);
-
             return view('users.pagination', compact('users'));
         }
         
-        $users = User::orderBy('created_at', 'desc')->paginate(7);
-
         return view('users.index', compact('users'));
     }
 

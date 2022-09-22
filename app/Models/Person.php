@@ -21,12 +21,9 @@ class Person extends Model
 
     public const NO_MEMBER = 0;
     public const MEMBER = 1;
-    public const UNBAPTIZED = 0;
-    public const BAPTIZED = 1;
-    public const UNACCEPTED = 0;
-    public const ACCEPTED = 1;
 
     protected const SECONDS_PER_YEAR = 31536000;
+    protected const PAGINATION = 35;
 
     /**
      *  get the families which the person belongs
@@ -214,7 +211,7 @@ class Person extends Model
                     ->orderBy('first_surname')
                     ->orderBy('second_surname')
                     ->with('membership')
-                    ->paginate(35);
+                    ->paginate(Person::PAGINATION);
     }
 
     public static function getPeopleByMembership($membership)
@@ -230,7 +227,7 @@ class Person extends Model
                     ->orderBy('first_surname')
                     ->orderBy('second_surname')
                     ->with('membership')
-                    ->paginate(35);
+                    ->paginate(Person::PAGINATION);
     }
 
     public static function queryMembersWith($field, $substr)
@@ -248,7 +245,7 @@ class Person extends Model
                     ->orderBy('first_surname')
                     ->orderBy('second_surname')
                     ->with('membership')
-                    ->paginate(35);
+                    ->paginate(Person::PAGINATION);
     }
 
     public static function getMembersWith($field)
@@ -265,7 +262,7 @@ class Person extends Model
                     ->orderBy('first_surname')
                     ->orderBy('second_surname')
                     ->with('membership')
-                    ->paginate(35);
+                    ->paginate(Person::PAGINATION);
     }
 
     public static function queryMembers($accepted, $baptized, $status, $sex, $min, $max)
@@ -309,6 +306,6 @@ class Person extends Model
                     ->orderBy('first_surname')
                     ->orderBy('second_surname')
                     ->with('membership')
-                    ->paginate(35);
+                    ->paginate(Person::PAGINATION);
     }
 }

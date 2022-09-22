@@ -6,27 +6,25 @@
 
 <div class="row justify-content-center">
   <div class="col-md-10">
-    <table class="table table-hover table-responsive-md">
+    <table class="table table-sm table-hover table-responsive-sm">
       <thead>
           <tr>
-              <th>No.</th>
+              <th class="text-center">No.</th>
               <th>Correo</th>
               <th>Estado</th>
-              <th class="d-none d-md-block">Rol</th>
+              <th>Rol</th>
               <th>Acciones</th>
           </tr>
       </thead>
       <tbody>
         @foreach ($users as $key => $user)
           <tr>
-            <td>{{ ($users->currentPage() - 1) * 7 + $key + 1 }}</td>
-            <td>{{ $user->email }}</td>
-            <td>{{ $user->active ? 'Activo' : 'Desactivado' }}</td>
-            <td class="d-none d-md-block">{{ $user->role_name }}</td>
-            <td>
-              <div class="d-flex">
-                <a href="{{ route('user.edit', $user->id) }}" class="btn btn-primary mr-3"><i class="fas fa-pencil-alt"></i> Editar</a>
-              </div>
+            <td class="align-middle text-center">{{ ($users->currentPage() - 1) * $users->perPage() + $key + 1 }}</td>
+            <td class="align-middle">{{ $user->email }}</td>
+            <td class="align-middle">{{ $user->active ? 'Activo' : 'Desactivado' }}</td>
+            <td class="align-middle">{{ $user->role_name }}</td>
+            <td class="align-middle">
+              <a href="{{ route('user.edit', $user->id) }}" class="btn btn-sm btn-primary mr-3"><i class="fas fa-pencil-alt"></i><span class="d-none d-lg-inline"> Editar</span></a>
             </td>
           </tr>
         @endforeach

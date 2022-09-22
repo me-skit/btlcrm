@@ -2,7 +2,6 @@
 
 @section('content')
   <div class="container">
-    <!-- the query thing -->
     <div class="row justify-content-center mb-3">
       <div class="col-md-12 d-flex justify-content-between align-items-baseline">
         <h3 id="title" data-name="{{ $address }}"><i class="{{ $icon ?? 'fas fa-users' }}"></i> {{ $title }}</h3>

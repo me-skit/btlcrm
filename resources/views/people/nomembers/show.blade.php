@@ -31,7 +31,7 @@
         {{ $person->sex_decoded }}
       </b>
     </div>
-  </div>            
+  </div>
   
   <div class="row">
     <div class="col-lg-6">
@@ -60,7 +60,7 @@
       <b>
         {{ $person->e_mail }}
       </b>
-    </div>        
+    </div>
   </div>
   
   @if ($person->diseases)
@@ -97,14 +97,15 @@
   
   <div class="row">
     <div class="col-lg-6">
-      Aceptado:
+      @if ($person->sex == 'M')
+        Aceptado:
+      @else
+        Aceptada:
+      @endif
       <b>
         {!! $person->membership->accepted ? "Si" : "<span class='text-danger'>No</span>" !!}
       </b>
     </div>
-  </div>
-  
-  <div class="row">
     <div class="col-lg-6">
       @if ($person->sex == 'M')
         Bautizado:
@@ -124,8 +125,13 @@
         {{ $person->member }}
       </b>
     </div>
+    <div class="col-lg-6">
+      Religión:
+      <b>
+        {{ $person->religion }}
+      </b>
+    </div>
   </div>
-  
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

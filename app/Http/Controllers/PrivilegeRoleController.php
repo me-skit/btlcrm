@@ -29,12 +29,12 @@ class PrivilegeRoleController extends Controller
             $query = str_replace(" ", "%", $request->get('query'));
             $privilegeRoles = PrivilegeRole::where('name', 'like', '%' . $query . '%')
                             ->orderBy('name')
-                            ->paginate(7);
+                            ->paginate(35);
 
             return view('privilegeroles.pagination', compact('privilegeRoles'));
         }
 
-        $privilegeRoles = PrivilegeRole::paginate(7);
+        $privilegeRoles = PrivilegeRole::paginate(35);
 
         if ($request->get('page'))
         {

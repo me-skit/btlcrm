@@ -38,7 +38,7 @@
       <div class="col-md-12 d-flex justify-content-between align-items-baseline">
         <h4>Miembros:</h4>
         <div>
-          <a href="{{ route('family.createmember', $family->id) . '?back=' . $back }}" class="btn btn-success"><i class="fas fa-plus"></i> Agregar</a>
+          <a href="{{ route('family.createmember', $family->id) }}" class="btn btn-success"><i class="fas fa-plus"></i> Agregar</a>
         </div>
       </div>
     </div>
@@ -54,7 +54,7 @@
                     <i class="far fa-address-card"></i> {{ $person->full_name }}
                     {!! $person->death_date ? "<small class='badge badge-dark'>Q.D.E.P.</small>" : "" !!}
                   </button>
-                  <a href="{{ route('family.editmember', [$family->id, $person->id]) . '?back=' . $back }}" class="btn btn-primary mr-3 py-0 {{  $person->death_date ? 'disabled' : '' }}"><i class="fas fa-pencil-alt"></i> Editar</a>
+                  <a href="{{ route('family.editmember', [$family->id, $person->id]) }}" class="btn btn-primary mr-3 py-0 {{  $person->death_date ? 'disabled' : '' }}"><i class="fas fa-pencil-alt"></i> Editar</a>
                 </h5>
               </div>
           
@@ -72,12 +72,6 @@
     </div>
 
     <div class="row">
-      <div class="col-md-12 text-right">
-        <a href="{{ route('root') . '/' . $back }}" class="btn btn-dark"><i class="fas fa-angle-double-left"></i> Regresar</a>
-      </div>
-    </div>
-
-    <div class="row">
       <div class="col-md-10 offset-md-1">
         <div id="map" class="mt-3" data-map="3" data-lat="{{ $family->latitude }}" data-lng="{{ $family->longitude }}"></div>
       </div>
@@ -87,7 +81,7 @@
   @include('people.show.modals')
 
   <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCavQwdjCznGj6eF1Kufdacu6pJ8AA7vPs&callback=initMap&libraries=&v=weekly"
+    src="https://maps.googleapis.com/maps/api/js?key=<API_KEY>&callback=initMap&libraries=&v=weekly"
     async
   >
   </script>

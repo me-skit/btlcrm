@@ -4,9 +4,9 @@
   <div class="container">
     <div class="row justify-content-center mb-3">
       <div class="col-md-10 d-flex justify-content-between align-items-baseline">
-        <h2 id="title" data-name="users"><i class="fas fa-user-cog"></i> Usuarios</h2>
+        <h3 id="title" data-name="users"><i class="fas fa-user-cog"></i> Usuarios</h3>
         <div>
-          <a href="{{ route('user.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Agregar</a>
+          <a href="{{ route('user.create') }}" class="btn btn-success"><i class="fas fa-plus"></i><span class="d-none d-lg-inline"> Agregar</span></a>
         </div>
       </div>
     </div>

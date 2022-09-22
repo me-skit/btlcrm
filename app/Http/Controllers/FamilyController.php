@@ -60,7 +60,7 @@ class FamilyController extends Controller
                             ->orderBy('created_at', 'DESC')
                             // ->orderBy('family_name')
                             ->with('village')
-                            ->paginate(7);
+                            ->paginate(15);
 
             return view('families.pagination', compact('families'));
         }
@@ -69,7 +69,7 @@ class FamilyController extends Controller
                         // ->orderBy('family_name')
                         ->orderBy('created_at', 'DESC')
                         ->with('village')
-                        ->paginate(7);
+                        ->paginate(15);
 
         if ($request->get('page'))
         {
@@ -118,8 +118,7 @@ class FamilyController extends Controller
         $data['created_by'] = Auth::id();
         $family = Family::create($data);
 
-        $back = $request->get('back') ? $request->get('back') : '';
-        return redirect('/family/' . $family->id . '?back=' . $back);
+        return redirect('/family/' . $family->id);
     }
 
     /**
@@ -135,11 +134,7 @@ class FamilyController extends Controller
         $privileges = Privilege::all();
         $privilege_roles = PrivilegeRole::orderBy('name')->get();
 
-        $sexes = array('M' => 'male', 'F' => 'female');
-        $statuses = array(1 => 'single', 2 => 'married');
-
-        $back = $request->get('back') ? $request->get('back') : '';
-        return view('families.show', compact('family', 'villages', 'campuses', 'privileges', 'privilege_roles', 'sexes', 'statuses', 'back'));
+        return view('families.show', compact('family', 'villages', 'campuses', 'privileges', 'privilege_roles'));
     }
 
     /**
@@ -188,8 +183,7 @@ class FamilyController extends Controller
         $family->fill($data);
         $family->save();
 
-        $back = $request->get('back') ? $request->get('back') : '';
-        return redirect('/family/' . $family->id . '?back=' . $back);
+        return redirect('/family/' . $family->id);
     }
 
     /**
@@ -204,8 +198,7 @@ class FamilyController extends Controller
         $campuses = Campus::all();
         $privileges = Privilege::all();
 
-        $back = $request->get('back') ? $request->get('back') : '';
-        return view('families.members.create', compact('family', 'campuses', 'privileges', 'back'));
+        return view('families.members.create', compact('family', 'campuses', 'privileges'));
     }
 
     /**
@@ -272,8 +265,7 @@ class FamilyController extends Controller
         $relation_data['created_by'] = Auth::id();
         FamilyMember::create($relation_data);
 
-        $back = $request->get('back') ? $request->get('back') : '';
-        return redirect('/family/' . $family_id . '?back=' . $back);
+        return redirect('/family/' . $family_id);
     }
 
     /**
@@ -290,8 +282,7 @@ class FamilyController extends Controller
         $campuses = Campus::all();
         $privileges = Privilege::all();
 
-        $back = $request->get('back') ? $request->get('back') : '';
-        return view('families.members.edit', compact('person', 'family', 'campuses', 'privileges', 'back'));
+        return view('families.members.edit', compact('person', 'family', 'campuses', 'privileges'));
     }
 
     /**
@@ -385,7 +376,6 @@ class FamilyController extends Controller
             $family->save();
         }
 
-        $back = $request->get('back') ? $request->get('back') : '';
-        return redirect('/family/' . $family_id . '?back=' . $back);
+        return redirect('/family/' . $family_id);
     }
 }

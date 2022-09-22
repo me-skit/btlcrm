@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row d-print-none">
   <div class="col-md-10 offset-md-1">
     {{ $privilegeRoles->links("pagination::bootstrap-4") }}
   </div>
@@ -6,30 +6,28 @@
 
 <div class="row justify-content-center">
   <div class="col-md-10">
-    <table class="table table-hover table-responsive-md">
+    <table class="table table-sm table-hover table-responsive-md">
       <thead>
         <tr>
-          <th>No.</th>
+          <th class="text-center">No.</th>
           <th>Descripción</th>
-          <th>Fecha de Creación</th>
-          <th>Acciones</th>
+          <th class="d-print-none">Acciones</th>
         </tr>
       </thead>
       <tbody>
         @foreach($privilegeRoles as $key => $privilegeRole)
           <tr>
-            <td>{{ ($privilegeRoles->currentPage() - 1) * 7 + $key + 1 }}</td>
-            <td>{{ $privilegeRole->name }}</td>
-            <td>{{ date_format($privilegeRole->created_at, 'd/m/Y H:i:s') }}</td>
-            <td>
+            <td class="align-middle text-center">{{ ($privilegeRoles->currentPage() - 1) * $privilegeRoles->perPage() + $key + 1 }}</td>
+            <td class="align-middle text-truncate">{{ $privilegeRole->name }}</td>
+            <td class="align-middle d-print-none">
               <div class="d-flex">
-                <a href="{{ route('privilegerole.edit', $privilegeRole->id) }}" class="btn btn-primary mr-3"><i class="fas fa-pencil-alt"></i> Editar</a>
+                <a href="{{ route('privilegerole.edit', $privilegeRole->id) }}" class="btn btn-sm btn-primary mr-3"><i class="fas fa-pencil-alt"></i><span class="d-none d-lg-inline"> Editar</span></a>
 
                 <form action="{{ route('privilegerole.destroy', $privilegeRole->id) }}" method="post">
                   @csrf
                   @method('DELETE')
 
-                  <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i> Eliminar</button>
+                  <button type="submit" class="btn btn-sm btn-danger"><i class="far fa-trash-alt"></i><span class="d-none d-lg-inline"> Eliminar</span></button>
                 </form>
               </div>
             </td>
