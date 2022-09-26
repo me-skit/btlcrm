@@ -49,7 +49,7 @@
                 </button>
 
               <a href="{{ route('person.edit', $person->id ) }}" class="btn btn-sm btn-primary mr-3 text-truncate"><i class="fas fa-pencil-alt"></i><span class="d-none d-lg-inline"> Editar</span></a>
-              <a href="{{ route('family.show', $person->family()->id ) . '?back=nomembers' }}" class="btn btn-sm btn-outline-primary text-truncate"><i class="fas fa-house-user"></i><span class="d-none d-lg-inline"> Familia</span></a>
+              <a href="{{ route('family.show', $person->family()->id ) }}" class="btn btn-sm btn-outline-primary text-truncate"><i class="fas fa-house-user"></i><span class="d-none d-lg-inline"> Familia</span></a>
             </div>
           </td>
         </tr>

@@ -64,7 +64,7 @@
                   <i class="fas fa-sitemap"></i> {{ __('Organización') }}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="dropdownCatal">
-                  <a class="dropdown-item" href="{{ route('directory') }}"><i class="fas fa-user-tie fa-fw"></i> {{ __('Nomina de privilegios') }}</a>
+                  <a class="dropdown-item" href="{{ route('directory') }}"><i class="fas fa-user-tie fa-fw"></i> {{ __('Nominas') }}</a>
                   @can('administer')
                     <a class="dropdown-item" href="{{ route('disciplines.index') }}"><i class="fas fa-user-lock fa-fw"></i> {{ __('Disciplinas') }}</a>                      
                   @endcan
@@ -82,8 +82,8 @@
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="{{ route('villages.index') }}"><i class="fas fa-map-marked-alt fa-fw"></i> {{ __('Pueblos y aldeas') }}</a>
                   <a class="dropdown-item" href="{{ route('campus.index') }}"><i class="fas fa-place-of-worship fa-fw"></i> {{ __('Sedes') }}</a>
-                  <a class="dropdown-item" href="{{ route('privileges.index') }}"><i class="fas fa-user-tie fa-fw"></i> {{ __('Privilegios') }}</a>
-                  <a class="dropdown-item" href="{{ route('privilegeroles.index') }}"><i class="fas fa-id-card-alt fa-fw"></i> {{ __('Puestos en privilegios') }}</a>
+                  <a class="dropdown-item" href="{{ route('privileges.index') }}"><i class="fas fa-user-tie fa-fw"></i> {{ __('Ministerios') }}</a>
+                  <a class="dropdown-item" href="{{ route('privilegeroles.index') }}"><i class="fas fa-id-card-alt fa-fw"></i> {{ __('Cargos') }}</a>
               </div>
             </li>
             @endcan

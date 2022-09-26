@@ -11,7 +11,7 @@
     <div class="row justify-content-center">
       <div class="form-group col-md-12">
         <div class="row" id="preferences">
-          <label for="privilege_list" class="col-md-1 pt-2">{{ __('Privilegio: ') }}</label>
+          <label for="privilege_list" class="col-md-2 pt-2">{{ __('Aspirantes para: ') }}</label>
           <select name="privilege_list" id="privilege_list" class="selectpicker show-tick col-sm-8 col-md-6 col-lg-4" data-live-search="true" data-path="members/bypreferences" required>
             @foreach ($privileges as $privilege)
               <option value="{{ $privilege->id }}">{{ $privilege->name }}</option>                    

@@ -180,6 +180,12 @@ hideByAge = (value, allchecks, clean) => {
         document.getElementById(item.dataset.id).checked = false;
       }
     }
+    else if (item.dataset.min > 0 && item.dataset.max == 0){
+      if (age < item.dataset.min) {
+        item.classList.add('d-none');
+        document.getElementById(item.dataset.id).checked = false;
+      }
+    }
   });
 }
 
@@ -905,7 +911,7 @@ getABunch = (page, map, model, image) => {
       });
 
       let info = new google.maps.InfoWindow({
-        content: '<b>' + item.name + '</b><br />' + item.address
+        content: '<b>' + item.name + '</b><br />' + item.address + (item.zone ? ', zona ' + item.zone : '')
       });
 
       marker.addListener('click', () => {

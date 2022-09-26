@@ -6,7 +6,7 @@
       <div class="col-md-8">
         <div class="card">
           <div class="card-header">
-            <span class="font-weight-bold"><i class="fas fa-id-card-alt"></i> Nombre del Puesto</span>
+            <span class="font-weight-bold"><i class="fas fa-id-card-alt"></i> Agregar Cargo</span>
           </div>
 
           <div class="card-body">
@@ -14,14 +14,14 @@
               @csrf
 
               <div class="row form-group">
-                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Descripción') }}<span class="text-danger">*</span></label>
+                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}<span class="text-danger">*</span></label>
                 <div class="col-md-6">
                   <input type="text"
                     name="name"
                     id="name"
                     class="form-control @error('name') is-invalid @enderror"
                     value="{{ old('name') }}"
-                    placeholder="Nombre del puesto o cargo"
+                    placeholder="Nombre del cargo"
                     required
                     autofocus>
 

@@ -134,6 +134,7 @@
           <option value="2">Casado(a)</option>
           <option value="3">Unido(a)</option>
           <option value="4">Divorciado(a)</option>
+          <option value="5">Separado(a)</option>
           <option value="6">Viudo(a)</option>
         </select>
       </div>
@@ -176,7 +177,7 @@
           value="{{ old('cellphone') }}"
           pattern="[0-9]{8}(,\s*[0-9]{8})*"
           title="Números de teléfono de 8 digitos, separados por coma"
-          placeholder="Número(s) personal(es)"
+          placeholder="Separados por comas"
         >
 
         @error('cellphone')

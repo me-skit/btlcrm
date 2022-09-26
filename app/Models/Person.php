@@ -127,6 +127,8 @@ class Person extends Model
                 return $this->sex === 'M' ? 'Unido' : 'Unida';
             case 4: 
                 return $this->sex === 'M' ? 'Divorciado' : 'Divorciada';
+            case 5: 
+                return $this->sex === 'M' ? 'Separado' : 'Separada';
             case 6:
                 return $this->sex === 'M' ? 'Viudo' : 'Viuda';
         }

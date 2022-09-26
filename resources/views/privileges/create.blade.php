@@ -6,7 +6,7 @@
       <div class="col-md-8">
         <div class="card">
           <div class="card-header">
-            <span class="font-weight-bold"><i class="fas fa-user-tie"></i> Privilegio</span>
+            <span class="font-weight-bold"><i class="fas fa-user-tie"></i> Ministerio</span>
           </div>
 
           <div class="card-body">
@@ -21,7 +21,7 @@
                       id="name"
                       class="form-control @error('name') is-invalid @enderror"
                       value="{{ old('name') }}"
-                      placeholder="Nombre del privilegio"
+                      placeholder="Nombre del ministerio"
                       required
                       autofocus>
 
@@ -37,7 +37,7 @@
 
               <div class="row">
                 <div class="col-md-12">
-                  <p><b>Preferencias </b>para indicar quienes pueden optar al cargo o privilegio según sexo, estado civil o edad:</p>
+                  <p><b>Preferencias </b>para indicar quienes pueden optar al privilegio según sexo, estado civil o edad:</p>
                 </div>
               </div>
 

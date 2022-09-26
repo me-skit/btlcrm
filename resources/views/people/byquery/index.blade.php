@@ -73,6 +73,7 @@
                     <option value="2">Casados(as)</option>
                     <option value="3">Unidos(as)</option>
                     <option value="4">Divorciados(as)</option>
+                    <option value="5">Separados(as)</option>
                     <option value="6">Viudos(as)</option>
                   </select>
                 </div>

@@ -133,6 +133,7 @@
           <option value="2" {{ $person->status == 2 ? 'selected' : '' }}>Casado(a)</option>
           <option value="3" {{ $person->status == 3 ? 'selected' : '' }}>Unido(a)</option>
           <option value="4" {{ $person->status == 4 ? 'selected' : '' }}>Divorciado(a)</option>
+          <option value="5" {{ $person->status == 5 ? 'selected' : '' }}>Separado(a)</option>
           <option value="6" {{ $person->status == 6 ? 'selected' : '' }}>Viudo(a)</option>
         </select>
       </div>
@@ -195,7 +196,7 @@
           value="{{ old('cellphone') ?? $person->cellphone }}"
           pattern="[0-9]{8}(,\s*[0-9]{8})*"
           title="Números de teléfono de 8 digitos, separados por comas"
-          placeholder="Número(s) personal(es)"
+          placeholder="Separados por comas"
         >
 
         @error('cellphone')

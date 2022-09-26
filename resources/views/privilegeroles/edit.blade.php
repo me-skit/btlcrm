@@ -14,7 +14,7 @@
               @method('PATCH')
 
               <div class="form-group row">
-                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Descripción') }}<span class="text-danger">*</span></label>
+                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}<span class="text-danger">*</span></label>
 
                 <div class="col-md-6">
                   <input type="text"
@@ -22,7 +22,7 @@
                     id="name"
                     class="form-control @error('name') is-invalid @enderror"
                     value="{{ old('name') ?? $privilegeRole->name }}"
-                    placeholder="Nombre del puesto o cargo"
+                    placeholder="Nombre del cargo"
                     required
                     autofocus>
 

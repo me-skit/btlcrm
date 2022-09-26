@@ -25,7 +25,7 @@
             <td class="align-middle text-truncate">{{ $family->address }}</td>
             <td class="align-middle">
               <div class="d-flex">
-                <a href="{{ route('family.show', $family->id ) . '?back=families' }}" class="btn btn-sm btn-primary mr-3"><i class="far fa-eye"></i><span class="d-none d-lg-inline"> Detalles</span></a>
+                <a href="{{ route('family.show', $family->id ) }}" class="btn btn-sm btn-primary mr-3"><i class="far fa-eye"></i><span class="d-none d-lg-inline"> Detalles</span></a>
               </div>
             </td>
           </tr>

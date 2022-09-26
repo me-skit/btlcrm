@@ -38,7 +38,7 @@ class FamilyController extends Controller
         $families = Family::where('active', 1)
                             ->whereNotNull('latitude')
                             ->whereNotNull('longitude')
-                            ->select('family_name as name', 'address', 'latitude', 'longitude')
+                            ->select('family_name as name', 'address', 'zone', 'latitude', 'longitude')
                             ->paginate(50);
 
         return $families->toJson();

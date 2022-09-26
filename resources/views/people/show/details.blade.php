@@ -71,7 +71,7 @@
   <div class="col-lg-6">
     <div class="row">
       <div class="col-5 col-sm-4 col-md-3 col-lg-5 border-bottom">
-        Teléfono personal:
+        No. celular:
       </div>
       <div class="col-7 col-sm-8 col-md-9 col-lg-7">
         <b>

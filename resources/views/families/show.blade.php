@@ -7,7 +7,7 @@
         <div class="col-md-12">
           <div class="pull-left d-flex align-items-baseline justify-content-between">
             <h3 id="family_name"><i class="fa fa-home"></i> {{ $family->family_name }}</h3>
-            <a href="{{ route('family.edit', $family->id) }}" class="btn btn-primary ml-2"><i class="fas fa-pencil-alt"></i> Editar</a>
+            <a href="{{ route('family.edit', $family->id) }}" class="btn btn-primary ml-2"><i class="fas fa-pencil-alt"></i><span class="d-none d-lg-inline"> Editar</span></a>
           </div>
         </div>
       </div>
@@ -38,7 +38,7 @@
       <div class="col-md-12 d-flex justify-content-between align-items-baseline">
         <h4>Miembros:</h4>
         <div>
-          <a href="{{ route('family.createmember', $family->id) }}" class="btn btn-success"><i class="fas fa-plus"></i> Agregar</a>
+          <a href="{{ route('family.createmember', $family->id) }}" class="btn btn-success"><i class="fas fa-plus"></i><span class="d-none d-lg-inline"> Agregar</span></a>
         </div>
       </div>
     </div>
@@ -48,13 +48,13 @@
         <div id="accordion">
           @foreach ($family->members as $person)
             <div class="card">
-              <div class="card-header bg-secondary py-2" id="heading-{{ $person->id }}">
+              <div class="card-header bg-secondary py-2 px-0" id="heading-{{ $person->id }}">
                 <h5 class="mb-0 d-flex justify-content-between">
-                  <button class="btn btn-link text-light collapsed py-0" data-toggle="collapse" data-target="#collapse-{{ $person->id }}" aria-expanded="false" aria-controls="collapse-{{ $person->id }}">
+                  <button class="btn btn-link text-light collapsed py-0 text-truncate" data-toggle="collapse" data-target="#collapse-{{ $person->id }}" aria-expanded="false" aria-controls="collapse-{{ $person->id }}">
                     <i class="far fa-address-card"></i> {{ $person->full_name }}
                     {!! $person->death_date ? "<small class='badge badge-dark'>Q.D.E.P.</small>" : "" !!}
                   </button>
-                  <a href="{{ route('family.editmember', [$family->id, $person->id]) }}" class="btn btn-primary mr-3 py-0 {{  $person->death_date ? 'disabled' : '' }}"><i class="fas fa-pencil-alt"></i> Editar</a>
+                  <a href="{{ route('family.editmember', [$family->id, $person->id]) }}" class="btn btn-primary mr-3 py-0 {{  $person->death_date ? 'disabled' : '' }}"><i class="fas fa-pencil-alt"></i><span class="d-none d-lg-inline"> Editar</span></a>
                 </h5>
               </div>
           

@@ -4,7 +4,7 @@
   <div class="container">
     <div class="row justify-content-center mb-3">
       <div class="col-md-10 d-flex justify-content-between align-items-baseline">
-        <h3 id="title" data-name="privilegeroles"><i class="fas fa-id-card-alt"></i> Puestos en Privilegios</h3>
+        <h3 id="title" data-name="privilegeroles"><i class="fas fa-id-card-alt"></i> Cargos</h3>
         <div class="d-print-none">
           <a id="btn-print" href="#" class="btn btn-light mr-2"><i class="fas fa-print"></i><span class="d-none d-lg-inline"> Imprimir</span></a>
           <a href="{{ route('privilegerole.create') }}" class="btn btn-success"><i class="fas fa-plus"></i><span class="d-none d-lg-inline"> Agregar</span></a>
