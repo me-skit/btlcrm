@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Family;
 use App\Models\Person;
 use App\Models\Privilege;
 use Illuminate\Http\Request;
@@ -163,5 +164,25 @@ class MemberController extends Controller
         $people = Person::queryMembers($request->get('accepted'), $request->get('baptized'), $request->get('status'), $request->get('sex'), $request->get('min'), $request->get('max'));
 
         return view('people.pagination', compact('people'));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+    public function statistics(Request $request)
+    {
+        $total_members = Person::totalMembers();
+        $total_families = Family::total();
+
+        $zone_distribution = Family::distributionByZone();
+        $sex_distribution = Person::distributionBySex();
+        $service_distribution = Person::distributionByOcupation();
+        $illness_distribution = Person::distributionByIllness();
+
+        return view('people.statistics.index', compact('total_members', 'total_families', 'zone_distribution', 'sex_distribution', 'service_distribution', 'illness_distribution'));
     }
 }

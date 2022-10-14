@@ -115,6 +115,7 @@ Route::prefix('/members')->group( function() {
     Route::get('/bypreferences', [MemberController::class, 'bypreferences'])->name('members.bypreferences');
     Route::get('/queryform', [MemberController::class, 'queryform'])->name('members.queryform');
     Route::get('/queryresult', [MemberController::class, 'queryresult'])->name('members.queryresult');
+    Route::get('/statistics', [MemberController::class, 'statistics'])->name('members.statistics');
 });
 
 Route::get('nomembers', [NoMemberController::class, 'index'])->name('nomembers.index');

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Family extends Model
 {
@@ -38,6 +39,11 @@ class Family extends Model
         return $this->belongsToMany(Person::class, 'family_members')->withPivot('family_role', 'active')->orderByPivot('family_role');
     }
 
+    public function setFamilyNameAttribute($value)
+    {
+        $this->attributes['family_name'] = ucwords(mb_strtolower($value));
+    }
+
     public function getFamilyNamesAttribute() {
         return explode(' ', $this->family_name);
     }
@@ -64,5 +70,22 @@ class Family extends Model
             default:
                 return 'Otro';
         }        
+    }
+
+    // static methods for statistics
+    public static function total()
+    {
+        return Family::where('active', 1)->count();
+    }
+
+    public static function distributionByZone()
+    {
+        $collection = Family::groupBy('zone')->select('zone', DB::raw('count(*) as total'))->get();
+
+        $distribution = $collection->map(function ($item) {
+            return ['Zona ' . $item->zone, $item->total];
+        });
+
+        return $distribution->all();
     }
 }

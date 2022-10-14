@@ -87,27 +87,27 @@ class Person extends Model
 
     public function setFirstNameAttribute($value)
     {
-        $this->attributes['first_name'] = ucfirst(strtolower($value));
+        $this->attributes['first_name'] = ucfirst(mb_strtolower($value));
     }
 
     public function setSecondNameAttribute($value)
     {
-        $this->attributes['second_name'] = ucfirst(strtolower($value));
+        $this->attributes['second_name'] = ucfirst(mb_strtolower($value));
     }
 
     public function setThirdNameAttribute($value)
     {
-        $this->attributes['third_name'] = ucfirst(strtolower($value));
+        $this->attributes['third_name'] = ucfirst(mb_strtolower($value));
     }
 
     public function setFirstSurnameAttribute($value)
     {
-        $this->attributes['first_surname'] = ucfirst(strtolower($value));
+        $this->attributes['first_surname'] = ucfirst(mb_strtolower($value));
     }
 
     public function setSecondSurnameAttribute($value)
     {
-        $this->attributes['second_surname'] = ucfirst(strtolower($value));
+        $this->attributes['second_surname'] = ucfirst(mb_strtolower($value));
     }
 
     public function getFullNameAttribute() {
@@ -309,5 +309,70 @@ class Person extends Model
                     ->orderBy('second_surname')
                     ->with('membership')
                     ->paginate(Person::PAGINATION);
+    }
+
+    // static methods for statistics
+    public static function totalMembers()
+    {
+        return Person::where('death_date', null)
+                    ->join('memberships', function($query) {
+                        $query->on('people.id', '=', 'memberships.person_id')
+                            ->where('memberships.member', Person::MEMBER);
+                        })
+                    ->count();
+    }
+
+    public static function distributionBySex()
+    {
+        $collection = Person::where('death_date', null)
+                        ->join('memberships', function($query) {
+                            $query->on('people.id', '=', 'memberships.person_id')
+                                ->where('memberships.member', Person::MEMBER);
+                            })
+                        ->select('sex', DB::raw('count(*) as total'))
+                        ->groupBy('sex')
+                        ->orderBy('sex', 'DESC')
+                        ->get();
+
+        $distribution = $collection->map(function ($item) {
+            return [$item->sex === 'M' ? 'Hombres' : 'Mujeres', $item->total];
+        });
+
+        return $distribution->all();
+    }
+
+    public static function distributionByOcupation()
+    {
+        $total_members = Person::totalMembers();
+
+        $with_ministry = Person::where('death_date', null)
+                            ->join('memberships', function($join) {
+                                $join->on('people.id', '=', 'memberships.person_id')
+                                    ->where('memberships.member', Person::MEMBER);
+                                })
+                            ->join('privilege_histories', function ($join) {
+                                $join->on('privilege_histories.person_id', '=', 'people.id')
+                                     ->where(function ($query) {
+                                        $query->where('privilege_histories.end_date', null)
+                                        ->orWhereDate('privilege_histories.end_date', '>=', date('Y-m-d'));
+                                    });
+                            })
+                            ->count();
+
+        return [['Sin privilegio', $total_members - $with_ministry], ['Con privilegio', $with_ministry]];
+    }
+
+    public static function distributionByIllness()
+    {
+        $total_members = Person::totalMembers();
+
+        $with_illness = Person::where('death_date', null)
+                            ->where(function ($query) {
+                                $query->whereNotNull('diseases')
+                                ->orWhereNotNull('handicaps');
+                            })
+                            ->count();
+
+        return [['Sin dolencias', $total_members - $with_illness], ['Con dolencia', $with_illness]];
     }
 }
