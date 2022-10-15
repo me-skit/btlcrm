@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\PrivilegeRole;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
+use \Illuminate\Database\QueryException;
 
 class PersonController extends Controller
 {
@@ -153,5 +154,33 @@ class PersonController extends Controller
         }
 
         return redirect('/members');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  Person  $person
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Request $request, Person $person)
+    {
+        Gate::authorize('administer');
+
+        $family_id = $request->get('family_id');
+
+        try {
+            if (($person->privilege_history()->count() > 0) or ($person->disciplines()->count() > 0 )) {
+                return redirect('/family/' . $family_id)->with('error','No pudieron eliminarse datos de ' . $person->full_name . ', elimine primero privilegios o disciplinas asociadas.');
+            }
+
+            $person->membership()->delete();
+            $person->families()->detach();
+            $person->delete();
+        } catch (QueryException $e) {
+            return redirect('/family/' . $family_id)->with('error','No pudieron eliminarse datos de ' . $person->full_name . '.');
+        }
+
+        return redirect('/family/' . $family_id)->with('info', 'Datos de ' . $person->full_name . ' eliminados.');
     }
 }

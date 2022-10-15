@@ -59,7 +59,12 @@
                     <i class="far fa-address-card"></i> {{ $person->full_name }}
                     {!! $person->death_date ? "<small class='badge badge-dark'>Q.D.E.P.</small>" : "" !!}
                   </button>
-                  <a href="{{ route('family.editmember', [$family->id, $person->id]) }}" class="btn btn-primary mr-3 py-0 {{  $person->death_date ? 'disabled' : '' }}"><i class="fas fa-pencil-alt"></i><span class="d-none d-lg-inline"> Editar</span></a>
+                  <div>
+                    @can('administer')
+                      <a href="#" class="btn btn-danger mr-1 py-0 btn-delperson" data-toggle="modal" data-target="#delPersonModal" data-person-id="{{  $person->id }}" data-person-name="{{  $person->full_name }}" data-family-id="{{  $family->id }}"><i class="far fa-trash-alt"></i><span class="d-none d-lg-inline"> Eliminar</span></a>
+                    @endcan
+                    <a href="{{ route('family.editmember', [$family->id, $person->id]) }}" class="btn btn-primary mr-3 py-0 {{  $person->death_date ? 'disabled' : '' }}"><i class="fas fa-pencil-alt"></i><span class="d-none d-lg-inline"> Editar</span></a>
+                  </div>
                 </h5>
               </div>
           
@@ -85,31 +90,58 @@
 
   @include('people.show.modals')
 
-  <!-- confirm delete family -->
-  <div class="modal fade" id="delFamilyModal" tabindex="-1" role="dialog" aria-labelledby="delFamilyModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="delFamilyModalLabel"><b><i class="fas fa-exclamation-triangle"></i> Eliminar Familia</b></h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body" id="del-priv-modal">
-          <p>Confirme eliminación de datos de esta familia.</p>
-          <p>Los datos de los miembros deben ser eliminados antes.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <form method="POST" action="{{ route('family.destroy', $family) }}">
-            @csrf
-            @method('delete')
-            <button type="submit" class="btn btn-danger">Eliminar</button>
-          </form>
+  @can('administer')
+    <!-- confirm delete family -->
+    <div class="modal fade" id="delFamilyModal" tabindex="-1" role="dialog" aria-labelledby="delFamilyModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="delFamilyModalLabel"><b><i class="fas fa-exclamation-triangle"></i> Eliminar Familia</b></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="del-priv-modal">
+            <p>Confirme eliminación de datos de esta familia.</p>
+            <p>Los datos de los miembros deben ser eliminados antes.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <form method="POST" action="{{ route('family.destroy', $family) }}">
+              @csrf
+              @method('delete')
+              <button type="submit" class="btn btn-danger">Eliminar</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+
+    <!-- confirm delete person info -->
+    <div class="modal fade" id="delPersonModal" tabindex="-1" role="dialog" aria-labelledby="delPersonModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="delPersonModalLabel"><b><i class="fas fa-exclamation-triangle"></i> Eliminar Datos</b></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="del-priv-modal">
+            <p id="del-person-text">Confirme eliminación de datos de esta persona.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <form id="deleteperson-form" action="#" method="POST" data-root="{{ url('/') }}">
+              @csrf
+              @method('delete')
+              <button type="submit" class="btn btn-danger" id="btn-del-person">Eliminar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  @endcan
 
   <script
     src="https://maps.googleapis.com/maps/api/js?key=<API_KEY>&callback=initMap&libraries=&v=weekly"

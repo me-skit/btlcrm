@@ -102,10 +102,11 @@ Route::prefix('/user')->group( function() {
     Route::get('/{user}/edit',  [UserController::class, 'edit'])->name('user.edit');
 });
 
-Route::prefix('/people')->group( function() {
+Route::prefix('/person')->group( function() {
     Route::get('/{person}',  [PersonController::class, 'show'])->name('person.show');
     Route::patch('/{person}',  [PersonController::class, 'update'])->name('person.update');
     Route::get('/{person}/edit',  [PersonController::class, 'edit'])->name('person.edit');
+    Route::delete('/{person}',  [PersonController::class, 'destroy'])->name('person.destroy');
 });
 
 Route::get('members', [MemberController::class, 'index'])->name('members.index');

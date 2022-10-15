@@ -730,6 +730,20 @@ updatePrivilegesView = (id) => {
   });
 }
 
+// setting the delete person action
+setPersonDeleteAction = () => {
+  let btns_delperson = document.getElementsByClassName('btn-delperson');
+  let text = document.getElementById('del-person-text');
+  let form = document.getElementById('deleteperson-form');
+  
+  Array.prototype.forEach.call(btns_delperson, btn => btn.addEventListener('click', (event) => {
+    form.action = form.dataset.root + '/person/' +  event.currentTarget.dataset.personId + '?family_id=' + event.currentTarget.dataset.familyId;
+    text.innerHTML = '¿Eliminar datos de <B>' + event.currentTarget.dataset.personName + '<B>?';
+  }));
+}
+
+setPersonDeleteAction();
+
 // change select when shows privilege directory or query by preferences
 let privilege_list = document.getElementById('privilege_list');
 if (privilege_list) {
