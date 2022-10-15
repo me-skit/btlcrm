@@ -7,7 +7,12 @@
         <div class="col-md-12">
           <div class="pull-left d-flex align-items-baseline justify-content-between">
             <h3 id="family_name"><i class="fa fa-home"></i> {{ $family->family_name }}</h3>
-            <a href="{{ route('family.edit', $family->id) }}" class="btn btn-primary ml-2"><i class="fas fa-pencil-alt"></i><span class="d-none d-lg-inline"> Editar</span></a>
+            <div>
+              @can('administer')
+                <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#delFamilyModal"><i class="far fa-trash-alt"></i><span class="d-none d-lg-inline"> Eliminar</span></a>
+              @endcan
+              <a href="{{ route('family.edit', $family->id) }}" class="btn btn-primary ml-2"><i class="fas fa-pencil-alt"></i><span class="d-none d-lg-inline"> Editar</span></a>
+            </div>
           </div>
         </div>
       </div>
@@ -79,6 +84,32 @@
   </div>
 
   @include('people.show.modals')
+
+  <!-- confirm delete family -->
+  <div class="modal fade" id="delFamilyModal" tabindex="-1" role="dialog" aria-labelledby="delFamilyModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="delFamilyModalLabel"><b><i class="fas fa-exclamation-triangle"></i> Eliminar Familia</b></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" id="del-priv-modal">
+          <p>Confirme eliminación de datos de esta familia.</p>
+          <p>Los datos de los miembros deben ser eliminados antes.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <form method="POST" action="{{ route('family.destroy', $family) }}">
+            @csrf
+            @method('delete')
+            <button type="submit" class="btn btn-danger">Eliminar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script
     src="https://maps.googleapis.com/maps/api/js?key=<API_KEY>&callback=initMap&libraries=&v=weekly"

@@ -11,7 +11,9 @@ use App\Models\PrivilegeRole;
 use App\Models\Membership;
 use App\Models\FamilyMember;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
+use \Illuminate\Database\QueryException;
 
 class FamilyController extends Controller
 {
@@ -377,5 +379,24 @@ class FamilyController extends Controller
         }
 
         return redirect('/family/' . $family_id);
+    }
+    
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  Family  $family
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Family $family)
+    {
+        Gate::authorize('administer');
+        
+        try {
+            $family->delete();
+        } catch (QueryException $e) {
+            return redirect('/family/' . $family->id)->with('error','Familia no puede eliminarse, tiene elementos dependientes');
+        }
+
+        return redirect('/families')->with('info', 'Familia ' . $family->family_name . ' eliminada.');
     }
 }
