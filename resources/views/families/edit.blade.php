@@ -117,7 +117,7 @@
               </div>
             
               <div class="row form-group">
-                <label for="location" class="col-md-3 col-form-label text-md-right">{{ __('Lat, Long') }}</label>
+                <label for="location" class="col-md-3 col-form-label text-md-right">{{ __('Lat, Long') }}<span class="text-danger">*</span></label>
                 <div class="col-md-7">
                   <input type="text"
                     name="location"
@@ -125,6 +125,7 @@
                     class="form-control @error('location') is-invalid @enderror"
                     value="{{ old('location') ?? $family->location }}"
                     placeholder="Latitud, longitud"
+                    required
                   >
             
                   @error('location')

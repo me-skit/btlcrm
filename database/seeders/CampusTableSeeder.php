@@ -22,5 +22,21 @@ class CampusTableSeeder extends Seeder
             'latitude' => 14.63245154478294,
             'longitude' => -90.92645998896595
         ]);
+
+        Campus::create([
+            'village_id' => 2,
+            'name' => 'Campo Evangelístico Pahuit',
+            'address' => 'Cerro Alto, Pahuit',
+        ]);
+
+        Campus::create([
+            'village_id' => 5,
+            'name' => 'Campo Evangelístico "La Esperanza"',
+        ]);
+
+        Campus::create([
+            'village_id' => 6,
+            'name' => 'Campo Evangelístico "El Chuluc"',
+        ]);
     }
 }

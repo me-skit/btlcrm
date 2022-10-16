@@ -7,19 +7,19 @@
   google.charts.load('current', {'packages':['corechart']});
 
   // Set a callback to run when the Google Visualization API is loaded.
-  let zone_distribution = <?php echo json_encode($zone_distribution); ?>;
-  google.charts.setOnLoadCallback(() => drawChart('Familias Distribuidas por Zona', 'byzone_chart', zone_distribution));
-  let sex_distribution = <?php echo json_encode($sex_distribution); ?>;
-  google.charts.setOnLoadCallback(() => drawChart('Distribución Segun Sexo', 'bysex_chart', sex_distribution, 180));
-  let service_distribution = <?php echo json_encode($service_distribution); ?>;
-  google.charts.setOnLoadCallback(() => drawChart('Distribución por Servicio', 'ocupational_chart', service_distribution));
-  let illness_distribution = <?php echo json_encode($illness_distribution); ?>;
-  google.charts.setOnLoadCallback(() => drawChart('Distribución por Salud', 'illness_chart', illness_distribution));
+  let zoneDistribution = <?php echo json_encode($zone_distribution); ?>;
+  google.charts.setOnLoadCallback(() => drawChart('Familias Distribuidas por Zona', 'byzone_chart', zoneDistribution, false));
+  let sexDistribution = <?php echo json_encode($sex_distribution); ?>;
+  google.charts.setOnLoadCallback(() => drawChart('Distribución Según Sexo', 'bysex_chart', sexDistribution, false, 180));
+  let serviceDistribution = <?php echo json_encode($service_distribution); ?>;
+  google.charts.setOnLoadCallback(() => drawChart('Distribución por Servicio', 'ocupational_chart', serviceDistribution, true));
+  let illnessDistribution = <?php echo json_encode($illness_distribution); ?>;
+  google.charts.setOnLoadCallback(() => drawChart('Distribución Según Salud', 'illness_chart', illnessDistribution, true));
 
   // Callback that creates and populates a data table,
   // instantiates the pie chart, passes in the data and
   // draws it.
-  function drawChart(title, div_name, distribution, degree = 0) {
+  function drawChart(title, div_name, distribution, setColors, degree = 0) {
 
     // Create the data table.
     var data = new google.visualization.DataTable();
@@ -32,6 +32,10 @@
       'title': title,
       pieStartAngle: degree
     };
+
+    if (setColors) {
+      options.colors = ['#dc3912', '#3366c0'];
+    }
 
     // Instantiate and draw our chart, passing in some options.
     var chart = new google.visualization.PieChart(document.getElementById(div_name));

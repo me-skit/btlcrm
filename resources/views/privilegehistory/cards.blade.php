@@ -74,8 +74,10 @@
 
         <div class="row">
           <div class="col-lg-12 text-right pt-3">
-            <a href="{{ route('person.show', $person->id) }}" class="btn btn-primary"><i class="far fa-eye"></i> Detalles</a>
-            <a href="{{ route('family.show', $person->family_id) }}" class="btn btn-outline-primary"><i class="fas fa-house-user"></i> Familia</a>
+            @can('consult')
+              <a href="{{ route('person.show', $person->id) }}" class="btn btn-primary"><i class="far fa-eye"></i> Detalles</a>
+              <a href="{{ route('family.show', $person->family_id) }}" class="btn btn-outline-primary"><i class="fas fa-house-user"></i> Familia</a>
+            @endcan
           </div>
         </div>
       </div>

@@ -359,7 +359,7 @@ class Person extends Model
                             })
                             ->count();
 
-        return [['Sin privilegio', $total_members - $with_ministry], ['Con privilegio', $with_ministry]];
+        return [['Con privilegio', $with_ministry], ['Sin privilegio', $total_members - $with_ministry]];
     }
 
     public static function distributionByIllness()
@@ -373,6 +373,6 @@ class Person extends Model
                             })
                             ->count();
 
-        return [['Sin dolencias', $total_members - $with_illness], ['Con dolencia', $with_illness]];
+        return [['Con dolencias', $with_illness], ['Sin dolencias', $total_members - $with_illness]];
     }
 }

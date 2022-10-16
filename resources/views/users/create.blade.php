@@ -25,6 +25,20 @@
               </div>
             </div>
 
+            <div class="form-group row">
+              <label for="nickname" class="col-md-3 col-form-label text-md-right">{{ __('Nickname') }}</label>
+
+              <div class="col-md-7">
+                <input id="nickname" type="text" class="form-control @error('nickname') is-invalid @enderror" name="nickname" value="{{ old('nickname') }}" autocomplete="nickname">
+
+                @error('nickname')
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                  </span>
+                @enderror
+              </div>
+            </div>
+
             <div class="row form-group">
               <label for="role" class="col-md-3 col-form-label text-md-right">{{ __('Rol') }}<span class="text-danger">*</span></label>
               <div class="col-md-7">

@@ -21,7 +21,7 @@ class AssignmentController extends Controller
      */
     public function directory(Request $request)
     {
-        Gate::authorize('consult');
+        // Gate::authorize('consult');
 
         $privileges = Privilege::all();
 
@@ -117,8 +117,7 @@ class AssignmentController extends Controller
      */
     public function edit($id)
     {
-        Gate::authorize('administer');
-        
+        // Gate::authorize('administer');
         $the_privilege = PrivilegeHistory::findOrFail($id);
         $person = $the_privilege->person;
         $privilege = Privilege::findOrFail($the_privilege->privilege_id);
@@ -173,7 +172,7 @@ class AssignmentController extends Controller
      */
     public function destroy($id)
     {
-        Gate::authorize('administer');
+        // Gate::authorize('administer');
         
         $privilege = PrivilegeHistory::findOrFail($id);
         $privilege->delete();

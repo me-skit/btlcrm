@@ -16,7 +16,9 @@ class VillagesTableSeeder extends Seeder
     {
         Village::create(['name' => 'Patzicía']);
         Village::create(['name' => 'Aldea Pahuit']);
-        Village::create(['name' => 'Aldea "La Esperanza"']);
-        Village::create(['name' => 'Aldea "El Caman"']);
+        Village::create(['name' => 'Aldea "El Camán"']);
+        Village::create(['name' => 'Aldea "El Sitán"']);
+        Village::create(['name' => 'Caserío "La Esperanza"']);
+        Village::create(['name' => 'Caserío "El Chuluc"']);
     }
 }

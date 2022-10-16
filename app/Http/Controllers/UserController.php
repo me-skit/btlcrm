@@ -72,6 +72,7 @@ class UserController extends Controller
 
         $data = $request->validate([
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'nickname' => 'nullable',
             'sex' => 'required',
             'role' => 'required'
         ]);
@@ -112,12 +113,14 @@ class UserController extends Controller
         Gate::authorize('administer');
 
         $data = $request->validate([
+            'nickname' => 'nullable',
             'role' => 'required',
             'sex' => 'required',
             'active' => 'required'
         ]);
 
         $user->role = $data['role'];
+        $user->nickname = $data['nickname'];
         $user->sex = $data['sex'];
         $user->active = $data['active'];
         $data['updated_by'] = Auth::id();

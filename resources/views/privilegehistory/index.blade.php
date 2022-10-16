@@ -46,7 +46,6 @@
             </div>
           </div>
         </div>
-        @can('administer')
         <div class="col-sm-12 col-md-4 col-lg-3 text-right px-1">
           <button
             class="btn btn-success btn-sm py-0 mr-1"
@@ -67,7 +66,6 @@
             Eliminar
           </button>
         </div>
-        @endcan
       </div>
     </li>
   @endforeach

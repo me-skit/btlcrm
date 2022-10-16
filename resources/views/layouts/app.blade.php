@@ -53,12 +53,11 @@
                 <a class="dropdown-item" href="{{ route('nomembers.index') }}"><i class="far fa-user fa-fw"></i> No miembros</a>
                 @endcan
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item disabled" href="#"><i class="fas fa-chart-pie fa-fw"></i> Estadísticas</a>
+                <a class="dropdown-item" href="{{ route('members.statistics') }}"><i class="fas fa-chart-pie fa-fw"></i> Estadísticas</a>
                 <a class="dropdown-item" href="{{ route('families.mapping') }}"><i class="fas fa-map-marked-alt fa-fw"></i> Mapeo</a>
               </div>
             </li>
 
-            @can('consult')
             <li class="nav-item dropdown">
                 <a id="dropdownCatal" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                   <i class="fas fa-sitemap"></i> {{ __('Organización') }}
@@ -70,7 +69,6 @@
                   @endcan
                 </div>
             </li>
-            @endcan
 
             @can('administer')
             <li class="nav-item dropdown">

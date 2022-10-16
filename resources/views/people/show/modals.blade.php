@@ -55,7 +55,7 @@
         </button>
       </div>
       <div class="modal-body" id="del-priv-modal">
-        Confirme que desea eliminar el registrado de privilegio definitivamente.
+        Confirme que desea eliminar el registro de privilegio definitivamente.
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -76,7 +76,7 @@
         </button>
       </div>
       <div class="modal-body" id="del-disp-modal">
-        Confirme que desea eliminar el registrado de disciplina definitivamente.
+        Confirme que desea eliminar el registro de disciplina definitivamente.
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
