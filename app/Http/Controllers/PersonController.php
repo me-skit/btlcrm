@@ -100,6 +100,8 @@ class PersonController extends Controller
             $person_data['handicaps'] = explode(',', $request->handicaps);
         }        
 
+        $person_data['preferences'] = $request->preferences;
+
         $membership_data = $request->validate([
             'campus_id' => ['numeric', 'nullable'],
             'accepted' => ['required', 'numeric'],
@@ -121,14 +123,6 @@ class PersonController extends Controller
             'family_role' => ['required', 'numeric']
         ]);
 
-        // setting death_date means the person passed away
-        if ($person_data['death_date'])
-        {
-            // status in membership and family_members could be: 0:inactive, 1:active, 2:passed away
-            $membership_data['status'] = '2';
-            $relation_data['active'] = '2';
-        }
-        
         $person_data['updated_by'] = Auth::id();
         $person->fill($person_data);
         $person->save();

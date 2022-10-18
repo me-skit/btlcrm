@@ -870,7 +870,7 @@ initMap = () => {
       let position = objectPosition(pos.lat, pos.lng);
 
       marker = addMarker(position, map);
-      map.panTo(position);
+      // map.panTo(position);
       setLocationInForm(position);
     });
   }
@@ -888,7 +888,7 @@ initMap = () => {
       let position = objectPosition(pos.lat, pos.lng);
 
       marker = addMarker(position, map);
-      map.panTo(position);
+      // map.panTo(position);
       setLocationInForm(position);
     });
   }

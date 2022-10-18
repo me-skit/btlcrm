@@ -63,7 +63,7 @@
                     @can('administer')
                       <a href="#" class="btn btn-danger mr-1 py-0 btn-delperson" data-toggle="modal" data-target="#delPersonModal" data-person-id="{{  $person->id }}" data-person-name="{{  $person->full_name }}" data-family-id="{{  $family->id }}"><i class="far fa-trash-alt"></i><span class="d-none d-lg-inline"> Eliminar</span></a>
                     @endcan
-                    <a href="{{ route('family.editmember', [$family->id, $person->id]) }}" class="btn btn-primary mr-3 py-0 {{  $person->death_date ? 'disabled' : '' }}"><i class="fas fa-pencil-alt"></i><span class="d-none d-lg-inline"> Editar</span></a>
+                    <a href="{{ route('family.editmember', [$family->id, $person->id]) }}" class="btn btn-primary mr-3 py-0"><i class="fas fa-pencil-alt"></i><span class="d-none d-lg-inline"> Editar</span></a>
                   </div>
                 </h5>
               </div>

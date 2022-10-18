@@ -61,7 +61,7 @@ class FamilyController extends Controller
                             ->where('family_name', 'like', '%' . $query . '%')
                             ->orderBy('created_at', 'DESC')
                             // ->orderBy('family_name')
-                            ->with('village')
+                            ->with('village', 'user')
                             ->paginate(15);
 
             return view('families.pagination', compact('families'));
@@ -70,7 +70,7 @@ class FamilyController extends Controller
         $families = Family::where('active', 1)
                         // ->orderBy('family_name')
                         ->orderBy('created_at', 'DESC')
-                        ->with('village')
+                        ->with('village', 'user')
                         ->paginate(15);
 
         if ($request->get('page'))
@@ -325,6 +325,8 @@ class FamilyController extends Controller
             $person_data['handicaps'] = explode(',', $request->handicaps);
         }        
 
+        $person_data['preferences'] = $request->preferences;
+
         $membership_data = $request->validate([
             'campus_id' => ['numeric', 'nullable'],
             'accepted' => ['required', 'numeric'],
@@ -345,15 +347,7 @@ class FamilyController extends Controller
         $relation_data = $request->validate([
             'family_role' => ['required', 'numeric']
         ]);
-
-        // setting death_date means the person passed away
-        if ($person_data['death_date'])
-        {
-            // status in membership and family_members could be: 0:inactive, 1:active, 2:passed away
-            $membership_data['status'] = '2';
-            $relation_data['active'] = '2';
-        }
-        
+       
         $person_data['updated_by'] = Auth::id();
         $person->fill($person_data);
         $person->save();

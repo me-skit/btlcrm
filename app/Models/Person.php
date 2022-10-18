@@ -157,14 +157,14 @@ class Person extends Model
 
     public function getMemberAttribute()
     {
-        return $this->membership->member ? ($this->membership->member == 1 ? "Si" : "De otra iglesia") : "No";
+        return $this->membership->member ? (($this->membership->member == Person::MEMBER) ? "Si" : "De otra iglesia") : "No";
     }
 
     public function getAgeAttribute()
     {
         if ($this->death_date)
         {
-            return floor((strtotime($this->death_date) -  strtotime($this->birthday)) / $this->SECONDS_PER_YEAR);
+            return floor((strtotime($this->death_date) -  strtotime($this->birthday)) / Person::SECONDS_PER_YEAR);
         }
         else
         {
@@ -175,6 +175,11 @@ class Person extends Model
     public function getFormattedBirthdayAttribute()
     {
         return Carbon::parse($this->birthday)->format('d/m/Y');
+    }
+
+    public function getFormattedDeathdayAttribute()
+    {
+        return Carbon::parse($this->death_date)->format('d/m/Y');
     }
 
     public function getAttendChurchAttribute($value)

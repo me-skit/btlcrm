@@ -39,6 +39,14 @@ class Family extends Model
         return $this->belongsToMany(Person::class, 'family_members')->withPivot('family_role', 'active')->orderByPivot('family_role');
     }
 
+    /**
+     * Get the user that owns/created the family.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
     public function setFamilyNameAttribute($value)
     {
         $this->attributes['family_name'] = ucwords(mb_strtolower($value));

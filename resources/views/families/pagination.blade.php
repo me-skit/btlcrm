@@ -13,6 +13,7 @@
               <th>Apellidos</th>
               <th class="text-center">Zona</th>
               <th>Dirección</th>
+              <th>Creador</th>
               <th>Acciones</th>
           </tr>
       </thead>
@@ -23,6 +24,7 @@
             <td class="align-middle text-truncate">{{ $family->family_name }}</td>
             <td class="align-middle text-center">{{ $family->zone }}</td>
             <td class="align-middle text-truncate">{{ $family->address }}</td>
+            <td class="align-middle text-truncate">{{ $family->user->nickname }}</td>
             <td class="align-middle">
               <div class="d-flex">
                 <a href="{{ route('family.show', $family->id ) }}" class="btn btn-sm btn-primary mr-3"><i class="far fa-eye"></i><span class="d-none d-lg-inline"> Detalles</span></a>
