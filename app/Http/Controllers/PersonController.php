@@ -139,13 +139,10 @@ class PersonController extends Controller
         $family_members->fill($relation_data);
         $family_members->save();
 
-        // check if all family members are active=0, if there is no one family is set inactive (active=0)
-        $plucked = $family->members()->pluck('active')->toArray();
-        if (!in_array(1, $plucked))
-        {
-            $family->active = 0;
-            $family->save();
-        }
+        // check if all family members are active, else the family got inactive (active=0)
+        $active_members = $family->members()->where('death_date', null)->count();
+        $family->active = $active_members ? 1 : 0;
+        $family->save();
 
         return redirect('/members');
     }
