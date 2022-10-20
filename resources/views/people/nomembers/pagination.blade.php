@@ -33,7 +33,7 @@
           <td class="align-middle text-truncate">{{ $person->full_name }} </td>
           <td class="align-middle">{{ $person->accepted ? "Si" : "No" }}</td>
           <td class="align-middle">{{ $person->baptized ? "Si" : "No" }}</td>
-          <td class="align-middle">{{ $person->religion }}</td>
+          <td class="align-middle">{{ $person->religion_formatted }}</td>
           <td class="align-middle text-center">{{ $person->age }}</td>
           <td class="align-middle text-center">{{ $person->civil_status }}</td>
           <td class="align-middle text-center text-truncate">{{ $person->diseases ? implode(",", $person->diseases) : '' }}</td>

@@ -120,7 +120,8 @@ class MemberController extends Controller
 
         $privilege_id = $request->get('privilege_id') ?? '1';
 
-        $people = Person::where('preferences', 'LIKE', '%"'. $privilege_id .'"%')
+        $people = Person::where('death_date', null)
+                    ->where('preferences', 'LIKE', '%"'. $privilege_id .'"%')
                     ->orderBy('first_name')
                     ->orderBy('second_name')
                     ->orderBy('third_name')

@@ -108,7 +108,7 @@
     <div class="row form-group">
       <label for="member" class="col-md-5 col-form-label text-md-right">{{ __('¿Miembro de Bethel?') }}<span class="text-danger">*</span></label>
       <div class="col-md-7">
-        <select name="member" id="member" class="form-control attend" required>
+        <select name="member" id="member" class="form-control" required>
           <option value="1" {{ $person->membership->member == 1 ? 'selected' : '' }}>Si</option>
           <option value="0" {{ $person->membership->member ? '' : 'selected' }}>No</option>
           <option value="-1" {{ $person->membership->member == -1 ? 'selected' : '' }}>No, de otra iglesia</option>
@@ -147,9 +147,9 @@
 <div class="row">
   <div class="col-lg-6">
     <div class="row form-group">
-      <label for="attend_church" class="col-md-5 col-form-label text-md-right">{{ __('Asiste a la iglesia') }}<span class="text-primary">*</span></label>
+      <label for="attend_church" class="col-md-5 col-form-label text-md-right">{{ __('¿Asiste a la iglesia?') }}<span class="text-primary">*</span></label>
       <div class="col-md-7">
-        <select name="attend_church" id="attend_church" class="form-control attend">
+        <select name="attend_church" id="attend_church" class="form-control">
           <option value="1" {{ $person->membership->attend_church == 1 ? 'selected' : '' }}>Si</option>
           <option value="0" {{ $person->membership->attend_church ? '' : 'selected' }}>No</option>
           <option value="2" {{ $person->membership->attend_church == 2 ? 'selected' : '' }}>Ocasionalmente</option>
@@ -205,7 +205,7 @@
           <span class="invalid-feedback" role="alert">
             <strong>{{ $message }}</strong>
           </span>
-        @enderror         
+        @enderror
       </div>    
     </div>
   </div>

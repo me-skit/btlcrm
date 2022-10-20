@@ -187,9 +187,9 @@ class Person extends Model
         return $value ? ($value == 1 ? "Si" : ($value == 2 ? "En ocasiones" : "Con problemas")) : "No";
     }
 
-    public function getReligionAttribute($value)
+    public function getReligionFormattedAttribute()
     {
-        switch ($value) {
+        switch ($this->religion) {
             case 1:
                 return $this->sex === 'M' ? "Evangélico" : "Evangélica";
             case 2:

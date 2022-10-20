@@ -255,6 +255,14 @@ togglePrivilegesSection = (membership) => {
   }
 }
 
+toggleAttendSelectFirst = (membership, attendSelect) => {
+  if (membership != MEMBER_YES) {
+    attendSelect.value = '';
+    attendSelect.required = false;
+    attendSelect.disabled = true;
+  }
+}
+
 toggleAttendSelect = (membership, attendSelect) => {
   if (membership == MEMBER_YES) {
     attendSelect.value = '1';
@@ -292,7 +300,7 @@ if (attend && member) {
 
   toggleCampusField(member.value);
   togglePrivilegesSection(member.value);
-  toggleAttendSelect(member.value, attend);
+  toggleAttendSelectFirst(member.value, attend);
   toggleReligionSelect(member.value);
 
   member.addEventListener('change', event => {
