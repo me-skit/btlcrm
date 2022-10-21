@@ -121,12 +121,16 @@ class MemberController extends Controller
         $privilege_id = $request->get('privilege_id') ?? '1';
 
         $people = Person::where('death_date', null)
+                    ->join('memberships', function($query) {
+                        $query->on('people.id', '=', 'memberships.person_id')
+                            ->where('memberships.member', Person::MEMBER);
+                        })
                     ->where('preferences', 'LIKE', '%"'. $privilege_id .'"%')
                     ->orderBy('first_name')
                     ->orderBy('second_name')
                     ->orderBy('third_name')
                     ->orderBy('first_surname')
-                    ->orderBy('second_surname')            
+                    ->orderBy('second_surname')
                     ->paginate(35);
 
         if ($request->get('privilege_id') or $request->get('page'))
