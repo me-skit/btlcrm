@@ -43,6 +43,25 @@ class PersonController extends Controller
         return view('people.show', compact('person', 'privileges', 'privilege_roles'));
     }
 
+    /**
+     * Display the specified resource.
+     *
+     * @param  $code
+     * @return \Illuminate\Http\Response
+     */
+    public function info($code)
+    {
+        Gate::authorize('consult');
+
+        $person_id = trim(base64_decode($code));
+        $person = Person::find($person_id);
+
+        if (!$person) {
+            abort(404, "No person with code " . $code . " was found.");
+        }
+
+        return view('people.info', compact('person'));
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -151,7 +170,7 @@ class PersonController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Person  $person
+     * @param  Person $person
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request, Person $person)

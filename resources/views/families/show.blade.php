@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+  <style>
+    .copy {
+      cursor: copy;
+    }
+  </style>
   <div class="container p-4">
     <div class="header">
       <div class="row d-flex justify-content-center">
@@ -9,9 +14,9 @@
             <h3 id="family_name"><i class="fa fa-home"></i> {{ $family->family_name }}</h3>
             <div>
               @can('administer')
-                <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#delFamilyModal"><i class="far fa-trash-alt"></i><span class="d-none d-lg-inline"> Eliminar</span></a>
+                <a href="#" class="btn btn-danger mr-2" data-toggle="modal" data-target="#delFamilyModal"><i class="far fa-trash-alt"></i><span class="d-none d-lg-inline"> Eliminar</span></a>
               @endcan
-              <a href="{{ route('family.edit', $family->id) }}" class="btn btn-primary ml-2"><i class="fas fa-pencil-alt"></i><span class="d-none d-lg-inline"> Editar</span></a>
+              <a href="{{ route('family.edit', $family->id) }}" class="btn btn-primary"><i class="fas fa-pencil-alt"></i><span class="d-none d-lg-inline"> Editar</span></a>
             </div>
           </div>
         </div>
@@ -39,10 +44,13 @@
       </div>    
     </div>
     
-    <div class="row d-flex justify-content-center py-2 bg-light">
+    <div class="row d-flex justify-content-center py-2 my-1 bg-light">
       <div class="col-md-12 d-flex justify-content-between align-items-baseline">
         <h4>Miembros:</h4>
         <div>
+          @can('administer')
+            <a href="#" class="btn btn-info mr-2" id="btn-import-1" data-toggle="modal" data-target="#importModal"><i class="far fa-file-import"></i><span class="d-none d-lg-inline"> Importar</span></a>
+          @endcan
           <a href="{{ route('family.createmember', $family->id) }}" class="btn btn-success"><i class="fas fa-plus"></i><span class="d-none d-lg-inline"> Agregar</span></a>
         </div>
       </div>
@@ -141,6 +149,54 @@
         </div>
       </div>
     </div>
+
+      <!-- import person modal -->
+      <div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+
+            <form id="import-form" action="#" method="POST" data-root="{{ url('/') }}" data-family-id="{{ $family->id }}">
+              @csrf
+              @method('PATCH')
+
+
+              <div class="modal-header">
+                <h5 class="modal-title" id="importModalLabel"><b><i class="far fa-file-import"></i> Mover Persona</b></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" id="del-priv-modal">
+                
+
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="row form-group">
+                      <label for="code" class="col-md-5 col-form-label text-md-right">{{ __('Código') }}<span class="text-danger">*</span></label>
+                      <div class="col-md-7">
+                        <input type="text" name="code" id="code" class="form-control" required>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2">
+                    <a href="#" class="btn btn-primary" id="btn-load">Cargar</a>
+                  </div>
+                </div>
+                <div id="person-info">
+
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-danger" id="btn-import-2" disabled>Importar</button>
+              </div>
+
+
+
+            </form>
+          </div>
+        </div>
+      </div>
   @endcan
 
   <script

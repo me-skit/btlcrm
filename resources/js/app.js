@@ -1060,6 +1060,48 @@ paginateQuery = () => {
   Array.prototype.forEach.call(paginations, item => item.addEventListener('click', () => setPagination(event, item)));
 }
 
+// copy code function
+const copyCodes = document.getElementsByClassName('copy');
+Array.prototype.forEach.call(copyCodes, item => item.addEventListener('click', () => navigator.clipboard.writeText(item.textContent)));
+
+// move person from one family to another
+const btnImportOne = document.getElementById('btn-import-1');
+if (btnImportOne) {
+  btnImportOne.addEventListener('click', () => {
+    document.getElementById('code').value = '';
+    document.getElementById('btn-import-2').disabled = true;
+    document.getElementById('person-info').innerHTML = "";
+  })
+}
+
+showPersonInfo = () => {
+  const personInfo = document.getElementById('person-info');
+  const btnImportTwo = document.getElementById('btn-import-2');
+  const inputCode = document.getElementById('code');
+  const form = document.getElementById('import-form');
+
+  fetch('/person/requestinfo/' + inputCode.value)
+  .then(response => {
+    if (response.ok) return  response.text();
+    
+    throw new Error('Error al cargar los datos, intente de nuevo');
+  })
+  .then(data => {
+    personInfo.innerHTML = data;
+    btnImportTwo.disabled = false;
+    form.action = form.dataset.root + '/family/' + form.dataset.familyId + '/import/' + inputCode.value;
+  })
+  .catch(error => {
+    personInfo.innerHTML = "No se encontró información de la persona según el código \"" + inputCode.value + "\"";
+    btnImportTwo.disabled = true;
+  });
+}
+
+const btnLoad = document.getElementById('btn-load');
+if (btnLoad) {
+  btnLoad.addEventListener('click', () => showPersonInfo());
+}
+
 // the sub-menu thing
 $('.dropdown-menu a.dropdown-toggle').on('click', function(e) {
   if (!$(this).next().hasClass('show')) {

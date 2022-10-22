@@ -390,4 +390,35 @@ class FamilyController extends Controller
 
         return redirect('/families')->with('info', 'Familia ' . $family->family_name . ' eliminada.');
     }
+
+    /**
+     * Update the specified resource from storage.
+     *
+     * @param  $family_id
+     * @param  $code
+     * @return \Illuminate\Http\Response
+     */
+    public function import($family_id, $code)
+    {
+        Gate::authorize('administer');
+        
+        $person_id = trim(base64_decode($code));
+        $person = Person::find($person_id);
+
+        if (!$person) {
+            return redirect('/family/' . $family_id)->with('error','No pudo agregarse datos de persona con código ' . $code . '.');
+        }
+
+        $old_relation = FamilyMember::where('family_id', $person->family()->id)->where('person_id', $person->id)->first();
+
+        $relation_data['family_id'] = $family_id;
+        $relation_data['person_id'] = $person->id;
+        $relation_data['family_role'] = $old_relation->family_role;
+        $relation_data['created_by'] = $old_relation->created_by;
+        $relation_data['updated_by'] = Auth::id();
+        $person->families()->detach();
+        FamilyMember::create($relation_data);
+
+        return redirect('/family/' . $family_id)->with('info', 'Datos de ' . $person->full_name . ' agregados a esta familia.');
+    }
 }

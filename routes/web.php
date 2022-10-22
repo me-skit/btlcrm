@@ -78,6 +78,8 @@ Route::prefix('/family')->group( function() {
     Route::get('/create',  [FamilyController::class, 'create'])->name('family.create');
     Route::get('/{family}',  [FamilyController::class, 'show'])->name('family.show');
 
+    Route::patch('{family_id}/import/{code}',  [FamilyController::class, 'import'])->name('family.import');
+
     Route::get('/{family}/createmember',  [FamilyController::class, 'createmember'])->name('family.createmember');
     Route::post('/{family_id}/addmember',  [FamilyController::class, 'addmember'])->name('family.addmember');
     Route::get('/{family_id}/editmember/{person}',  [FamilyController::class, 'editmember'])->name('family.editmember');
@@ -103,6 +105,7 @@ Route::prefix('/user')->group( function() {
 });
 
 Route::prefix('/person')->group( function() {
+    Route::get('/requestinfo/{code}',  [PersonController::class, 'info'])->name('person.info');
     Route::get('/{person}',  [PersonController::class, 'show'])->name('person.show');
     Route::patch('/{person}',  [PersonController::class, 'update'])->name('person.update');
     Route::get('/{person}/edit',  [PersonController::class, 'edit'])->name('person.edit');
